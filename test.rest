@@ -1,0 +1,47 @@
+### Test API
+GET http://localhost:3000/test
+
+
+### GET all emails
+GET http://localhost:8383/emails
+
+
+### GET Token
+GET http://localhost:3000/token
+
+
+### GET FRIENDs
+GET http://localhost:8383/friends
+
+### GET FRIEND
+GET http://localhost:8383/friends/james
+
+
+### ADD A FRIEND
+POST http://localhost:8383/addfriend
+Content-Type: application/json
+
+{
+    "name": "banana",
+    "status": "frieind"
+}
+
+### UPDATE STATUS OF A FRIEND
+PATCH http://localhost:8383/changestatus
+Content-Type: application/json
+
+{
+    "name": "Hola",
+    "newStatus": "Mundo"
+}
+
+
+###DELETE A FRIEND
+DELETE http://localhost:8383/friends
+Content-Type: application/json
+
+{
+    "name": "banana"
+}
+
+
