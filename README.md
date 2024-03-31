@@ -34,3 +34,11 @@ FIREBASE_UNIVERSE_DOMAIN
 
 PLEASE, REMOVE THE // FROM THE .ENV FILE, THIS IS JUST FOR THE README
 In order to get all the firebase configuration you need to create a new project in firebase and then go to the settings of the project and then to the service accounts tab, there you can generate a new private key and you will get a json file with all the configuration.
+
+## Deployment
+The backend is deployed in Railway. The deployment is automatically done with Railway CLI using the following command:
+```bash
+railway up
+```
+
+Youu need to have the environment variables in Railway.
