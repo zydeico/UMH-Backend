@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const { getFirestore } = require('firebase-admin/firestore');
 const db = getFirestore();
 const jwt = require('jsonwebtoken');
@@ -102,8 +104,14 @@ const UserController = {
     // Generate a new token
     async generateToken(req, res, next) {
         try {
-            const token = jwt.sign({}, process.env.SECRET_KEY, { expiresIn: '15m' });
-            res.status(200).json({ BearerToken: token });
+            const subscriptionKey = req.headers['ocp-apim-subscription-key'];
+            const expectedKey = process.env.OCMP_SUBSCRIPTION_KEY;
+            if (subscriptionKey !== expectedKey) {
+                return res.status(403).json({ error: 'Invalid subscription key' });
+            }
+            const user = { id: process.env.USER_ID, username: process.env.USERNAME };
+            const BearerToken = jwt.sign(user, process.env.SECRET_KEY);
+            return res.json({ BearerToken });
         } catch (error) {
             next(error);
         }
