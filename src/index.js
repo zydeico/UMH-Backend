@@ -8,7 +8,7 @@ const app = express();
 
 async function initializeFirebase() {
     try {
-        await initializeApp({
+        initializeApp({
             credential: cert({
                 type: process.env.FIREBASE_TYPE,
                 project_id: process.env.FIREBASE_PROJECT_ID,
@@ -24,9 +24,7 @@ async function initializeFirebase() {
             }),
             connectTimeout: 7000
         });
-        console.log('Firebase initialized successfully');
     } catch (error) {
-        console.error('Error initializing Firebase:', error);
         throw error;
     }
 }
@@ -34,7 +32,7 @@ async function initializeFirebase() {
 async function startServer() {
     await initializeFirebase();
     const db = getFirestore();
-
+    const app = express();
     function generateToken(req, res, next) {
         const user = { id: process.env.USER_ID, username: process.env.USERNAME };
         const token = jwt.sign(user, process.env.SECRET_KEY);
@@ -51,11 +49,15 @@ async function startServer() {
     app.use((err, req, res, next) => {
         console.error(err.stack);
         res.status(500).send(`Something went wrong: ${err.message}`);
-    });    
+    });
+
+    app.use((req, res, next) => {
+        res.status(404).send("Not found");
+    });
 
     const port = process.env.PORT || 3000;
     app.listen(port, () => {
-        console.log(`API Success on port: ${port}`);
+
     });
 }
 
