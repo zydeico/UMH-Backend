@@ -6,14 +6,20 @@ const errorHandler = require('./middleware/errorHandler');
 
 app.use(express.json());
 
-// Configuración de trust proxy a false antes de express-rate-limit
+// Delete the x-forwarded-for header before express-rate-limit middleware
+app.use((req, res, next) => {
+    req.headers['x-forwarded-for'] = '';
+    next();
+});
+
+// Configuration for the trust proxy
 app.set('trust proxy', false);
 
-// Middleware para manejar errores
+// Error management middleware
 app.use(errorHandler);
 
 /**
- * Middleware de limitación de velocidad
+ * Speed limiter middleware
  */
 const limiter = rateLimit({
     windowMs: 6 * 60 * 60 * 1000,
@@ -22,7 +28,7 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// Rutas
+// Routes
 app.use('/', routes);
 
 module.exports = app;
