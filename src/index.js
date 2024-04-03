@@ -5,6 +5,8 @@ const { initializeApp, cert } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
 const jwt = require('jsonwebtoken');
 const app = express();
+const hostname = '0.0.0.0';
+const port = process.env.PORT || 3000;
 
 async function initializeFirebase() {
     try {
@@ -55,10 +57,10 @@ async function startServer() {
         res.status(404).send("Not found");
     });
 
-    const port = process.env.PORT || 3000;
+    const port = process.env.PORT || 8080;
     app.listen(port, () => {
-
-    });
+      console.log('Listening on port', port);
+    });       
 }
 
 startServer();
