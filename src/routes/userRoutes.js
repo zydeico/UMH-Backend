@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { verifyToken } = require('../middleware/authMiddleware');
 const UserController = require('../controllers/userController');
+const UtilsServerController = require('../controllers/utilsServerController');
 
 /*
 * Routes for the User model GET
@@ -9,6 +10,7 @@ const UserController = require('../controllers/userController');
 router.get('/getData', verifyToken, UserController.getData);
 router.get('/newToken', UserController.generateToken);
 router.get('/health', UserController.health);
+router.get('/searchEmail', verifyToken, UtilsServerController.getAndSearchSpecificEmailFromEmails);
 
 /*
 * Routes for the User model POST
