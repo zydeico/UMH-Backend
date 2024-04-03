@@ -42,4 +42,11 @@ The backend is deployed in Railway. The deployment is automatically done with Ra
 railway up
 ```
 
+## Deployment in Google Cloud Run
+The backend is deployed in Google Cloud Run. The deployment is automatically done with the following command:
+```bash
+gcloud run deploy umhbackend --source .
+```
+Note: Use the server 33 region us-east1 to deploy the backend.
+
 Youu need to have the environment variables in Railway.
