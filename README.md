@@ -47,6 +47,7 @@ The backend is deployed in Google Cloud Run. The deployment is automatically don
 ```bash
 gcloud run deploy umhbackend --source .
 ```
-Note: Use the server 33 region us-east1 to deploy the backend.
+
+Note: Use the server 37 region us-east1 to deploy the backend.
 
 Youu need to have the environment variables in Railway.

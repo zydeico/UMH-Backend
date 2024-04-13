@@ -10,7 +10,6 @@ const UtilsServerController = require('../controllers/utilsServerController');
 router.get('/getData', verifyToken, UserController.getData);
 router.get('/newToken', UserController.generateToken);
 router.get('/health', UserController.health);
-router.get('/searchEmail', verifyToken, UtilsServerController.getAndSearchSpecificEmailFromEmails);
 
 /*
 * Routes for the User model POST
@@ -21,6 +20,7 @@ router.post('/refresh-token', UserController.refreshToken);
 router.post('/sendRequests', verifyToken, UserController.sendRequests);
 router.post('/verifyToken', UserController.verifyToken);
 router.post('/recordEmail', verifyToken, UserController.recordEmail);
+router.post('/searchEmail', verifyToken, UserController.getAndSearchSpecificEmailFromEmails);
 
 /*
 * Routes for the User model DELETE

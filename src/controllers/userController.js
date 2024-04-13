@@ -73,7 +73,7 @@ const UserController = {
         } catch (error) {
             next(error);
         }
-    },
+    },  
 
     // Record email
     async recordEmail(req, res, next) {
