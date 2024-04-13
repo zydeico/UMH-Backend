@@ -7,7 +7,7 @@ const UtilsServerController = {
     async getAndSearchSpecificEmailFromEmails(req, res, next) {
         try {
             const { email } = req.body;
-            const emailCollectionRef = db.collection('emails');
+            const emailCollectionRef = db.collection('mobile_user');
             const query = emailCollectionRef.where('email', '==', email);
             const querySnapshot = await query.get();
             const docs = [];
