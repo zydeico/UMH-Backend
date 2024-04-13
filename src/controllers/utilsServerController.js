@@ -34,7 +34,7 @@ const UtilsServerController = {
             res.status(400).json({ message: "Error on request: ", error });
             throw error;
         }
-    },      
+    } 
 };
 
 module.exports = UtilsServerController;

@@ -20,7 +20,7 @@ router.post('/refresh-token', UserController.refreshToken);
 router.post('/sendRequests', verifyToken, UserController.sendRequests);
 router.post('/verifyToken', UserController.verifyToken);
 router.post('/recordEmail', verifyToken, UserController.recordEmail);
-router.post('/searchEmail', verifyToken, UserController.getAndSearchSpecificEmailFromEmails);
+router.post('/searchEmail', verifyToken, UtilsServerController.getAndSearchSpecificEmailFromEmails);
 
 /*
 * Routes for the User model DELETE
