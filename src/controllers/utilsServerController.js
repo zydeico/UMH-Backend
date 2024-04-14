@@ -107,11 +107,13 @@ const UtilsServerController = {
     // Search user using their data
     async searchUser(req, res, next) {
         try {
-            const { email, phone, name } = req.body;
+            const { email, phone, name, collections } = req.body;
             if (!email && !phone && !name) {
                 return res.status(400).json({ message: "At least one of email, phone, or name is required" });
             }
-            
+            if (!collections || !Array.isArray(collections) || collections.length === 0) {
+                return res.status(400).json({ message: "Collections array is required and must not be empty" });
+            }
             let queryField, queryValue;
             if (email) {
                 queryField = 'email';
@@ -123,20 +125,22 @@ const UtilsServerController = {
                 queryField = 'name';
                 queryValue = name;
             }
+            const results = [];
+            for (const collectionName of collections) {
+                const collectionRef = db.collection(collectionName);
+                const query = collectionRef.where(queryField, '==', queryValue);
+                const querySnapshot = await query.get();
+                querySnapshot.forEach(doc => {
+                    const docId = doc.id;
+                    const docData = doc.data();
+                    const dataWithId = { ...docData, id: docId, collection: collectionName };
+                    results.push(dataWithId);
+                });
+            }
     
-            const mobileUserCollectionRef = db.collection('mobile_user');
-            const query = mobileUserCollectionRef.where(queryField, '==', queryValue);
-            const querySnapshot = await query.get();
-            if (querySnapshot.empty) {
+            if (results.length === 0) {
                 return res.status(404).json({ message: `User not found` });
             }
-            const results = [];
-            querySnapshot.forEach(doc => {
-                const docId = doc.id;
-                const docData = doc.data();
-                const dataWithId = { ...docData, id: docId };
-                results.push(dataWithId);
-            });
             res.status(200).json({ message: `User exists`, results });
         } catch (error) {
             res.status(400).json({ message: "Error on request: ", error });
