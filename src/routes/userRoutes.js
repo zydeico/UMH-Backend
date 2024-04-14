@@ -21,6 +21,9 @@ router.post('/sendRequests', verifyToken, UserController.sendRequests);
 router.post('/verifyToken', UserController.verifyToken);
 router.post('/recordEmail', verifyToken, UserController.recordEmail);
 router.post('/searchEmail', verifyToken, UtilsServerController.getAndSearchSpecificEmailFromEmails);
+router.post('/searchPhone', verifyToken, UtilsServerController.getAndSearchSpecificPhoneFromUsers);
+router.post('/searchUserName', verifyToken, UtilsServerController.getAndSearchSpecificNameFromMobileUser);
+router.post('/searchSpecificUser', verifyToken, UtilsServerController.searchUser);
 
 /*
 * Routes for the User model DELETE

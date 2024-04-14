@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
 
 const UtilsServerController = {
+    // Get and search for a specific email in multiple collections
     async getAndSearchSpecificEmailFromEmails(req, res, next) {
         try {
             const { email, collections } = req.body;
@@ -37,13 +38,111 @@ const UtilsServerController = {
                 }
                 separatedResults[result.collection].push(result);
             });
-    
-            res.status(200).json(separatedResults);
+
+            res.status(200).json({ message: "Email exists", separatedResults });
         } catch (error) {
             res.status(400).json({ message: "Error on request: ", error });
             throw error;
         }
-    }              
+    },
+    
+    // Search phone number in mobile_user collection
+    async getAndSearchSpecificPhoneFromUsers(req, res, next) {
+        try {
+            const { phone } = req.body;
+            if (!phone) {
+                return res.status(400).json({ message: "Phone is required" });
+            } else if (typeof phone !== 'string') {
+                return res.status(400).json({ message: "Phone must be a string" });
+            }
+            const mobileUserCollectionRef = db.collection('mobile_user');
+            const query = mobileUserCollectionRef.where('phone', '==', phone);
+            const querySnapshot = await query.get();
+            if (querySnapshot.empty) {
+                return res.status(404).json({ message: "Phone not found" });
+            }
+            const results = [];
+            querySnapshot.forEach(doc => {
+                const docId = doc.id;
+                const docData = doc.data();
+                const dataWithId = { ...docData, id: docId };
+                results.push(dataWithId);
+            });
+            res.status(200).json({ message: "Phone exists", results });
+        } catch (error) {
+            res.status(400).json({ message: "Error on request: ", error });
+            throw error;
+        }
+    },
+
+    // Get and search specific name in mobile_user collection
+    async getAndSearchSpecificNameFromMobileUser(req, res, next) {
+        try {
+            const { name } = req.body;
+            if (!name) {
+                return res.status(400).json({ message: "Name is required" });
+            } else if (typeof name !== 'string') {
+                return res.status(400).json({ message: "Name must be a string" });
+            }
+            const mobileUserCollectionRef = db.collection('mobile_user');
+            const query = mobileUserCollectionRef.where('name', '==', name);
+            const querySnapshot = await query.get();
+            if (querySnapshot.empty) {
+                return res.status(404).json({ message: "Name not found" });
+            }
+            const results = [];
+            querySnapshot.forEach(doc => {
+                const docId = doc.id;
+                const docData = doc.data();
+                const dataWithId = { ...docData, id: docId };
+                results.push(dataWithId);
+            });
+            res.status(200).json({ message: "Name exists", results });
+        } catch (error) {
+            res.status(400).json({ message: "Error on request: ", error });
+            throw error;
+        }
+    },
+
+    // Search user using their data
+    async searchUser(req, res, next) {
+        try {
+            const { email, phone, name } = req.body;
+            if (!email && !phone && !name) {
+                return res.status(400).json({ message: "At least one of email, phone, or name is required" });
+            }
+            
+            let queryField, queryValue;
+            if (email) {
+                queryField = 'email';
+                queryValue = email;
+            } else if (phone) {
+                queryField = 'phone';
+                queryValue = phone;
+            } else {
+                queryField = 'name';
+                queryValue = name;
+            }
+    
+            const mobileUserCollectionRef = db.collection('mobile_user');
+            const query = mobileUserCollectionRef.where(queryField, '==', queryValue);
+            const querySnapshot = await query.get();
+            if (querySnapshot.empty) {
+                return res.status(404).json({ message: `User not found` });
+            }
+            const results = [];
+            querySnapshot.forEach(doc => {
+                const docId = doc.id;
+                const docData = doc.data();
+                const dataWithId = { ...docData, id: docId };
+                results.push(dataWithId);
+            });
+            res.status(200).json({ message: `User exists`, results });
+        } catch (error) {
+            res.status(400).json({ message: "Error on request: ", error });
+            throw error;
+        }
+    }       
 };
 
 module.exports = UtilsServerController;

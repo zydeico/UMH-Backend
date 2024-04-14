@@ -1,6 +1,6 @@
 {
   "name": "umh-backend",
-  "version": "1.7.0",
+  "version": "1.9.4",
   "description": "Backend for the UMH project",
   "main": "index.js",
   "scripts": {
