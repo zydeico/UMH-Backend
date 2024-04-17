@@ -56,7 +56,8 @@ const UserController = {
         try {
             const { name, phone, email, password, pin, pushTokenAPN, platform } = req.body;
             const uid = generateUID(20);
-            const mobileUserCollectionRef = db.collection('mobile_user');
+            const collectionName = process.env.COLLECTIONNAME;
+            const mobileUserCollectionRef = db.collection(collectionName);
             const registrationDateAndTime = new Date();
             await mobileUserCollectionRef.doc(uid).set({
                 name,
@@ -230,7 +231,8 @@ const UserController = {
     async deleteUid(req, res, next) {
         try {
             const { uid } = req.body;
-            const mobileUserCollectionRef = db.collection('mobile_user');
+            const collectionName = process.env.COLLECTIONNAME;
+            const mobileUserCollectionRef = db.collection(collectionName);
             await mobileUserCollectionRef.doc(uid).delete();
             res.status(200).json({ message: 'Successfully deleted uid' });
         } catch (error) {
@@ -243,7 +245,8 @@ const UserController = {
         try {
             const { uid } = req.body;
             const { name, phone, email, password, pin, pushTokenAPN, platform } = req.body;
-            const mobileUserCollectionRef = db.collection('mobile_user');
+            const collectionName = process.env.COLLECTIONNAME;
+            const mobileUserCollectionRef = db.collection(collectionName);
             await mobileUserCollectionRef.doc(uid).update({
                 name,
                 phone,

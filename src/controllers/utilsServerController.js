@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const { getFirestore } = require('firebase-admin/firestore');
 const db = getFirestore();
 const jwt = require('jsonwebtoken');
@@ -55,7 +57,8 @@ const UtilsServerController = {
             } else if (typeof phone !== 'string') {
                 return res.status(400).json({ message: "Phone must be a string" });
             }
-            const mobileUserCollectionRef = db.collection('mobile_user');
+            const collectionName = process.env.COLLECTIONNAME;
+            const mobileUserCollectionRef = db.collection(collectionName);
             const query = mobileUserCollectionRef.where('phone', '==', phone);
             const querySnapshot = await query.get();
             if (querySnapshot.empty) {
@@ -84,7 +87,8 @@ const UtilsServerController = {
             } else if (typeof name !== 'string') {
                 return res.status(400).json({ message: "Name must be a string" });
             }
-            const mobileUserCollectionRef = db.collection('mobile_user');
+            const collectionName = process.env.COLLECTIONNAME;
+            const mobileUserCollectionRef = db.collection(collectionName);
             const query = mobileUserCollectionRef.where('name', '==', name);
             const querySnapshot = await query.get();
             if (querySnapshot.empty) {
