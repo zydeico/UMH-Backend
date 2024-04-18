@@ -52,9 +52,14 @@ const UserController = {
     },
 
     // Register a new user
-    async registerUser (req, res, next) {
+    async registerUser(req, res, next) {
         try {
             const { name, phone, email, password, pin, pushTokenAPN, platform } = req.body;
+            if (!name || !phone || !email || !password || !pin || !pushTokenAPN || !platform) {
+                const error = new Error('All fields are required');
+                error.statusCode = 400;
+                throw error;
+            }
             const uid = generateUID(20);
             const collectionName = process.env.COLLECTIONNAME;
             const mobileUserCollectionRef = db.collection(collectionName);
@@ -72,6 +77,9 @@ const UserController = {
             });
             res.status(200).json({ uid });
         } catch (error) {
+            const statusCode = error.statusCode || 500;
+            const errorMessage = error.message || 'Internal Server Error';
+            res.status(statusCode).json({ error: errorMessage });
             next(error);
         }
     },  
