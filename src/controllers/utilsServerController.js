@@ -4,6 +4,7 @@ const { getFirestore } = require('firebase-admin/firestore');
 const db = getFirestore();
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
+const { BlockedIP } = require('../models/BlockedIP');
 
 const UtilsServerController = {
     // Get and search for a specific email in multiple collections
@@ -178,6 +179,33 @@ const UtilsServerController = {
 
             const userData = docSnapshot.data();
             res.status(200).json(userData);
+        } catch (error) {
+            console.error("Error occurred:", error);
+            res.status(500).json({ message: "Internal server error" });
+            next(error);
+        }
+    },
+
+    async unblockIP(req, res, next) {
+        try {
+            const { ip } = req.body;
+    
+            if (!ip) {
+                return res.status(400).json({ message: "IP is required" });
+            }
+    
+            const db = getFirestore();
+            const blockedIPCollectionRef = db.collection(process.env.BLOCKEDIPCOLLECTIONNAME);
+            const querySnapshot = await blockedIPCollectionRef.where('ip', '==', ip).get();
+    
+            if (querySnapshot.empty) {
+                return res.status(404).json({ message: "IP not found in the blocked IPs collection" });
+            }
+            querySnapshot.forEach(async doc => {
+                await blockedIPCollectionRef.doc(doc.id).delete();
+            });
+    
+            res.status(200).json({ message: "IP unblocked successfully" });
         } catch (error) {
             console.error("Error occurred:", error);
             res.status(500).json({ message: "Internal server error" });

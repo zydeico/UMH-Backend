@@ -25,6 +25,7 @@ router.post('/searchPhone', verifyToken, UtilsServerController.getAndSearchSpeci
 router.post('/searchUserName', verifyToken, UtilsServerController.getAndSearchSpecificNameFromMobileUser);
 router.post('/searchSpecificUser', verifyToken, UtilsServerController.searchUser);
 router.post('/searchByUID', verifyToken, UtilsServerController.searchByUID);
+router.post('/unblockIP', UtilsServerController.unblockIP);
 
 /*
 * Routes for the User model DELETE

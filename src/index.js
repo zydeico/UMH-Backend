@@ -4,9 +4,9 @@ const express = require('express');
 const { initializeApp, cert } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
 const jwt = require('jsonwebtoken');
-const app = express();
-const hostname = '0.0.0.0';
-const port = process.env.PORT || 3000;
+const requestLog = {};
+const REQUEST_LIMIT = 150;
+const INTERVAL_TIME = 60000;
 
 async function initializeFirebase() {
     try {
@@ -31,36 +31,68 @@ async function initializeFirebase() {
     }
 }
 
-async function startServer() {
-    await initializeFirebase();
-    const db = getFirestore();
-    const app = express();
-    function generateToken(req, res, next) {
-        const user = { id: process.env.USER_ID, username: process.env.USERNAME };
-        const token = jwt.sign(user, process.env.SECRET_KEY);
-
-        req.token = token;
-        next();
+async function saveBlockedIP(req) {
+    try {
+        const db = getFirestore();
+        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        const blockedIPCollectionRef = db.collection(process.env.BLOCKEDIPCOLLECTIONNAME);
+        await blockedIPCollectionRef.doc(ip).set({ timestamp: new Date() });
+    } catch (error) {
+        console.error("Error saving blocked IP:", error);
+        throw error;
     }
+}
 
-    app.use(generateToken);
+async function startServer() {
+    try {
+        await initializeFirebase();
+        const db = getFirestore();
+        const app = express();
+        function generateToken(req, res, next) {
+            const user = { id: process.env.USER_ID, username: process.env.USERNAME };
+            const token = jwt.sign(user, process.env.SECRET_KEY);
 
-    const appRoutes = require('./app');
-    app.use('/api', appRoutes);
+            req.token = token;
+            next();
+        }
 
-    app.use((err, req, res, next) => {
-        console.error(err.stack);
-        res.status(500).send(`Something went wrong: ${err.message}`);
-    });
+        app.use((req, res, next) => {
+            const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+            if (!requestLog[ip]) {
+                requestLog[ip] = [];
+            }
+            const currentTime = Date.now();
+            const requestsInWindow = requestLog[ip].filter(time => currentTime - time < INTERVAL_TIME);
+            if (requestsInWindow.length > REQUEST_LIMIT) {
+                saveBlockedIP(req);
+                return res.status(429).json({ error: 'Too many requests from this IP' });
+            }
+            requestLog[ip].push(currentTime);
+            next();
+        });
 
-    app.use((req, res, next) => {
-        res.status(404).send("Not found");
-    });
+        app.use(generateToken);
 
-    const port = process.env.PORT || 8080;
-    app.listen(port, () => {
+        const appRoutes = require('./app');
+        app.use('/api', appRoutes);
 
-    });
+        app.use((err, req, res, next) => {
+            console.error(err.stack);
+            res.status(500).send(`Something went wrong: ${err.message}`);
+        });
+
+        app.use((req, res, next) => {
+            res.status(404).send("Not found");
+        });
+
+        const port = process.env.PORT || 8080;
+        app.listen(port, () => {
+            console.log(`Server is running on port ${port}`);
+        });
+    } catch (error) {
+        console.error("Error starting server:", error);
+        throw error;
+    }
 }
 
 startServer();
