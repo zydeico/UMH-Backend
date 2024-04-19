@@ -47,7 +47,7 @@ const UtilsServerController = {
             throw error;
         }
     },
-    
+
     // Search phone number in mobile_user collection
     async getAndSearchSpecificPhoneFromUsers(req, res, next) {
         try {
@@ -141,7 +141,7 @@ const UtilsServerController = {
                     results.push(dataWithId);
                 });
             }
-    
+
             if (results.length === 0) {
                 return res.status(404).json({ message: `User not found` });
             }
@@ -150,7 +150,36 @@ const UtilsServerController = {
             res.status(400).json({ message: "Error on request: ", error });
             throw error;
         }
-    }       
+    },
+
+    // Get user by UID from mobile_user collection
+    async searchByUID(req, res, next) {
+        try {
+            const { uid } = req.body;
+            if (!uid) {
+                return res.status(400).json({ message: "UID is required" });
+            } else if (typeof uid !== 'string') {
+                return res.status(400).json({ message: "UID must be a string" });
+            }
+            
+            const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
+            const mobileUserCollectionRef = db.collection(collectionName);
+            const userDocRef = mobileUserCollectionRef.doc(uid);
+    
+            const docSnapshot = await userDocRef.get();
+            
+            if (!docSnapshot.exists) {
+                return res.status(404).json({ message: "User not found" });
+            }
+            
+            const userData = docSnapshot.data();
+            
+            res.status(200).json(userData);
+        } catch (error) {
+            res.status(400).json({ message: "Error on request", error: error.message });
+            next(error);
+        }
+    }    
 };
 
 module.exports = UtilsServerController;

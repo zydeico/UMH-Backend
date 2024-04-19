@@ -28,7 +28,7 @@ const UserController = {
         } catch (error) {
             next(error);
         }
-    },    
+    },
 
     // EXPERIMENTAL Massive insert of emails
     async insertEmails(res, next) {
@@ -82,7 +82,7 @@ const UserController = {
             res.status(statusCode).json({ error: errorMessage });
             next(error);
         }
-    },  
+    },
 
     // Record email
     async recordEmail(req, res, next) {
@@ -91,11 +91,11 @@ const UserController = {
             if (!email || !uid) {
                 return res.status(400).json({ message: 'Email and UID are required in the request body' });
             }
-    
+
             const emailCollectionRef = db.collection('emails');
             const docRef = emailCollectionRef.doc(uid);
             const registrationDateAndTime = new Date();
-    
+
             await docRef.set({
                 email,
                 verified: false,
@@ -108,27 +108,27 @@ const UserController = {
             res.status(400).json({ message: 'Error adding email record.' });
             throw error;
         }
-    },    
+    },
 
     // Patch email verification
     async patchEmailVerification(req, res, next) {
         try {
             const { uid, email } = req.body;
-    
+
             if (!uid || !email) {
                 return res.status(400).json({ message: 'Both UID and Email are required in the request body' });
             }
-    
+
             const emailCollectionRef = db.collection('emails');
             const querySnapshot = await emailCollectionRef.where('uid', '==', uid).where('email', '==', email).get();
-    
+
             if (querySnapshot.empty) {
                 return res.status(404).json({ message: 'Email not found or UID does not match' });
             }
-    
+
             const docRef = querySnapshot.docs[0].ref;
             const isVerified = querySnapshot.docs[0].data().verified;
-    
+
             if (isVerified) {
                 return res.status(200).json({ message: 'Email already verified' });
             } else {
@@ -138,7 +138,7 @@ const UserController = {
         } catch (error) {
             next(error);
         }
-    },    
+    },
 
     // Refresh token function for the user
     async refreshToken(req, res, next) {
@@ -179,14 +179,14 @@ const UserController = {
             const token = jwt.sign(user, process.env.SECRET_KEY, { expiresIn: '1h' });
             const currentDate = new Date();
             const formattedDate = currentDate.toISOString();
-            return res.json({ 
+            return res.json({
                 Authorization: `Bearer ${token}`,
                 generatedAt: formattedDate
             });
         } catch (error) {
             next(error);
         }
-    },          
+    },
 
     // Verify token function
     async verifyToken(req, res, next) {
@@ -210,7 +210,7 @@ const UserController = {
         } catch (error) {
             next(error);
         }
-    },      
+    },
 
     // EXPERIMENTAL FUNCTION
     async sendRequests() {
@@ -220,7 +220,7 @@ const UserController = {
         for (let i = 0; i < numRequests; i++) {
             requests.push(axios.post(url, {}));
         }
-    
+
         try {
             const responses = await Promise.all(requests);
             console.log('All requests were successful');
