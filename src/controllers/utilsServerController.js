@@ -156,30 +156,34 @@ const UtilsServerController = {
     async searchByUID(req, res, next) {
         try {
             const { uid } = req.body;
+
             if (!uid) {
                 return res.status(400).json({ message: "UID is required" });
             } else if (typeof uid !== 'string') {
                 return res.status(400).json({ message: "UID must be a string" });
             }
-            
+
             const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
+            if (!collectionName) {
+                throw new Error("Error: Collection not found");
+            }
+
             const mobileUserCollectionRef = db.collection(collectionName);
             const userDocRef = mobileUserCollectionRef.doc(uid);
-    
             const docSnapshot = await userDocRef.get();
-            
+
             if (!docSnapshot.exists) {
                 return res.status(404).json({ message: "User not found" });
             }
-            
+
             const userData = docSnapshot.data();
-            
             res.status(200).json(userData);
         } catch (error) {
-            res.status(400).json({ message: "Error on request", error: error.message });
+            console.error("Error occurred:", error);
+            res.status(500).json({ message: "Internal server error" });
             next(error);
         }
-    }    
+    }
 };
 
 module.exports = UtilsServerController;
