@@ -60,7 +60,7 @@ const UserController = {
                 error.statusCode = 400;
                 throw error;
             }
-            const uid = generateUID(20);
+            const uid = generateUID(28);
             const collectionName = process.env.COLLECTIONNAME;
             const mobileUserCollectionRef = db.collection(collectionName);
             const registrationDateAndTime = new Date();
