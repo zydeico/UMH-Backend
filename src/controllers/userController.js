@@ -54,8 +54,8 @@ const UserController = {
     // Register a new user
     async registerUser(req, res, next) {
         try {
-            const { name, phone, email, password, pin, pushTokenAPN, platform } = req.body;
-            if (!name || !phone || !email || !password || !pin || !pushTokenAPN || !platform) {
+            const { name, phoneNumber, email, password, pin, fcmToken, platform, birthDay, will, insurancePolicy } = req.body;
+            if (!name || !phoneNumber || !email || !password || !pin || !fcmToken || !platform || !birthDay || !will || !insurancePolicy) {
                 const error = new Error('All fields are required');
                 error.statusCode = 400;
                 throw error;
@@ -66,14 +66,17 @@ const UserController = {
             const registrationDateAndTime = new Date();
             await mobileUserCollectionRef.doc(uid).set({
                 name,
-                phone,
+                phone: phoneNumber,
                 email,
                 password,
                 pin,
-                pushTokenAPN,
+                pushTokenAPN: fcmToken,
                 platform,
                 registrationDateAndTime,
-                generatedByApi: true
+                generatedByApi: false,
+                birthDay,
+                will,
+                insurancePolicy
             });
             res.status(200).json({ uid });
         } catch (error) {
