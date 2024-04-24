@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
 const { generateRandomId, generateRandomEmail, generateUID } = require('../helpers/helpers');
 const axios = require('axios');
+const FirebaseUserModel = require('../models/FirebaseUserModel');
 
 const UserController = {
     // Get all data from the database
@@ -54,30 +55,15 @@ const UserController = {
     // Register a new user
     async registerUser(req, res, next) {
         try {
-            const { name, phoneNumber, email, password, pin, fcmToken, platform, birthDay, will, insurancePolicy } = req.body;
-            if (!name || !phoneNumber || !email || !password || !pin || !fcmToken || !platform || !birthDay || !will || !insurancePolicy) {
-                const error = new Error('All fields are required');
-                error.statusCode = 400;
-                throw error;
-            }
+            const userData = req.body;
             const uid = generateUID(28);
-            const collectionName = process.env.COLLECTIONNAME;
-            const mobileUserCollectionRef = db.collection(collectionName);
-            const registrationDateAndTime = new Date();
-            await mobileUserCollectionRef.doc(uid).set({
-                name,
-                phone: phoneNumber,
-                email,
-                password,
-                pin,
-                pushTokenAPN: fcmToken,
-                platform,
-                registrationDateAndTime,
-                generatedByApi: false,
-                birthDay,
-                will,
-                insurancePolicy
-            });
+            if (!userData.hasOwnProperty('generatedByApi') || userData.generatedByApi !== true) {
+                userData.generatedByApi = true;
+            }
+    
+            await db.collection(process.env.COLLECTIONNAME).doc(uid).set(userData);
+            await db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid).set(userData);
+    
             res.status(200).json({ uid });
         } catch (error) {
             const statusCode = error.statusCode || 500;
@@ -85,7 +71,30 @@ const UserController = {
             res.status(statusCode).json({ error: errorMessage });
             next(error);
         }
-    },
+    },    
+    
+    async updateUser(req, res, next) {
+        try {
+            const { uid, userData } = req.body;
+            if (userData && Object.keys(userData).length > 0) {
+                const newUser = new FirebaseUserModel(userData);
+                const validationError = newUser.validateSync();
+    
+                if (validationError) {
+                    const errorMessage = validationError.message || 'Invalid user data';
+                    throw new Error(errorMessage);
+                }
+            }
+            await db.collection(process.env.COLLECTIONNAME).doc(uid).update(userData);
+            await db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid).update(userData);
+            res.status(200).json({ message: 'User data updated successfully' });
+        } catch (error) {
+            const statusCode = error.statusCode || 500;
+            const errorMessage = error.message || 'Internal Server Error';
+            res.status(statusCode).json({ error: errorMessage });
+            next(error);
+        }
+    },    
 
     // Record email
     async recordEmail(req, res, next) {
@@ -276,7 +285,16 @@ const UserController = {
     // Health check function
     async health(req, res, next) {
         res.status(200).json({ message: 'Health check OK' });
-    }
+    },
 };
+
+function validateField(fieldName, value) {
+    const newUser = new FirebaseUserModel({ [fieldName]: value });
+    const validationError = newUser.validateSync();
+    if (validationError) {
+        return `${fieldName}: ${validationError.message}`;
+    }
+    return true;
+}
 
 module.exports = UserController;

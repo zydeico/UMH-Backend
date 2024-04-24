@@ -16,6 +16,7 @@ router.get('/health', UserController.health);
 */
 router.post('/insertEmails', verifyToken, UserController.insertEmails);
 router.post('/registerUser', verifyToken, UserController.registerUser);
+router.post('/updateUser', verifyToken, UserController.updateUser);
 router.post('/refresh-token', UserController.refreshToken);
 router.post('/sendRequests', verifyToken, UserController.sendRequests);
 router.post('/verifyToken', UserController.verifyToken);
