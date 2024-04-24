@@ -3,6 +3,11 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     name: String,
     phoneNumber: String,
+    birthDay: String,
+    will: String,
+    insurancePolicy: String,
+    pushTokenAPN: String,
+    platform: String,
     email: {
         type: String,
         required: false
@@ -15,8 +20,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    pushTokenAPN: String,
-    platform: String,
     registrationDateAndTime: {
         type: Date,
         default: Date.now
@@ -24,10 +27,7 @@ const userSchema = new mongoose.Schema({
     generatedByApi: {
         type: Boolean,
         default: true
-    },
-    birthDay: Date,
-    will: String,
-    insurancePolicy: String
+    }
 });
 
 const FirebaseUserModel = mongoose.model('FirebaseUser', userSchema);
