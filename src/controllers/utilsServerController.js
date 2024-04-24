@@ -58,7 +58,7 @@ const UtilsServerController = {
             } else if (typeof phone !== 'string') {
                 return res.status(400).json({ message: "Phone must be a string" });
             }
-            const collectionName = process.env.COLLECTIONNAME;
+            const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
             const mobileUserCollectionRef = db.collection(collectionName);
             const query = mobileUserCollectionRef.where('phone', '==', phone);
             const querySnapshot = await query.get();
@@ -88,7 +88,7 @@ const UtilsServerController = {
             } else if (typeof name !== 'string') {
                 return res.status(400).json({ message: "Name must be a string" });
             }
-            const collectionName = process.env.COLLECTIONNAME;
+            const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
             const mobileUserCollectionRef = db.collection(collectionName);
             const query = mobileUserCollectionRef.where('name', '==', name);
             const querySnapshot = await query.get();

@@ -61,7 +61,6 @@ const UserController = {
                 userData.generatedByApi = true;
             }
     
-            await db.collection(process.env.COLLECTIONNAME).doc(uid).set(userData);
             await db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid).set(userData);
     
             res.status(200).json({ uid });
@@ -85,7 +84,6 @@ const UserController = {
                     throw new Error(errorMessage);
                 }
             }
-            await db.collection(process.env.COLLECTIONNAME).doc(uid).update(userData);
             await db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid).update(userData);
             res.status(200).json({ message: 'User data updated successfully' });
         } catch (error) {
@@ -251,7 +249,7 @@ const UserController = {
     async deleteUid(req, res, next) {
         try {
             const { uid } = req.body;
-            const collectionName = process.env.COLLECTIONNAME;
+            const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
             const mobileUserCollectionRef = db.collection(collectionName);
             await mobileUserCollectionRef.doc(uid).delete();
             res.status(200).json({ message: 'Successfully deleted uid' });
@@ -265,7 +263,7 @@ const UserController = {
         try {
             const { uid } = req.body;
             const { name, phone, email, password, pin, pushTokenAPN, platform } = req.body;
-            const collectionName = process.env.COLLECTIONNAME;
+            const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
             const mobileUserCollectionRef = db.collection(collectionName);
             await mobileUserCollectionRef.doc(uid).update({
                 name,
