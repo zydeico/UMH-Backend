@@ -72,6 +72,7 @@ const UserController = {
         }
     },    
     
+    // Update user
     async updateUser(req, res, next) {
         try {
             const { uid, userData } = req.body;
@@ -102,7 +103,7 @@ const UserController = {
                 return res.status(400).json({ message: 'Email and UID are required in the request body' });
             }
 
-            const emailCollectionRef = db.collection('emails');
+            const emailCollectionRef = db.collection(process.env.EMAILSCOLLECTION);
             const docRef = emailCollectionRef.doc(uid);
             const registrationDateAndTime = new Date();
 
@@ -129,7 +130,7 @@ const UserController = {
                 return res.status(400).json({ message: 'Both UID and Email are required in the request body' });
             }
 
-            const emailCollectionRef = db.collection('emails');
+            const emailCollectionRef = db.collection(process.env.EMAILSCOLLECTION);
             const querySnapshot = await emailCollectionRef.where('uid', '==', uid).where('email', '==', email).get();
 
             if (querySnapshot.empty) {
