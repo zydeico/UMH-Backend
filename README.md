@@ -48,7 +48,7 @@ railway up
 ## Deployment in Google Cloud Run
 The backend is deployed in Google Cloud Run. The deployment is automatically done with the following command:
 ```bash
-gcloud run deploy umhbackend --source .
+gcloud run deploy umhbackend --source . --region=us-west1
 ```
 
 Note: Use the server 37 region us-east1 to deploy the backend.

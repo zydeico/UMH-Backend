@@ -188,11 +188,8 @@ const UserController = {
             }
             const user = { id: process.env.USER_ID, username: process.env.USERNAME };
             const token = jwt.sign(user, process.env.SECRET_KEY, { expiresIn: '1h' });
-            const currentDate = new Date();
-            const formattedDate = currentDate.toISOString();
             return res.json({
-                Authorization: `Bearer ${token}`,
-                generatedAt: formattedDate
+                Authorization: `Bearer ${token}`
             });
         } catch (error) {
             next(error);
