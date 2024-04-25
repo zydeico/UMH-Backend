@@ -7,7 +7,7 @@ const UtilsServerController = require('../controllers/utilsServerController');
 /*
 * Routes for the User model GET
 */
-router.get('/getData', verifyToken, UserController.getData);
+router.get('/getData', verifyToken, UserController.getAllData);
 router.get('/newToken', UserController.generateToken);
 router.get('/health', UserController.health);
 

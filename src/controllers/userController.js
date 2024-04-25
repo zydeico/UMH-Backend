@@ -10,7 +10,7 @@ const FirebaseUserModel = require('../models/FirebaseUserModel');
 
 const UserController = {
     // Get all data from the database
-    async getData(req, res, next) {
+    async getAllData(req, res, next) {
         try {
             const collections = await db.listCollections();
             const allData = {};
