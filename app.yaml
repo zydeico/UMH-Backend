@@ -1,1 +1,75 @@
 runtime: nodejs20
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: umhbackend
+  namespace: '854945044736'
+  selfLink: /apis/serving.knative.dev/v1/namespaces/854945044736/services/umhbackend
+  uid: 9773beb8-7799-416f-8d70-9a254595d297
+  resourceVersion: AAYW77fBYzk
+  generation: 21
+  creationTimestamp: '2024-04-13T18:32:58.561973Z'
+  labels:
+    cloud.googleapis.com/location: us-west1
+  annotations:
+    run.googleapis.com/client-name: gcloud
+    serving.knative.dev/creator: daniel.prolite@gmail.com
+    serving.knative.dev/lastModifier: daniel.prolite@gmail.com
+    run.googleapis.com/client-version: 473.0.0
+    run.googleapis.com/operation-id: 4c0b8810-9ac8-4322-bc33-7588836c5695
+    run.googleapis.com/ingress: all
+    run.googleapis.com/ingress-status: all
+spec:
+  template:
+    metadata:
+      labels:
+        client.knative.dev/nonce: jhlxtvpgyy
+        run.googleapis.com/startupProbeType: Default
+      annotations:
+        run.googleapis.com/client-name: gcloud
+        run.googleapis.com/client-version: 473.0.0
+        autoscaling.knative.dev/maxScale: '3'
+        run.googleapis.com/startup-cpu-boost: 'true'
+    spec:
+      containerConcurrency: 80
+      timeoutSeconds: 300
+      serviceAccountName: 854945044736-compute@developer.gserviceaccount.com
+      containers:
+      - image: us-west1-docker.pkg.dev/umhbackend/cloud-run-source-deploy/umhbackend@sha256:436de8f59c6293f200711dfb5992bc9ed07c3c18594cadf55aec2f30fe809c73
+        ports:
+        - name: http1
+          containerPort: 8080
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 512Mi
+        startupProbe:
+          timeoutSeconds: 240
+          periodSeconds: 240
+          failureThreshold: 1
+          tcpSocket:
+            port: 8080
+  traffic:
+  - percent: 100
+    latestRevision: true
+status:
+  observedGeneration: 21
+  conditions:
+  - type: Ready
+    status: 'True'
+    lastTransitionTime: '2024-04-25T18:11:36.163129Z'
+  - type: ConfigurationsReady
+    status: 'True'
+    lastTransitionTime: '2024-04-13T18:32:58.654374Z'
+  - type: RoutesReady
+    status: 'True'
+    lastTransitionTime: '2024-04-25T18:11:36.073973Z'
+  latestReadyRevisionName: umhbackend-00021-p59
+  latestCreatedRevisionName: umhbackend-00021-p59
+  traffic:
+  - revisionName: umhbackend-00021-p59
+    percent: 100
+    latestRevision: true
+  url: https://umhbackend-bbmk4te2qa-uw.a.run.app
+  address:
+    url: https://umhbackend-bbmk4te2qa-uw.a.run.app
