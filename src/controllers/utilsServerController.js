@@ -3,8 +3,6 @@ require('dotenv').config();
 const { getFirestore } = require('firebase-admin/firestore');
 const db = getFirestore();
 const jwt = require('jsonwebtoken');
-const UserModel = require('../models/userModel');
-const { BlockedIP } = require('../models/BlockedIP');
 
 const UtilsServerController = {
     // Get and search for a specific email in multiple collections
