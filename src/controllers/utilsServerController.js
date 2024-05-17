@@ -4,6 +4,17 @@ const { getFirestore } = require('firebase-admin/firestore');
 const db = getFirestore();
 const jwt = require('jsonwebtoken');
 
+const states = [
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", 
+    "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", 
+    "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", 
+    "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", 
+    "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", 
+    "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", 
+    "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", 
+    "Wisconsin", "Wyoming"
+];
+
 const UtilsServerController = {
     // Get and search for a specific email in multiple collections
     async getAndSearchSpecificEmailFromEmails(req, res, next) {
@@ -204,6 +215,20 @@ const UtilsServerController = {
             });
     
             res.status(200).json({ message: "IP unblocked successfully" });
+        } catch (error) {
+            console.error("Error occurred:", error);
+            res.status(500).json({ message: "Internal server error" });
+            next(error);
+        }
+    },
+    
+    // Insert states into the database
+    async insertStates(req, res, next) {
+        try {
+            const mainCollectionName = db.collection(process.env.CONFIGURATIONVALUESCOLLECTION);
+            const docRef = mainCollectionName.doc(process.env.STATESSUBCOLLECTION);
+            await docRef.set({ unitedStates: states });
+            res.status(200).json({ message: "States inserted successfully" });
         } catch (error) {
             console.error("Error occurred:", error);
             res.status(500).json({ message: "Internal server error" });

@@ -27,6 +27,7 @@ router.post('/searchUserName', verifyToken, UtilsServerController.getAndSearchSp
 router.post('/searchSpecificUser', verifyToken, UtilsServerController.searchUser);
 router.post('/searchByUID', verifyToken, UtilsServerController.searchByUID);
 router.post('/unblockIP', UtilsServerController.unblockIP);
+router.post('/postUnitedStatesStates', verifyToken, UtilsServerController.insertStates);
 
 /*
 * Routes for the User model DELETE
