@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const signUpUserModel = new mongoose.Schema({
+const signUpUserSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: false
+        required: true
     },
     email: {
         type: String,
@@ -14,7 +14,7 @@ const signUpUserModel = new mongoose.Schema({
         type: String,
         required: true
     },
-    securitySocialNumber: {
+    socialSecurityNumber: {
         type: String,
         required: true
     },
@@ -33,9 +33,19 @@ const signUpUserModel = new mongoose.Schema({
     isBiometricActive: {
         type: Boolean,
         required: true
+    },
+    pushTokenAPN: {
+        type: String,
+        required: false
+    },
+    birthDay: {
+        type: String,
+        required: true
     }
+}, { 
+    strict: true 
 });
 
-const SignUpUserModel = mongoose.model('SignUpUserModel', signUpUserModel);
+const SignUpUserModel = mongoose.model('SignUpUserModel', signUpUserSchema);
 
 module.exports = SignUpUserModel;

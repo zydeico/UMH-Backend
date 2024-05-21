@@ -62,6 +62,17 @@ If I have any error on deployment, can I run
 gcloud run deploy umhbackend --source . --region=us-west1 --project=umhbackend
 ```
 
+## Alternative to deploy in Google Cloud Run using bash script
+You can use the following bash script to deploy the backend in Google Cloud Run:
+```bash
+./deploy.sh
+```
+
+If you receive a permission error, you can run the following command:
+```bash
+chmod +x deploy.sh
+```
+
 Note: Use the server 37 region us-east1 to deploy the backend.
 
 Youu need to have the environment variables in Railway.

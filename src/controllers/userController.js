@@ -65,16 +65,22 @@ const UserController = {
     async registerUser(req, res, next) {
         try {
             const userData = req.body;
-            const newUser = new SignUpUserModel(userData);
+            const filteredUserData = {};
+            Object.keys(userData).forEach(key => {
+                if (Object.keys(SignUpUserModel.schema.paths).includes(key)) {
+                    filteredUserData[key] = userData[key];
+                }
+            });
+            const newUser = new SignUpUserModel(filteredUserData);
             const validationError = newUser.validateSync();
             if (validationError) {
                 return res.status(400).json({ error: "Validation failed. Please check the input data." });
             }
             const uid = generateUID(28);
-            if (!userData.hasOwnProperty('generatedByApi') || userData.generatedByApi !== true) {
-                userData.generatedByApi = true;
+            if (!filteredUserData.hasOwnProperty('generatedByApi') || filteredUserData.generatedByApi !== true) {
+                filteredUserData.generatedByApi = true;
             }
-            await db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid).set(userData);
+            await db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid).set(filteredUserData);
             res.status(200).json({ uid });
         } catch (error) {
             const statusCode = error.statusCode || 500;
