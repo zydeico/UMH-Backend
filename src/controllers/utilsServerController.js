@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const { getFirestore } = require('firebase-admin/firestore');
 const db = getFirestore();
-const jwt = require('jsonwebtoken');
 
 const states = [
     "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", 
@@ -16,7 +15,10 @@ const states = [
 ];
 
 const UtilsServerController = {
-    // Get and search for a specific email in multiple collections
+    /*
+    * Get and search for a specific email in multiple collections
+    * Allows to search for a specific email in multiple collections and return the results separated by collection
+    */
     async getAndSearchSpecificEmailFromEmails(req, res, next) {
         try {
             const { email, collections } = req.body;
@@ -227,7 +229,7 @@ const UtilsServerController = {
         try {
             const mainCollectionName = db.collection(process.env.CONFIGURATIONVALUESCOLLECTION);
             const docRef = mainCollectionName.doc(process.env.STATESSUBCOLLECTION);
-            await docRef.set({ unitedStates: states });
+            await docRef.set({ unitedStates: states }, { merge: true });
             res.status(200).json({ message: "States inserted successfully" });
         } catch (error) {
             console.error("Error occurred:", error);

@@ -8,6 +8,9 @@ const { generateRandomId, generateRandomEmail, generateUID } = require('../helpe
 const axios = require('axios');
 const FirebaseUserModel = require('../models/FirebaseUserModel');
 
+// Models imports
+const SignUpUserModel = require('../models/SignUpModel/SignUpUsermodel');
+
 const UserController = {
     // Get all data from the database
     async getAllData(req, res, next) {
@@ -52,17 +55,26 @@ const UserController = {
         }
     },
 
-    // Register a new user
+    /* 
+    * Register a new user
+    * This function receives a request with the user data in the body
+    * The user data is validated using the FirebaseUserModel
+    * If the data is valid, the user is registered in the database
+    * The response is a JSON object with the UID of the new user
+    */
     async registerUser(req, res, next) {
         try {
             const userData = req.body;
+            const newUser = new SignUpUserModel(userData);
+            const validationError = newUser.validateSync();
+            if (validationError) {
+                return res.status(400).json({ error: "Validation failed. Please check the input data." });
+            }
             const uid = generateUID(28);
             if (!userData.hasOwnProperty('generatedByApi') || userData.generatedByApi !== true) {
                 userData.generatedByApi = true;
             }
-    
             await db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid).set(userData);
-    
             res.status(200).json({ uid });
         } catch (error) {
             const statusCode = error.statusCode || 500;
@@ -70,7 +82,7 @@ const UserController = {
             res.status(statusCode).json({ error: errorMessage });
             next(error);
         }
-    },    
+    },
     
     // Update user
     async updateUser(req, res, next) {

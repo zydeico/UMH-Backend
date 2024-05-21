@@ -6,37 +6,47 @@ const UtilsServerController = require('../controllers/utilsServerController');
 
 /*
 * Routes for the User model GET
+* This routes are separeted by the authentication required
 */
+// Authentication requires token verification
 router.get('/getData', verifyToken, UserController.getAllData);
+
+// Authentication doesn't require token verification
 router.get('/newToken', UserController.generateToken);
 router.get('/health', UserController.health);
 
 /*
 * Routes for the User model POST
+* This routes are separeted by the authentication required
 */
+// Authentication requires token verification
 router.post('/insertEmails', verifyToken, UserController.insertEmails);
 router.post('/registerUser', verifyToken, UserController.registerUser);
 router.post('/updateUser', verifyToken, UserController.updateUser);
-router.post('/refresh-token', UserController.refreshToken);
 router.post('/sendRequests', verifyToken, UserController.sendRequests);
-router.post('/verifyToken', UserController.verifyToken);
 router.post('/recordEmail', verifyToken, UserController.recordEmail);
 router.post('/searchEmail', verifyToken, UtilsServerController.getAndSearchSpecificEmailFromEmails);
 router.post('/searchPhone', verifyToken, UtilsServerController.getAndSearchSpecificPhoneFromUsers);
 router.post('/searchUserName', verifyToken, UtilsServerController.getAndSearchSpecificNameFromMobileUser);
 router.post('/searchSpecificUser', verifyToken, UtilsServerController.searchUser);
 router.post('/searchByUID', verifyToken, UtilsServerController.searchByUID);
-router.post('/unblockIP', UtilsServerController.unblockIP);
 router.post('/postUnitedStatesStates', verifyToken, UtilsServerController.insertStates);
+
+// Authentication doesn't require token verification
+router.post('/unblockIP', UtilsServerController.unblockIP);
+router.post('/refresh-token', UserController.refreshToken);
+router.post('/verifyToken', UserController.verifyToken);
 
 /*
 * Routes for the User model DELETE
+* All routes require token verification
 */
 router.delete('/deleteUid', verifyToken, UserController.deleteUid);
 
 
 /*
 * Routes for the User model PATCH
+* All routes require token verification
 */
 router.patch('/updateUser', verifyToken, UserController.patchData);
 router.patch('/verifyUserEmail', verifyToken, UserController.patchEmailVerification);
