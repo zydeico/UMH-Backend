@@ -74,7 +74,7 @@ const UserController = {
             const newUser = new SignUpUserModel(filteredUserData);
             const validationError = newUser.validateSync();
             if (validationError) {
-                return res.status(400).json({ error: "Validation failed. Please check the input data." });
+                return res.status(400).json({ error: "Validation failed. Please check the input data.", details: validationError.errors });
             }
             const uid = generateUID(28);
             if (!filteredUserData.hasOwnProperty('generatedByApi') || filteredUserData.generatedByApi !== true) {
@@ -83,6 +83,10 @@ const UserController = {
             await db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid).set(filteredUserData);
             res.status(200).json({ uid });
         } catch (error) {
+            if (error.name === 'ValidationError') {
+                return res.status(400).json({ error: "Validation failed. Please check the input data.", details: error.errors });
+            }
+            
             const statusCode = error.statusCode || 500;
             const errorMessage = error.message || 'Internal Server Error';
             res.status(statusCode).json({ error: errorMessage });
