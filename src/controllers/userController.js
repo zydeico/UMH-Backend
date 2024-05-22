@@ -80,7 +80,7 @@ const UserController = {
             if (!filteredUserData.hasOwnProperty('generatedByApi') || filteredUserData.generatedByApi !== true) {
                 filteredUserData.generatedByApi = true;
             }
-            await db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid).set(filteredUserData);
+            await db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid).set(filteredUserData, { merge: true });
             res.status(200).json({ uid });
         } catch (error) {
             if (error.name === 'ValidationError') {
@@ -93,7 +93,7 @@ const UserController = {
             next(error);
         }
     },
-    
+
     // Update user
     async updateUser(req, res, next) {
         try {

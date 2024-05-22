@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const signUpUserSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: false
     },
     email: {
         type: String,
@@ -16,11 +16,11 @@ const signUpUserSchema = new mongoose.Schema({
     },
     socialSecurityNumber: {
         type: String,
-        required: true
+        required: false
     },
     state: {
         type: String,
-        required: true
+        required: false
     },
     password: {
         type: String,
@@ -32,7 +32,7 @@ const signUpUserSchema = new mongoose.Schema({
     },
     isBiometricActive: {
         type: Boolean,
-        required: true
+        required: false
     },
     pushTokenAPN: {
         type: String,
@@ -40,7 +40,7 @@ const signUpUserSchema = new mongoose.Schema({
     },
     birthDay: {
         type: String,
-        required: true
+        required: false
     }
 }, { 
     strict: true 
