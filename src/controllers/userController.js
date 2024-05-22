@@ -271,7 +271,12 @@ const UserController = {
             const { uid } = req.body;
             const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
             const mobileUserCollectionRef = db.collection(collectionName);
-            await mobileUserCollectionRef.doc(uid).delete();
+            const docRef = mobileUserCollectionRef.doc(uid);
+            const doc = await docRef.get();
+            if (!doc.exists) {
+                return res.status(400).json({ message: 'UID does not exist' });
+            }
+            await docRef.delete();
             res.status(200).json({ message: 'Successfully deleted uid' });
         } catch (error) {
             next(error);
