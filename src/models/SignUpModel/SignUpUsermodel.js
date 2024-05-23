@@ -41,6 +41,10 @@ const signUpUserSchema = new mongoose.Schema({
     birthDay: {
         type: String,
         required: false
+    },
+    photoURL: {
+        type: String,
+        required: false
     }
 }, { 
     strict: true 
