@@ -122,7 +122,7 @@ const UserController = {
     async recordEmail(req, res, next) {
         try {
             const { email, uid } = req.body;
-            
+
             if (!email || !uid) {
                 return res.status(400).json({ message: 'Email and UID are required in the request body' });
             }
@@ -317,6 +317,30 @@ const UserController = {
     async health(req, res, next) {
         res.status(200).json({ message: 'Health check OK' });
     },
+
+    // Get user data
+    async getUserData(req, res, next) {
+        try {
+            const { uid } = req.body;
+            
+            if (!uid) {
+                return res.status(400).json({ message: 'UID is required', data: [] });
+            }
+    
+            const mobileUserCollectionRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME);
+            const docRef = mobileUserCollectionRef.doc(uid);
+            const doc = await docRef.get();
+    
+            if (!doc.exists) {
+                return res.status(404).json({ message: 'User not found', data: [] });
+            }
+    
+            const userData = doc.data();
+            res.status(200).json({ data: [userData] });
+        } catch (error) {
+            next(error);
+        }
+    }     
 };
 
 function validateField(fieldName, value) {

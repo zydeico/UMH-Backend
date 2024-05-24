@@ -10,6 +10,7 @@ const UtilsServerController = require('../controllers/utilsServerController');
 */
 // Authentication requires token verification
 router.get('/getData', verifyToken, UserController.getAllData);
+router.get('/me', verifyToken, UserController.getUserData);
 
 // Authentication doesn't require token verification
 router.get('/newToken', UserController.generateToken);
