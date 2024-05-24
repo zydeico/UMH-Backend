@@ -7,6 +7,7 @@ const UserModel = require('../models/userModel');
 const { generateRandomId, generateRandomEmail, generateUID } = require('../helpers/helpers');
 const axios = require('axios');
 const FirebaseUserModel = require('../models/FirebaseUserModel');
+const SignUpEmailModel = require('../models/SignUpModel/SignUpEmailModel');
 
 // Models imports
 const SignUpUserModel = require('../models/SignUpModel/SignUpUsermodel');
@@ -121,25 +122,32 @@ const UserController = {
     async recordEmail(req, res, next) {
         try {
             const { email, uid } = req.body;
+            
             if (!email || !uid) {
                 return res.status(400).json({ message: 'Email and UID are required in the request body' });
             }
 
+            const newSignUpEmail = new SignUpEmailModel({ email, uid });
+            const validationError = newSignUpEmail.validateSync();
+            if (validationError) {
+                return res.status(400).json({ message: 'Validation error', errors: validationError.errors });
+            }
+
+            const emailRecord = {
+                email: newSignUpEmail.email,
+                verified: false,
+                uid: newSignUpEmail.uid,
+                registrationDateAndTime: new Date(),
+                generatedByApi: true
+            };
+
             const emailCollectionRef = db.collection(process.env.EMAILSCOLLECTION);
             const docRef = emailCollectionRef.doc(uid);
-            const registrationDateAndTime = new Date();
-
-            await docRef.set({
-                email,
-                verified: false,
-                uid,
-                registrationDateAndTime,
-                generatedByApi: true
-            });
+            await docRef.set(emailRecord);
             res.status(200).json({ message: 'Email record added successfully.' });
         } catch (error) {
             res.status(400).json({ message: 'Error adding email record.' });
-            throw error;
+            next(error);
         }
     },
 
