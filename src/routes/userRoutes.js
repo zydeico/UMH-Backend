@@ -35,14 +35,14 @@ router.post('/postUnitedStatesStates', verifyToken, UtilsServerController.insert
 
 // Authentication doesn't require token verification
 router.post('/unblockIP', UtilsServerController.unblockIP);
-router.post('/refresh-token', UserController.refreshToken);
+router.post('/refreshToken', UserController.refreshToken);
 router.post('/verifyToken', UserController.verifyToken);
 
 /*
 * Routes for the User model DELETE
 * All routes require token verification
 */
-router.delete('/deleteUid', verifyToken, UserController.deleteUid);
+router.delete('/deleteUID', verifyToken, UserController.deleteUid);
 
 
 /*
