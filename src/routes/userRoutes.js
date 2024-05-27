@@ -49,6 +49,7 @@ router.delete('/deleteUID', verifyToken, UserController.deleteUid);
 * USE WITH CAUTION
 */
 //router.delete('/deleteAllUsers', verifyToken, UserController.deleteAllUsers);
+//router.delete('/deleteAllAuthUsers', verifyToken, UtilsServerController.deleteAllFirebaseUsers);
 
 
 /*

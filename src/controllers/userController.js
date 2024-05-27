@@ -356,6 +356,7 @@ const UserController = {
         }
     },
 
+    // Warning: This function will delete all users from the database
     async deleteAllUsers(req, res, next) {
         try {
             const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;

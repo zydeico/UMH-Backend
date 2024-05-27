@@ -261,7 +261,25 @@ const UtilsServerController = {
             }
             res.status(500).json({ message: "Internal server error", error: error.message });
         }
-    }
+    },
+
+    // Warning: This route will delete all users from the database
+    async deleteAllFirebaseUsers(req, res, next) {
+        try {
+            const auth = require('firebase-admin').auth();
+            const listUsersResult = await auth.listUsers();
+            const users = listUsersResult.users;
+            const deletionPromises = users.map(user => {
+                return auth.deleteUser(user.uid);
+            });
+    
+            await Promise.all(deletionPromises);
+            return res.status(200).json({ message: 'All Firebase users deleted successfully' });
+        } catch (error) {
+            console.error('Error deleting Firebase users:', error);
+            return res.status(500).json({ message: 'Unexpected error', data: [] });
+        }
+    }    
 };
 
 module.exports = UtilsServerController;
