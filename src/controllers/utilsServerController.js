@@ -236,6 +236,31 @@ const UtilsServerController = {
             res.status(500).json({ message: "Internal server error" });
             next(error);
         }
+    },
+
+    // Link email and phone to Firebase account
+    async linkEmailAndPhoneToFirebaseAccount(req, res) {
+        try {
+            const { email, phone } = req.body;
+            if (!email || !phone) {
+                return res.status(400).json({ message: "Both email and phone number are required" });
+            }
+
+            const auth = require('firebase-admin').auth();
+            const emailUserRecord = await auth.getUserByEmail(email);
+            const uid = emailUserRecord.uid;
+
+            await auth.updateUser(uid, {
+                phoneNumber: phone
+            });
+
+            res.status(200).json({ message: "Email and phone linked to Firebase account successfully" });
+        } catch (error) {
+            if (error.code === 'auth/user-not-found') {
+                return res.status(404).json({ message: "User not found with the provided email" });
+            }
+            res.status(500).json({ message: "Internal server error", error: error.message });
+        }
     }
 };
 

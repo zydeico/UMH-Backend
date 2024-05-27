@@ -32,6 +32,7 @@ router.post('/searchSpecificUser', verifyToken, UtilsServerController.searchUser
 router.post('/searchByUID', verifyToken, UtilsServerController.searchByUID);
 router.post('/postUnitedStatesStates', verifyToken, UtilsServerController.insertStates);
 router.post('/msusers/me', verifyToken, UserController.getUserData);
+router.post('/msusers/linkAccount', verifyToken, UtilsServerController.linkEmailAndPhoneToFirebaseAccount);
 
 // Authentication doesn't require token verification
 router.post('/unblockIP', UtilsServerController.unblockIP);
