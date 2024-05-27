@@ -10,7 +10,6 @@ const UtilsServerController = require('../controllers/utilsServerController');
 */
 // Authentication requires token verification
 router.get('/getData', verifyToken, UserController.getAllData);
-router.get('/me', verifyToken, UserController.getUserData);
 
 // Authentication doesn't require token verification
 router.get('/newToken', UserController.generateToken);
@@ -32,6 +31,7 @@ router.post('/searchUserName', verifyToken, UtilsServerController.getAndSearchSp
 router.post('/searchSpecificUser', verifyToken, UtilsServerController.searchUser);
 router.post('/searchByUID', verifyToken, UtilsServerController.searchByUID);
 router.post('/postUnitedStatesStates', verifyToken, UtilsServerController.insertStates);
+router.post('/msusers/me', verifyToken, UserController.getUserData);
 
 // Authentication doesn't require token verification
 router.post('/unblockIP', UtilsServerController.unblockIP);

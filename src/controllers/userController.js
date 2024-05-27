@@ -322,25 +322,46 @@ const UserController = {
     async getUserData(req, res, next) {
         try {
             const { uid } = req.body;
-            
+
             if (!uid) {
                 return res.status(400).json({ message: 'UID is required', data: [] });
             }
-    
-            const mobileUserCollectionRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME);
-            const docRef = mobileUserCollectionRef.doc(uid);
-            const doc = await docRef.get();
-    
+
+            if (typeof uid !== 'string' || uid.trim() === '') {
+                return res.status(400).json({ message: 'Invalid UID format', data: [] });
+            }
+
+            let mobileUserCollectionRef;
+            try {
+                mobileUserCollectionRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME);
+            } catch (error) {
+                return res.status(500).json({ message: 'Error accessing user collection', data: [] });
+            }
+
+            let docRef, doc;
+            try {
+                docRef = mobileUserCollectionRef.doc(uid);
+                doc = await docRef.get();
+            } catch (error) {
+                return res.status(500).json({ message: 'Error retrieving user data', data: [] });
+            }
+
             if (!doc.exists) {
                 return res.status(404).json({ message: 'User not found', data: [] });
             }
-    
+
             const userData = doc.data();
+
+            if (!userData) {
+                return res.status(500).json({ message: 'Error processing user data', data: [] });
+            }
+
             res.status(200).json({ data: [userData] });
         } catch (error) {
+            res.status(500).json({ message: 'Unexpected error', data: [] });
             next(error);
         }
-    }     
+    }
 };
 
 function validateField(fieldName, value) {
