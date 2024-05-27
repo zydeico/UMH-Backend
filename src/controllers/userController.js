@@ -322,55 +322,70 @@ const UserController = {
     async getUserData(req, res, next) {
         try {
             const { uid } = req.body;
-
+    
             if (!uid) {
                 return res.status(400).json({ message: 'UID is required', data: [] });
             }
-
+    
             if (typeof uid !== 'string' || uid.trim() === '') {
                 return res.status(400).json({ message: 'Invalid UID format', data: [] });
             }
-
-            let mobileUserCollectionRef;
+    
+            const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
+            let userData;
             try {
-                mobileUserCollectionRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME);
+                const doc = await mobileUserDocRef.get();
+                if (!doc.exists) {
+                    return res.status(404).json({ message: 'User not found', data: [] });
+                }
+                userData = doc.data();
             } catch (error) {
-                return res.status(500).json({ message: 'Error accessing user collection', data: [] });
-            }
-
-            let docRef, doc;
-            try {
-                docRef = mobileUserCollectionRef.doc(uid);
-                doc = await docRef.get();
-            } catch (error) {
+                console.error('Error retrieving user data:', error);
                 return res.status(500).json({ message: 'Error retrieving user data', data: [] });
             }
-
-            if (!doc.exists) {
-                return res.status(404).json({ message: 'User not found', data: [] });
-            }
-
-            const userData = doc.data();
 
             if (!userData) {
                 return res.status(500).json({ message: 'Error processing user data', data: [] });
             }
-
+    
             res.status(200).json({ data: [userData] });
         } catch (error) {
+            console.error('Unexpected error:', error);
             res.status(500).json({ message: 'Unexpected error', data: [] });
             next(error);
         }
-    }
-};
+    },
 
-function validateField(fieldName, value) {
-    const newUser = new FirebaseUserModel({ [fieldName]: value });
-    const validationError = newUser.validateSync();
-    if (validationError) {
-        return `${fieldName}: ${validationError.message}`;
-    }
-    return true;
-}
+    async deleteAllUsers(req, res, next) {
+        try {
+            const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
+
+            if (!collectionName) {
+                return res.status(500).json({ message: 'Collection name not specified in environment variables', data: [] });
+            }
+    
+            const collectionRef = db.collection(collectionName);
+            const batchDelete = async () => {
+                try {
+                    const snapshot = await collectionRef.get();
+                    const batch = db.batch();
+                    snapshot.forEach(doc => {
+                        batch.delete(doc.ref);
+                    });
+                    await batch.commit();
+                } catch (error) {
+                    console.error('Error deleting documents:', error);
+                    throw error;
+                }
+            };
+    
+            await batchDelete();
+            return res.status(200).json({ message: 'All users deleted successfully' });
+        } catch (error) {
+            console.error('Unexpected error:', error);
+            return res.status(500).json({ message: 'Unexpected error', data: [] });
+        }
+    }    
+};
 
 module.exports = UserController;

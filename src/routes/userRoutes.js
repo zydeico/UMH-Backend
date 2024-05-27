@@ -44,6 +44,11 @@ router.post('/verifyToken', UserController.verifyToken);
 * All routes require token verification
 */
 router.delete('/deleteUID', verifyToken, UserController.deleteUid);
+/*
+* WARNING: This route will delete all users from the database
+* USE WITH CAUTION
+*/
+//router.delete('/deleteAllUsers', verifyToken, UserController.deleteAllUsers);
 
 
 /*
