@@ -56,13 +56,16 @@ const UserController = {
         }
     },
 
-    /* 
-    * Register a new user
-    * This function receives a request with the user data in the body
-    * The user data is validated using the FirebaseUserModel
-    * If the data is valid, the user is registered in the database
-    * The response is a JSON object with the UID of the new user
-    */
+
+    /**
+     * Registers a new user.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {Promise<void>} - A promise that resolves when the user is registered.
+     * @throws {Error} - If there is an error during the registration process.
+     */
     async registerUser(req, res, next) {
         try {
             const firebaseUID = req.body.uid;
@@ -70,46 +73,54 @@ const UserController = {
             if (!firebaseUID) {
                 return res.status(400).json({ error: "Firebase UID is required." });
             }
-    
+
             const filteredUserData = {};
             Object.keys(userData).forEach(key => {
                 if (Object.keys(SignUpUserModel.schema.paths).includes(key)) {
                     filteredUserData[key] = userData[key];
                 }
             });
-    
+            filteredUserData.registrationDate = new Date();
             const newUser = new SignUpUserModel(filteredUserData);
             const validationError = newUser.validateSync();
             if (validationError) {
                 return res.status(400).json({ error: "Validation failed. Please check the input data.", details: validationError.errors });
             }
-    
+
             if (!filteredUserData.hasOwnProperty('generatedByApi') || filteredUserData.generatedByApi !== true) {
                 filteredUserData.generatedByApi = true;
             }
-            
+
             await db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(firebaseUID).set(filteredUserData, { merge: true });
-            res.status(200).json({ message: "User registration completed successfully." });
+            res.status(200).json({ message: "User registration successfully." });
         } catch (error) {
             if (error.name === 'ValidationError') {
                 return res.status(400).json({ error: "Validation failed. Please check the input data.", details: error.errors });
             }
-    
+
             const statusCode = error.statusCode || 500;
             const errorMessage = error.message || 'Internal Server Error';
             res.status(statusCode).json({ error: errorMessage });
             next(error);
         }
-    },    
+    },
 
-    // Update user
+    /**
+     * Updates a user's data.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {Promise<void>} - A promise that resolves when the user data is updated.
+     * @throws {Error} - If there is an error updating the user data.
+     */
     async updateUser(req, res, next) {
         try {
             const { uid, userData } = req.body;
             if (userData && Object.keys(userData).length > 0) {
                 const newUser = new FirebaseUserModel(userData);
                 const validationError = newUser.validateSync();
-    
+
                 if (validationError) {
                     const errorMessage = validationError.message || 'Invalid user data';
                     throw new Error(errorMessage);
@@ -123,9 +134,17 @@ const UserController = {
             res.status(statusCode).json({ error: errorMessage });
             next(error);
         }
-    },    
+    },
 
-    // Record email
+    /**
+     * Records an email in the database.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {Promise<void>} - A promise that resolves when the email record is added successfully.
+     * @throws {Error} - If there is an error adding the email record.
+     */
     async recordEmail(req, res, next) {
         try {
             const { email, uid } = req.body;
@@ -158,7 +177,15 @@ const UserController = {
         }
     },
 
-    // Patch email verification
+    /**
+     * Updates the email verification status for a user.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {Promise<void>} - A promise that resolves when the email verification is updated.
+     * @throws {Error} - If an error occurs while updating the email verification status.
+     */
     async patchEmailVerification(req, res, next) {
         try {
             const { uid, email } = req.body;
@@ -329,15 +356,15 @@ const UserController = {
     async getUserData(req, res, next) {
         try {
             const { uid } = req.body;
-    
+
             if (!uid) {
                 return res.status(400).json({ message: 'UID is required', data: [] });
             }
-    
+
             if (typeof uid !== 'string' || uid.trim() === '') {
                 return res.status(400).json({ message: 'Invalid UID format', data: [] });
             }
-    
+
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
             let userData;
             try {
@@ -354,7 +381,7 @@ const UserController = {
             if (!userData) {
                 return res.status(500).json({ message: 'Error processing user data', data: [] });
             }
-    
+
             res.status(200).json({ data: [userData] });
         } catch (error) {
             console.error('Unexpected error:', error);
@@ -371,7 +398,7 @@ const UserController = {
             if (!collectionName) {
                 return res.status(500).json({ message: 'Collection name not specified in environment variables', data: [] });
             }
-    
+
             const collectionRef = db.collection(collectionName);
             const batchDelete = async () => {
                 try {
@@ -386,14 +413,14 @@ const UserController = {
                     throw error;
                 }
             };
-    
+
             await batchDelete();
             return res.status(200).json({ message: 'All users deleted successfully' });
         } catch (error) {
             console.error('Unexpected error:', error);
             return res.status(500).json({ message: 'Unexpected error', data: [] });
         }
-    }    
+    }
 };
 
 module.exports = UserController;

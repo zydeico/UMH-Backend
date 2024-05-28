@@ -57,6 +57,6 @@ router.delete('/deleteUID', verifyToken, UserController.deleteUid);
 * All routes require token verification
 */
 router.patch('/msusers/update_profile_user', verifyToken, UserController.patchData);
-router.patch('/verifyUserEmail', verifyToken, UserController.patchEmailVerification);
+router.patch('/msusers/verify_user_email', verifyToken, UserController.patchEmailVerification);
 
 module.exports = router;
