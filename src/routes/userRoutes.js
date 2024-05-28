@@ -21,8 +21,8 @@ router.get('/health', UserController.health);
 */
 // Authentication requires token verification
 router.post('/insertEmails', verifyToken, UserController.insertEmails);
-router.post('/registerUser', verifyToken, UserController.registerUser);
-router.post('/updateUser', verifyToken, UserController.updateUser);
+router.post('/msusers/register_user', verifyToken, UserController.registerUser);
+router.post('/msusers/update_general_info', verifyToken, UserController.updateUser);
 router.post('/sendRequests', verifyToken, UserController.sendRequests);
 router.post('/recordEmail', verifyToken, UserController.recordEmail);
 router.post('/searchEmail', verifyToken, UtilsServerController.getAndSearchSpecificEmailFromEmails);
@@ -56,7 +56,7 @@ router.delete('/deleteUID', verifyToken, UserController.deleteUid);
 * Routes for the User model PATCH
 * All routes require token verification
 */
-router.patch('/updateUser', verifyToken, UserController.patchData);
+router.patch('/msusers/update_profile_user', verifyToken, UserController.patchData);
 router.patch('/verifyUserEmail', verifyToken, UserController.patchEmailVerification);
 
 module.exports = router;
