@@ -58,7 +58,7 @@ const UserController = {
 
 
     /**
-     * Registers a new user.
+     * Registers data of a new user.
      *
      * @param {Object} req - The request object.
      * @param {Object} res - The response object.
@@ -68,10 +68,18 @@ const UserController = {
      */
     async registerUser(req, res, next) {
         try {
-            const firebaseUID = req.body.uid;
+            const uid = req.body.uid;
             const userData = req.body;
-            if (!firebaseUID) {
+    
+            if (!uid) {
                 return res.status(400).json({ error: "Firebase UID is required." });
+            }
+
+            const userRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
+            const userDoc = await userRef.get();
+    
+            if (userDoc.exists) {
+                return res.status(400).json({ error: "User with this UID already exists." });
             }
 
             const filteredUserData = {};
@@ -80,30 +88,31 @@ const UserController = {
                     filteredUserData[key] = userData[key];
                 }
             });
+    
             filteredUserData.registrationDate = new Date();
             const newUser = new SignUpUserModel(filteredUserData);
             const validationError = newUser.validateSync();
             if (validationError) {
                 return res.status(400).json({ error: "Validation failed. Please check the input data.", details: validationError.errors });
             }
-
+    
             if (!filteredUserData.hasOwnProperty('generatedByApi') || filteredUserData.generatedByApi !== true) {
                 filteredUserData.generatedByApi = true;
             }
-
-            await db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(firebaseUID).set(filteredUserData, { merge: true });
+    
+            await userRef.set(filteredUserData, { merge: true });
             res.status(200).json({ message: "User registration successfully." });
         } catch (error) {
             if (error.name === 'ValidationError') {
                 return res.status(400).json({ error: "Validation failed. Please check the input data.", details: error.errors });
             }
-
+            
             const statusCode = error.statusCode || 500;
             const errorMessage = error.message || 'Internal Server Error';
             res.status(statusCode).json({ error: errorMessage });
             next(error);
         }
-    },
+    },    
 
     /**
      * Updates a user's data.
