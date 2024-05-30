@@ -13,7 +13,14 @@ const SignUpEmailModel = require('../models/SignUpModel/SignUpEmailModel');
 const SignUpUserModel = require('../models/SignUpModel/SignUpUsermodel');
 
 const UserController = {
-    // Get all data from the database
+
+    /**
+     * Retrieves all data from collections and returns it as a JSON response.
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {Promise<void>} - A promise that resolves when the data is retrieved and the response is sent.
+     */
     async getAllData(req, res, next) {
         try {
             const collections = await db.listCollections();
@@ -35,7 +42,12 @@ const UserController = {
         }
     },
 
-    // EXPERIMENTAL Massive insert of emails
+    /**
+     * Inserts random emails into the 'emails' collection in the database.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {Promise<void>} - A promise that resolves when the emails are successfully inserted.
+     */
     async insertEmails(res, next) {
         try {
             const batch = db.batch();
@@ -56,7 +68,6 @@ const UserController = {
         }
     },
 
-
     /**
      * Registers data of a new user.
      *
@@ -70,14 +81,14 @@ const UserController = {
         try {
             const uid = req.body.uid;
             const userData = req.body;
-    
+
             if (!uid) {
                 return res.status(400).json({ error: "Firebase UID is required." });
             }
 
             const userRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
             const userDoc = await userRef.get();
-    
+
             if (userDoc.exists) {
                 return res.status(400).json({ error: "User with this UID already exists." });
             }
@@ -88,31 +99,31 @@ const UserController = {
                     filteredUserData[key] = userData[key];
                 }
             });
-    
+
             filteredUserData.registrationDate = new Date();
             const newUser = new SignUpUserModel(filteredUserData);
             const validationError = newUser.validateSync();
             if (validationError) {
                 return res.status(400).json({ error: "Validation failed. Please check the input data.", details: validationError.errors });
             }
-    
+
             if (!filteredUserData.hasOwnProperty('generatedByApi') || filteredUserData.generatedByApi !== true) {
                 filteredUserData.generatedByApi = true;
             }
-    
+
             await userRef.set(filteredUserData, { merge: true });
             res.status(200).json({ message: "User registration successfully." });
         } catch (error) {
             if (error.name === 'ValidationError') {
                 return res.status(400).json({ error: "Validation failed. Please check the input data.", details: error.errors });
             }
-            
+
             const statusCode = error.statusCode || 500;
             const errorMessage = error.message || 'Internal Server Error';
             res.status(statusCode).json({ error: errorMessage });
             next(error);
         }
-    },    
+    },
 
     /**
      * Updates a user's data.
@@ -224,16 +235,24 @@ const UserController = {
         }
     },
 
-    // Generate a new token for the user
+    /**
+     * Generates a token for authentication.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {Object} The generated token.
+     * @throws {Error} If an error occurs during token generation.
+     */
     async generateToken(req, res, next) {
         try {
             const subscriptionKey = req.headers['ocp-apim-subscription-key'];
             const expectedKey = process.env.OCMP_SUBSCRIPTION_KEY;
-            
+
             if (!subscriptionKey || subscriptionKey !== expectedKey) {
                 return res.status(401).json({ error: 'Unauthorized: Invalid subscription key' });
             }
-    
+
             const user = { id: process.env.USER_ID, username: process.env.USERNAME };
             const token = jwt.sign(user, process.env.SECRET_KEY, { expiresIn: '1h' });
             const bearerToken = `Bearer ${token}`;
@@ -241,9 +260,15 @@ const UserController = {
         } catch (error) {
             next(error);
         }
-    },    
+    },
 
-    // Verify the token sent by the user
+    /**
+     * Verifies the token provided in the request.
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {Promise<void>} - A promise that resolves when the token is verified.
+     */
     async verifyToken(req, res, next) {
         try {
             const subscriptionKey = req.headers['ocp-apim-subscription-key'];
@@ -267,7 +292,12 @@ const UserController = {
         }
     },
 
-    // EXPERIMENTAL FUNCTION
+    /**
+     * Sends multiple requests to a specified URL using axios.
+     * @async
+     * @function sendRequests
+     * @returns {Promise<void>} A promise that resolves when all requests are completed.
+     */
     async sendRequests() {
         const requests = [];
         const numRequests = 201;
@@ -290,7 +320,15 @@ const UserController = {
         }
     },
 
-    // Delete only the uid from the database
+    /**
+     * Deletes a user by UID.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {Promise<void>} - A promise that resolves when the user is deleted.
+     * @throws {Error} - If an error occurs while deleting the user.
+     */
     async deleteUid(req, res, next) {
         try {
             const { uid } = req.body;
@@ -308,7 +346,15 @@ const UserController = {
         }
     },
 
-    // PATCH data using the userModel and the uid from the request body
+    /**
+     * Updates user data in the database based on the provided UID and specific fields.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {Promise<void>} - A promise that resolves when the data is successfully updated.
+     * @throws {Error} - If an error occurs while updating the data.
+     */
     async patchData(req, res, next) {
         try {
             const { uid } = req.body;
@@ -330,12 +376,26 @@ const UserController = {
         }
     },
 
-    // Health check function
+    /**
+     * Handles the health check endpoint.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {void}
+     */
     async health(req, res, next) {
         res.status(200).json({ message: 'Health check OK' });
     },
 
-    // Get user data
+    /**
+     * Retrieves user data based on the provided UID.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {Promise<void>} - A promise that resolves when the user data is retrieved.
+     */
     async getUserData(req, res, next) {
         try {
             const { uid } = req.body;
@@ -374,6 +434,14 @@ const UserController = {
     },
 
     // Warning: This function will delete all users from the database
+    /**
+     * Deletes all users from the specified collection.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {Object} The response object.
+     */
     async deleteAllUsers(req, res, next) {
         try {
             const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
