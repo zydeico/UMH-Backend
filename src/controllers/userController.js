@@ -224,52 +224,26 @@ const UserController = {
         }
     },
 
-    // Refresh token function for the user
-    async refreshToken(req, res, next) {
-        try {
-            const refreshToken = req.body.refreshToken;
-            if (!refreshToken) {
-                return res.status(400).json({ message: 'Refresh token is required' });
-            }
-            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
-                if (err) {
-                    return res.status(401).json({ message: 'Invalid token to refresh' });
-                }
-                UserModel.findOne({ email: decoded.email }, (err, user) => {
-                    if (err) {
-                        return res.status(500).json({ message: 'Error finding user' });
-                    }
-                    if (!user) {
-                        return res.status(404).json({ message: 'User not found' });
-                    }
-                    const accessToken = jwt.sign({ email: user.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
-                    res.status(200).json({ accessToken });
-                });
-            });
-        } catch (error) {
-            next(error);
-        }
-    },
-
-    // Generate a new token
+    // Generate a new token for the user
     async generateToken(req, res, next) {
         try {
             const subscriptionKey = req.headers['ocp-apim-subscription-key'];
             const expectedKey = process.env.OCMP_SUBSCRIPTION_KEY;
-            if (subscriptionKey !== expectedKey) {
-                return res.status(403).json({ error: 'Invalid subscription key' });
+            
+            if (!subscriptionKey || subscriptionKey !== expectedKey) {
+                return res.status(401).json({ error: 'Unauthorized: Invalid subscription key' });
             }
+    
             const user = { id: process.env.USER_ID, username: process.env.USERNAME };
             const token = jwt.sign(user, process.env.SECRET_KEY, { expiresIn: '1h' });
-            return res.json({
-                Authorization: `Bearer ${token}`
-            });
+            const bearerToken = `Bearer ${token}`;
+            return res.json({ Authorization: bearerToken });
         } catch (error) {
             next(error);
         }
-    },
+    },    
 
-    // Verify token function
+    // Verify the token sent by the user
     async verifyToken(req, res, next) {
         try {
             const subscriptionKey = req.headers['ocp-apim-subscription-key'];

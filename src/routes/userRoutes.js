@@ -36,7 +36,6 @@ router.post('/msusers/linkAccount', verifyToken, UtilsServerController.linkEmail
 
 // Authentication doesn't require token verification
 router.post('/unblockIP', UtilsServerController.unblockIP);
-router.post('/refreshToken', UserController.refreshToken);
 router.post('/verifyToken', UserController.verifyToken);
 
 /*
