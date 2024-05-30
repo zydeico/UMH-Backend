@@ -248,15 +248,14 @@ const UserController = {
         try {
             const subscriptionKey = req.headers['ocp-apim-subscription-key'];
             const expectedKey = process.env.OCMP_SUBSCRIPTION_KEY;
-
-            if (!subscriptionKey || subscriptionKey !== expectedKey) {
-                return res.status(401).json({ error: 'Unauthorized: Invalid subscription key' });
+            if (subscriptionKey !== expectedKey) {
+                return res.status(403).json({ error: 'Invalid subscription key' });
             }
-
             const user = { id: process.env.USER_ID, username: process.env.USERNAME };
             const token = jwt.sign(user, process.env.SECRET_KEY, { expiresIn: '1h' });
-            const bearerToken = `Bearer ${token}`;
-            return res.json({ Authorization: bearerToken });
+            return res.json({
+                Authorization: `Bearer ${token}`
+            });
         } catch (error) {
             next(error);
         }
@@ -434,14 +433,6 @@ const UserController = {
     },
 
     // Warning: This function will delete all users from the database
-    /**
-     * Deletes all users from the specified collection.
-     *
-     * @param {Object} req - The request object.
-     * @param {Object} res - The response object.
-     * @param {Function} next - The next middleware function.
-     * @returns {Object} The response object.
-     */
     async deleteAllUsers(req, res, next) {
         try {
             const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
