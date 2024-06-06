@@ -14,6 +14,25 @@ const states = [
     "Wisconsin", "Wyoming"
 ];
 
+const familyMembers = [
+    "Father", "Mother", "Brother", "Sister", "Grandfather", "Grandmother",
+    "Great-grandfather", "Great-grandmother", "Great-great-grandfather", "Great-great-grandmother",
+    "Uncle", "Aunt", "Great-uncle", "Great-aunt",
+    "Cousin (male)", "Cousin (female)", "Second cousin (male)", "Second cousin (female)",
+    "Nephew", "Niece", "Great-nephew", "Great-niece",
+    "Son", "Daughter", "Stepson", "Stepdaughter",
+    "Grandson", "Granddaughter", "Great-grandson", "Great-granddaughter", "Great-great-grandson", "Great-great-granddaughter",
+    "Stepfather", "Stepmother",
+    "Brother-in-law", "Sister-in-law",
+    "Son-in-law", "Daughter-in-law",
+    "Father-in-law", "Mother-in-law",
+    "Godson", "Goddaughter", "Godfather", "Godmother",
+    "Partner", "Boyfriend", "Girlfriend",
+    "Half-brother", "Half-sister",
+    "Fiancé (male)", "Fiancée (female)",
+    "Spouse", "Husband", "Wife"
+];
+
 const UtilsServerController = {
     /*
     * Get and search for a specific email in multiple collections
@@ -231,6 +250,20 @@ const UtilsServerController = {
             const docRef = mainCollectionName.doc(process.env.STATESSUBCOLLECTION);
             await docRef.set({ unitedStates: states }, { merge: true });
             res.status(200).json({ message: "States inserted successfully" });
+        } catch (error) {
+            console.error("Error occurred:", error);
+            res.status(500).json({ message: "Internal server error" });
+            next(error);
+        }
+    },
+
+    // Insert familiar into the database
+    async insertFamiliars(req, res, next) {
+        try {
+            const mainCollectionName = db.collection(process.env.CONFIGURATIONVALUESCOLLECTION);
+            const docRef = mainCollectionName.doc(process.env.FAMILIARCOLLECTION);
+            await docRef.set({ FamilyMembersEN: familyMembers }, { merge: true });
+            res.status(200).json({ message: "Familiar info inserted successfully" });
         } catch (error) {
             console.error("Error occurred:", error);
             res.status(500).json({ message: "Internal server error" });

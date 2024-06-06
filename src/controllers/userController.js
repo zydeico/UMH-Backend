@@ -247,16 +247,36 @@ const UserController = {
     async generateToken(req, res, next) {
         try {
             const subscriptionKey = req.headers['ocp-apim-subscription-key'];
+            if (!subscriptionKey) {
+                return res.status(400).json({ error: 'Subscription key is missing' });
+            }
+    
             const expectedKey = process.env.OCMP_SUBSCRIPTION_KEY;
+            if (!expectedKey) {
+                throw new Error('Subscription key is not configured in the environment');
+            }
+    
             if (subscriptionKey !== expectedKey) {
                 return res.status(403).json({ error: 'Invalid subscription key' });
             }
-            const user = { id: process.env.USER_ID, username: process.env.USERNAME };
-            const token = jwt.sign(user, process.env.SECRET_KEY, { expiresIn: '1h' });
+
+            const userId = process.env.USER_ID;
+            const username = process.env.USERNAME;
+            const secretKey = process.env.SECRET_KEY;
+            
+            if (!userId || !username || !secretKey) {
+                throw new Error('Required environment variables (USER_ID, USERNAME, SECRET_KEY) are not defined');
+            }
+    
+            const user = { id: userId, username: username };
+            const token = jwt.sign(user, secretKey, { expiresIn: '1h' });
             return res.json({
                 Authorization: `Bearer ${token}`
             });
         } catch (error) {
+            if (error instanceof jwt.JsonWebTokenError) {
+                return res.status(500).json({ error: 'Error generating token' });
+            }
             next(error);
         }
     },
