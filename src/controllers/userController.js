@@ -416,18 +416,18 @@ const UserController = {
      * @param {Function} next - The next middleware function.
      * @returns {Promise<void>} - A promise that resolves when the user data is retrieved.
      */
-    async getUserData(req, res, next) {
+    async sendMEData(req, res, next) {
         try {
             const { uid } = req.body;
-
+    
             if (!uid) {
                 return res.status(400).json({ message: 'UID is required', data: [] });
             }
-
+    
             if (typeof uid !== 'string' || uid.trim() === '') {
                 return res.status(400).json({ message: 'Invalid UID format', data: [] });
             }
-
+    
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
             let userData;
             try {
@@ -440,18 +440,20 @@ const UserController = {
                 console.error('Error retrieving user data:', error);
                 return res.status(500).json({ message: 'Error retrieving user data', data: [] });
             }
-
+    
             if (!userData) {
                 return res.status(500).json({ message: 'Error processing user data', data: [] });
             }
 
+            // Deleting password from responded data
+            delete userData.password;
             res.status(200).json({ data: [userData] });
         } catch (error) {
             console.error('Unexpected error:', error);
             res.status(500).json({ message: 'Unexpected error', data: [] });
             next(error);
         }
-    },
+    },    
 
     // Warning: This function will delete all users from the database
     async deleteAllUsers(req, res, next) {
