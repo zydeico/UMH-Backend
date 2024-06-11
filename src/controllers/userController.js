@@ -447,6 +447,7 @@ const UserController = {
 
             // Deleting password from responded data
             delete userData.password;
+            delete userData.pushTokenAPN;
             res.status(200).json({ data: [userData] });
         } catch (error) {
             console.error('Unexpected error:', error);
