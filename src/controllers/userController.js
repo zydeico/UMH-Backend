@@ -81,49 +81,50 @@ const UserController = {
         try {
             const uid = req.body.uid;
             const userData = req.body;
-
+    
             if (!uid) {
                 return res.status(400).json({ error: "Firebase UID is required." });
             }
-
+    
             const userRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
             const userDoc = await userRef.get();
-
+    
             if (userDoc.exists) {
-                return res.status(400).json({ error: "User with this UID already exists." });
+                await userRef.set(userData, { merge: true });
+                return res.status(200).json({ message: "User data updated successfully." });
             }
-
+            
             const filteredUserData = {};
             Object.keys(userData).forEach(key => {
                 if (Object.keys(SignUpUserModel.schema.paths).includes(key)) {
                     filteredUserData[key] = userData[key];
                 }
             });
-
+    
             filteredUserData.registrationDate = new Date();
             const newUser = new SignUpUserModel(filteredUserData);
             const validationError = newUser.validateSync();
             if (validationError) {
                 return res.status(400).json({ error: "Validation failed. Please check the input data.", details: validationError.errors });
             }
-
+    
             if (!filteredUserData.hasOwnProperty('generatedByApi') || filteredUserData.generatedByApi !== true) {
                 filteredUserData.generatedByApi = true;
             }
-
+    
             await userRef.set(filteredUserData, { merge: true });
             res.status(200).json({ message: "User registration successfully." });
         } catch (error) {
             if (error.name === 'ValidationError') {
                 return res.status(400).json({ error: "Validation failed. Please check the input data.", details: error.errors });
             }
-
+    
             const statusCode = error.statusCode || 500;
             const errorMessage = error.message || 'Internal Server Error';
             res.status(statusCode).json({ error: errorMessage });
             next(error);
         }
-    },
+    },    
 
     /**
      * Updates a user's data.
