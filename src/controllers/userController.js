@@ -457,6 +457,14 @@ const UserController = {
     },    
 
     // Warning: This function will delete all users from the database
+    /**
+     * Deletes all users from the specified collection.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {Object} The response object.
+     */
     async deleteAllUsers(req, res, next) {
         try {
             const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
