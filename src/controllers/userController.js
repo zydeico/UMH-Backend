@@ -23,24 +23,28 @@ const UserController = {
      */
     async getAllData(req, res, next) {
         try {
-            const collections = await db.listCollections();
+            const collectionsSnapshot = await db.listCollections();
             const allData = {};
-            for await (const collection of collections) {
-                const collectionData = await collection.get();
+    
+            for (const collectionRef of collectionsSnapshot) {
+                const collectionName = collectionRef.id;
+                const docsSnapshot = await collectionRef.get();
                 const docs = [];
-                collectionData.forEach(doc => {
-                    const docId = doc.id;
+    
+                docsSnapshot.forEach(doc => {
                     const docData = doc.data();
-                    const dataWithId = { ...docData, id: docId };
-                    docs.push(dataWithId);
+                    const docWithId = { ...docData, id: doc.id };
+                    docs.push(docWithId);
                 });
-                allData[collection.id] = docs;
+    
+                allData[collectionName] = docs;
             }
+    
             res.status(200).json(allData);
         } catch (error) {
             next(error);
         }
-    },
+    },    
 
     /**
      * Inserts random emails into the 'emails' collection in the database.
