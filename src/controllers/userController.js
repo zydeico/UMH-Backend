@@ -454,16 +454,20 @@ const UserController = {
                 return res.status(500).json({ message: 'Error processing user data', data: [] });
             }
     
-            // Eliminar la contraseña de los datos de respuesta
+            // Deleting some data on response for security reasons
             delete userData.password;
             delete userData.pushTokenAPN;
+            delete userData.will;
+            delete userData.insurancePolicy;
+            delete userData.generatedByApi;
+            
             res.status(200).json({ data: [userData] });
         } catch (error) {
             console.error('Unexpected error:', error);
             res.status(500).json({ message: 'Unexpected error', data: [] });
             next(error);
         }
-    },    
+    },  
 
     // Warning: This function will delete all users from the database
     /**
