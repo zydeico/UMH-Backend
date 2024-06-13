@@ -382,23 +382,24 @@ const UserController = {
     async patchData(req, res, next) {
         try {
             const { uid } = req.body;
-            const { name, phone, email, pushTokenAPN, platform, ssn, state } = req.body;
+            const { name, phone, email, pushTokenAPN, platform, socialSecurityNumber, state, photoURL } = req.body;
             const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
             const mobileUserCollectionRef = db.collection(collectionName);
-            await mobileUserCollectionRef.doc(uid).update({
+            await mobileUserCollectionRef.doc(uid).set({
                 name,
                 phone,
                 email,
                 pushTokenAPN,
                 platform,
-                ssn,
-                state
-            });
+                socialSecurityNumber,
+                state,
+                photoURL
+            }, { merge: true });
             res.status(200).json({ message: 'Successfully updated data' });
         } catch (error) {
             next(error);
         }
-    },
+    },    
 
     /**
      * Handles the health check endpoint.
@@ -423,13 +424,17 @@ const UserController = {
     async sendMEData(req, res, next) {
         try {
             const { uid } = req.body;
-    
             if (!uid) {
                 return res.status(400).json({ message: 'UID is required', data: [] });
             }
-    
+            
             if (typeof uid !== 'string' || uid.trim() === '') {
                 return res.status(400).json({ message: 'Invalid UID format', data: [] });
+            }
+
+            const keys = Object.keys(req.body);
+            if (keys.length !== 1 || keys[0] !== 'uid') {
+                return res.status(400).json({ message: 'Only one UID is allowed in the request body', data: [] });
             }
     
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
@@ -448,8 +453,8 @@ const UserController = {
             if (!userData) {
                 return res.status(500).json({ message: 'Error processing user data', data: [] });
             }
-
-            // Deleting password from responded data
+    
+            // Eliminar la contraseña de los datos de respuesta
             delete userData.password;
             delete userData.pushTokenAPN;
             res.status(200).json({ data: [userData] });
