@@ -50,6 +50,8 @@ const FamiliarController = {
                 return res.status(400).json({ message: 'Invalid UID format' });
             }
     
+            const successfullyAddedMembers = [];
+    
             for (let familyMember of familyMembers) {
                 if (typeof familyMember !== 'object' || !familyMember.email || !familyMember.name || !familyMember.phone || !familyMember.relationship) {
                     return res.status(400).json({ message: 'Invalid family member format' });
@@ -59,11 +61,9 @@ const FamiliarController = {
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
             const familyCollectionRef = mobileUserDocRef.collection(process.env.FAMILIARSUBCOLLECTION);
     
-            // Create an array to store promises for each family member addition
             const promises = [];
     
             for (let familyMember of familyMembers) {
-                // Add the new document with family data and get the document reference
                 const newFamilyDocRef = familyCollectionRef.doc();
                 const dataToSave = {
                     Member: {
@@ -71,20 +71,23 @@ const FamiliarController = {
                         phone: familyMember.phone,
                         email: familyMember.email,
                         relationship: familyMember.relationship,
-                        memberID: newFamilyDocRef.id  // Adding memberID to the family map
+                        memberID: newFamilyDocRef.id
                     }
                 };
+    
                 promises.push(newFamilyDocRef.set(dataToSave));
+                successfullyAddedMembers.push({
+                    memberID: newFamilyDocRef.id
+                });
             }
     
-            // Execute all promises
             await Promise.all(promises);
     
-            return res.status(200).json({ message: 'Family members added successfully' });
+            return res.status(200).json({ message: 'Family members added successfully', InformationMember: successfullyAddedMembers });
         } catch (error) {
             return res.status(500).json({ message: 'Unexpected error', error: error.message });
         }
-    },        
+    },       
 
     // Endpoint para eliminar un miembro de la familia
     async deleteFamilyMember(req, res) {
