@@ -47,6 +47,7 @@ router.post('/verifyToken', UserController.verifyToken);
 * All routes require token verification
 */
 router.delete('/deleteUID', verifyToken, UserController.deleteUid);
+router.delete('/msusers/delete_familiar', verifyToken, FamiliarController.deleteFamilyMember);
 /*
 * WARNING: This route will delete all users from the database
 * USE WITH CAUTION
@@ -61,5 +62,6 @@ router.delete('/deleteUID', verifyToken, UserController.deleteUid);
 */
 router.patch('/msusers/update_profile_user', verifyToken, UserController.patchData);
 router.patch('/msusers/verify_user_email', verifyToken, UserController.patchEmailVerification);
+router.patch('/msusers/update_familiar', verifyToken, FamiliarController.updateFamilyMember);
 
 module.exports = router;

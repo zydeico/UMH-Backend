@@ -4,7 +4,7 @@ const { getFirestore } = require('firebase-admin/firestore');
 const db = getFirestore();
 
 const FamiliarController = {
-    // This endpoint is used to get family members of a user
+    // Endpoint para obtener los miembros de la familia registrados de un usuario
     async getRegisteredFamily(req, res) {
         try {
             const uid = req.body.uid;
@@ -14,43 +14,33 @@ const FamiliarController = {
             }
 
             if (typeof uid !== 'string' || uid.trim() === '') {
-                return res.status(400).json({ message: 'Invalid UID format', data: [] });
-            }
-
-            const keys = Object.keys(req.body);
-
-            if (keys.length !== 1 || keys[0] !== 'uid') {
-                return res.status(400).json({ message: 'Only one UID is allowed in the request body', data: [] });
+                return res.status(400).json({ message: 'Invalid UID format' });
             }
 
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid).collection(process.env.FAMILIARSUBCOLLECTION);
-            
-            try {
-                const snapshot = await mobileUserDocRef.get();
-                if (snapshot.empty) {
-                    return res.status(404).json({ message: 'No data found', data: [] });
-                }
 
-                let familyData = [];
-                snapshot.forEach(doc => {
-                    familyData.push(doc.data());
-                });
-
-                return res.status(200).json({ data: familyData });
-
-            } catch (error) {
-                return res.status(500).send({ message: error.message });
+            const snapshot = await mobileUserDocRef.get();
+            if (snapshot.empty) {
+                return res.status(404).json({ message: 'No family members found for the specified user', data: [] });
             }
+
+            let familyData = [];
+            snapshot.forEach(doc => {
+                familyData.push(doc.data().Member);
+            });
+
+            return res.status(200).json({ data: familyData });
+
         } catch (error) {
-            return res.status(500).send({ message: "Unexpected error: ", error: error.message });
+            return res.status(500).send({ message: 'Unexpected error', error: error.message });
         }
     },
 
-    // This endpoint is used to add a family member to a user
+    // Endpoint para agregar un miembro de la familia a un usuario
     async addFamilyMember(req, res) {
         try {
             const uid = req.body.uid;
-            const familyMembers = req.body.family;
+            const familyMembers = req.body.Member;
     
             if (!uid || !familyMembers || !Array.isArray(familyMembers) || familyMembers.length === 0) {
                 return res.status(400).json({ message: 'Missing or invalid uid or family array' });
@@ -69,18 +59,108 @@ const FamiliarController = {
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
             const familyCollectionRef = mobileUserDocRef.collection(process.env.FAMILIARSUBCOLLECTION);
     
-            try {
-                const newFamilyDocRef = await familyCollectionRef.add({ family: familyMembers });
+            // Create an array to store promises for each family member addition
+            const promises = [];
     
-                return res.status(200).json({ message: 'Family members added successfully', data: { familyMemberID: newFamilyDocRef.id } });
-    
-            } catch (error) {
-                return res.status(500).send({ message: error.message });
+            for (let familyMember of familyMembers) {
+                // Add the new document with family data and get the document reference
+                const newFamilyDocRef = familyCollectionRef.doc();
+                const dataToSave = {
+                    Member: {
+                        name: familyMember.name,
+                        phone: familyMember.phone,
+                        email: familyMember.email,
+                        relationship: familyMember.relationship,
+                        memberID: newFamilyDocRef.id  // Adding memberID to the family map
+                    }
+                };
+                promises.push(newFamilyDocRef.set(dataToSave));
             }
+    
+            // Execute all promises
+            await Promise.all(promises);
+    
+            return res.status(200).json({ message: 'Family members added successfully' });
         } catch (error) {
-            return res.status(500).send({ message: "Unexpected error", error: error.message });
+            return res.status(500).json({ message: 'Unexpected error', error: error.message });
         }
-    }         
+    },        
+
+    // Endpoint para eliminar un miembro de la familia
+    async deleteFamilyMember(req, res) {
+        try {
+            const uid = req.body.uid;
+            const memberIDToDelete = req.body.memberID;
+    
+            if (!uid || !memberIDToDelete) {
+                return res.status(400).json({ message: 'Missing uid or memberID information' });
+            }
+    
+            if (typeof uid !== 'string' || uid.trim() === '') {
+                return res.status(400).json({ message: 'Invalid UID format' });
+            }
+    
+            const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
+            const familyMemberDocRef = mobileUserDocRef.collection(process.env.FAMILIARSUBCOLLECTION).doc(memberIDToDelete);
+    
+            const docSnapshot = await familyMemberDocRef.get();
+    
+            if (!docSnapshot.exists) {
+                return res.status(404).json({ message: 'Family member not found' });
+            }
+            
+            await familyMemberDocRef.delete();
+            return res.status(200).json({ message: 'Family member deleted successfully' });
+    
+        } catch (error) {
+            return res.status(500).json({ message: 'Unexpected error', error: error.message });
+        }
+    },        
+
+    // Update family member
+    async updateFamilyMember(req, res) {
+        try {
+            const uid = req.body.uid;
+            const memberID = req.body.memberID;
+            const updatedMemberData = req.body.member;
+    
+            // Verificar si los datos requeridos están presentes
+            if (!uid || !memberID || !updatedMemberData) {
+                return res.status(400).json({ message: 'Missing uid, memberID, or member information' });
+            }
+    
+            // Validar el formato del UID
+            if (typeof uid !== 'string' || uid.trim() === '') {
+                return res.status(400).json({ message: 'Invalid UID format' });
+            }
+    
+            // Validar el formato del miembro actualizado
+            if (typeof updatedMemberData !== 'object' || !updatedMemberData.email || !updatedMemberData.name || !updatedMemberData.phone || !updatedMemberData.relationship) {
+                return res.status(400).json({ message: 'Invalid member format' });
+            }
+    
+            const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
+            const familyMemberDocRef = mobileUserDocRef.collection(process.env.FAMILIARSUBCOLLECTION).doc(memberID);
+    
+            const docSnapshot = await familyMemberDocRef.get();
+    
+            if (!docSnapshot.exists) {
+                return res.status(404).json({ message: 'Family member not found' });
+            }
+    
+            // Realizar merge de los datos actualizados con los existentes en Firestore
+            await familyMemberDocRef.set({
+                Member: {
+                    ...docSnapshot.data().Member,
+                    ...updatedMemberData
+                }
+            }, { merge: true });
+    
+            return res.status(200).json({ message: 'Family member updated successfully' });
+        } catch (error) {
+            return res.status(500).json({ message: 'Unexpected error', error: error.message });
+        }
+    }    
 };
 
 module.exports = FamiliarController;
