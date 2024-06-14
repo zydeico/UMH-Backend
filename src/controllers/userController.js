@@ -446,7 +446,6 @@ const UserController = {
                 }
                 userData = doc.data();
             } catch (error) {
-                console.error('Error retrieving user data:', error);
                 return res.status(500).json({ message: 'Error retrieving user data', data: [] });
             }
     
@@ -463,7 +462,6 @@ const UserController = {
             
             res.status(200).json({ data: [userData] });
         } catch (error) {
-            console.error('Unexpected error:', error);
             res.status(500).json({ message: 'Unexpected error', data: [] });
             next(error);
         }

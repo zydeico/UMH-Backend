@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { verifyToken } = require('../middleware/authMiddleware');
-const UserController = require('../controllers/userController');
+const UserController = require('../controllers/UserController.js');
 const UtilsServerController = require('../controllers/utilsServerController');
+const UserFamilyController = require('../controllers/UserFamilyController');
 
 /*
 * Routes for the User model GET
@@ -10,6 +11,7 @@ const UtilsServerController = require('../controllers/utilsServerController');
 */
 // Authentication requires token verification
 router.get('/getData', verifyToken, UserController.getAllData);
+router.get('/msusers/get_familiar_information', verifyToken, UserFamilyController.getRegisteredFamily);
 
 // Authentication doesn't require token verification
 router.get('/newToken', UserController.generateToken);
