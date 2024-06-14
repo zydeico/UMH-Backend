@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { verifyToken } = require('../middleware/authMiddleware');
-const UserController = require('../controllers/UserController.js');
+const UserController = require('../controllers/userController');
 const UtilsServerController = require('../controllers/utilsServerController');
-const UserFamilyController = require('../controllers/UserFamilyController');
+const UserFamilyController = require('../controllers/userFamilyController');
 
 /*
 * Routes for the User model GET
@@ -11,7 +11,6 @@ const UserFamilyController = require('../controllers/UserFamilyController');
 */
 // Authentication requires token verification
 router.get('/getData', verifyToken, UserController.getAllData);
-router.get('/msusers/get_familiar_information', verifyToken, UserFamilyController.getRegisteredFamily);
 
 // Authentication doesn't require token verification
 router.get('/newToken', UserController.generateToken);
@@ -36,6 +35,7 @@ router.post('/postUnitedStatesStates', verifyToken, UtilsServerController.insert
 router.post('/post_familiar', verifyToken, UtilsServerController.insertFamiliars);
 router.post('/msusers/me', verifyToken, UserController.sendMEData);
 router.post('/msusers/linkAccount', verifyToken, UtilsServerController.linkEmailAndPhoneToFirebaseAccount);
+router.post('/msusers/retrieve_familiar_information', verifyToken, UserFamilyController.getRegisteredFamily);
 
 // Authentication doesn't require token verification
 router.post('/unblockIP', UtilsServerController.unblockIP);
