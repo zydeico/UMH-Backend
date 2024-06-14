@@ -4,7 +4,15 @@ const { getFirestore } = require('firebase-admin/firestore');
 const db = getFirestore();
 
 const FamiliarController = {
-    // Endpoint para obtener los miembros de la familia registrados de un usuario
+
+    /**
+     * Retrieves the registered family members for a specified user.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @returns {Object} The response object containing the registered family members.
+     * @throws {Error} If an unexpected error occurs.
+     */
     async getRegisteredFamily(req, res) {
         try {
             const uid = req.body.uid;
@@ -36,7 +44,14 @@ const FamiliarController = {
         }
     },
 
-    // Endpoint para agregar un miembro de la familia a un usuario
+    /**
+     * Adds family members to the database.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @returns {Object} The response object.
+     * @throws {Object} If there is an unexpected error.
+     */
     async addFamilyMember(req, res) {
         try {
             const uid = req.body.uid;
@@ -87,9 +102,15 @@ const FamiliarController = {
         } catch (error) {
             return res.status(500).json({ message: 'Unexpected error', error: error.message });
         }
-    },       
+    },
 
-    // Endpoint para eliminar un miembro de la familia
+    /**
+     * Deletes a family member.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @returns {Object} The response object.
+     */
     async deleteFamilyMember(req, res) {
         try {
             const uid = req.body.uid;
@@ -118,9 +139,19 @@ const FamiliarController = {
         } catch (error) {
             return res.status(500).json({ message: 'Unexpected error', error: error.message });
         }
-    },        
+    },
 
-    // Update family member
+    /**
+     * Updates a family member in the database.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} req.body - The request body.
+     * @param {string} req.body.uid - The UID of the user.
+     * @param {string} req.body.memberID - The ID of the family member.
+     * @param {Object} req.body.member - The updated member data.
+     * @param {Object} res - The response object.
+     * @returns {Object} The response object.
+     */
     async updateFamilyMember(req, res) {
         try {
             const uid = req.body.uid;
@@ -163,7 +194,7 @@ const FamiliarController = {
         } catch (error) {
             return res.status(500).json({ message: 'Unexpected error', error: error.message });
         }
-    }    
+    }
 };
 
 module.exports = FamiliarController;
