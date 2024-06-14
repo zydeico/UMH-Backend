@@ -3,7 +3,7 @@ const router = express.Router();
 const { verifyToken } = require('../middleware/authMiddleware');
 const UserController = require('../controllers/userController');
 const UtilsServerController = require('../controllers/utilsServerController');
-const UserFamilyController = require('../controllers/userFamilyController');
+const FamiliarController = require('../controllers/familiarController');
 
 /*
 * Routes for the User model GET
@@ -35,7 +35,8 @@ router.post('/postUnitedStatesStates', verifyToken, UtilsServerController.insert
 router.post('/post_familiar', verifyToken, UtilsServerController.insertFamiliars);
 router.post('/msusers/me', verifyToken, UserController.sendMEData);
 router.post('/msusers/linkAccount', verifyToken, UtilsServerController.linkEmailAndPhoneToFirebaseAccount);
-router.post('/msusers/retrieve_familiar_information', verifyToken, UserFamilyController.getRegisteredFamily);
+router.post('/msusers/retrieve_familiar_information', verifyToken, FamiliarController.getRegisteredFamily);
+router.post('/msusers/add_familiar', verifyToken, FamiliarController.addFamilyMember);
 
 // Authentication doesn't require token verification
 router.post('/unblockIP', UtilsServerController.unblockIP);
