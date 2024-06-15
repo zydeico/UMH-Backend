@@ -98,7 +98,7 @@ const FamiliarController = {
     
             await Promise.all(promises);
     
-            return res.status(200).json({ message: 'Family members added successfully', InformationMember: successfullyAddedMembers });
+            return res.status(200).json({ message: 'Family member added successfully', InformationMember: successfullyAddedMembers });
         } catch (error) {
             return res.status(500).json({ message: 'Unexpected error', error: error.message });
         }
@@ -156,21 +156,17 @@ const FamiliarController = {
         try {
             const uid = req.body.uid;
             const memberID = req.body.memberID;
-            const updatedMemberData = req.body.member;
-    
-            // Verificar si los datos requeridos están presentes
-            if (!uid || !memberID || !updatedMemberData) {
-                return res.status(400).json({ message: 'Missing uid, memberID, or member information' });
+            const updatedInformationData = req.body.NewInformation;
+            if (!uid || !memberID || !updatedInformationData) {
+                return res.status(400).json({ message: 'Missing uid, memberID, or Information' });
             }
-    
-            // Validar el formato del UID
+
             if (typeof uid !== 'string' || uid.trim() === '') {
                 return res.status(400).json({ message: 'Invalid UID format' });
             }
-    
-            // Validar el formato del miembro actualizado
-            if (typeof updatedMemberData !== 'object' || !updatedMemberData.email || !updatedMemberData.name || !updatedMemberData.phone || !updatedMemberData.relationship) {
-                return res.status(400).json({ message: 'Invalid member format' });
+
+            if (typeof updatedInformationData !== 'object' || !updatedInformationData.email || !updatedInformationData.name || !updatedInformationData.phone || !updatedInformationData.relationship) {
+                return res.status(400).json({ message: 'Invalid Information format' });
             }
     
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
@@ -181,12 +177,11 @@ const FamiliarController = {
             if (!docSnapshot.exists) {
                 return res.status(404).json({ message: 'Family member not found' });
             }
-    
-            // Realizar merge de los datos actualizados con los existentes en Firestore
+
             await familyMemberDocRef.set({
-                Member: {
-                    ...docSnapshot.data().Member,
-                    ...updatedMemberData
+                Information: {
+                    ...docSnapshot.data().Information,
+                    ...updatedInformationData
                 }
             }, { merge: true });
     
@@ -194,7 +189,7 @@ const FamiliarController = {
         } catch (error) {
             return res.status(500).json({ message: 'Unexpected error', error: error.message });
         }
-    }
+    }    
 };
 
 module.exports = FamiliarController;
