@@ -39,22 +39,40 @@ CONFIGURATIONVALUESCOLLECTION
 CARDSTYPESSUBCOLLECTION
 STATESSUBCOLLECTION
 STATESFIELD
+FAMILIARSUBCOLLECTION
 ```
 
 PLEASE, REMOVE THE // FROM THE .ENV FILE, THIS IS JUST FOR THE README
 In order to get all the firebase configuration you need to create a new project in firebase and then go to the settings of the project and then to the service accounts tab, there you can generate a new private key and you will get a json file with all the configuration.
 
-## Deployment
-The backend is deployed in Railway. The deployment is automatically done with Railway CLI using the following command:
+## Deployment in Google Cloud Run
+We use Docker and the ./deploy.sh script to deploy the backend in Google Cloud Run. The Dockerfile is used to create the image that is deployed in Google Cloud Run.
 ```bash
-railway up
+./deploy.sh
 ```
 
-## Deployment in Google Cloud Run
-The backend is deployed in Google Cloud Run. The deployment is automatically done with the following command:
+# Docker configuration
+To run locally using Docker you can use the following commands:
 ```bash
-gcloud run deploy umhbackend --source . --region=us-west1
+docker build -t umhbackend .
+docker run -p 8080:8080 umhbackend
 ```
+
+To stop the container you can run the following command:
+```bash
+docker stop $(docker ps -a -q)
+```
+
+Or just use the id of the container to stop it:
+```bash
+docker stop <container_id>
+```
+
+Example: 
+```bash
+docker stop 123456789
+```
+
 
 ## Errors solutions
 If I have any error on deployment, can I run 
