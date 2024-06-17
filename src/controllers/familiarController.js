@@ -179,7 +179,7 @@ const FamiliarController = {
             }
 
             await familyMemberDocRef.set({
-                Information: {
+                Member: {
                     ...docSnapshot.data().Information,
                     ...updatedInformationData
                 }
