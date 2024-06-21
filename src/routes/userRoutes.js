@@ -7,6 +7,7 @@ const FamiliarController = require('../controllers/familiarController');
 const CardsController = require('../controllers/cardsController');
 const ContactsController = require('../controllers/contactsController');
 const FavoritesController = require('../controllers/favoritesController');
+const DistributionsController = require('../controllers/distributionsController');
 
 
 /*
@@ -59,6 +60,10 @@ router.post('/mscontacts/get_contacts', verifyToken, ContactsController.getConta
 router.post('/msfavorites/register_favorite', verifyToken, FavoritesController.registerFavorite);
 router.post('/msfavorites/get_favorites', verifyToken, FavoritesController.getFavorites);
 
+// MSDistributions
+router.post('/msdistributions/register_distribution', verifyToken, DistributionsController.registerDistribution);
+router.post('/msdistributions/get_distributions', verifyToken, DistributionsController.geDistribution);
+
 // Authentication doesn't require token verification
 router.post('/unblockIP', UtilsServerController.unblockIP);
 router.post('/verifyToken', UserController.verifyToken);
@@ -82,6 +87,9 @@ router.delete('/mscontacts/delete_contact', verifyToken, ContactsController.dele
 
 // MSFavorites
 router.delete('/msfavorites/delete_favorite', verifyToken, FavoritesController.deleteFavorite);
+
+// MSDistributions
+router.delete('/msdistributions/delete_distribution', verifyToken, DistributionsController.deleteDistribution);
 
 
 /*
@@ -109,5 +117,8 @@ router.patch('/mscontacts/update_contact', verifyToken, ContactsController.updat
 
 // MSFavorites
 router.patch('/msfavorites/update_favorite', verifyToken, FavoritesController.updateFavorite);
+
+// MSDistributions
+router.patch('/msdistributions/update_distribution', verifyToken, DistributionsController.updateDistribution);
 
 module.exports = router;
