@@ -65,6 +65,7 @@ router.post('/msdistributions/get_distributions', verifyToken, DistributionsCont
 
 // MSGifts
 router.post('/msgifts/register_gift', verifyToken, GiftsController.registerNewGift);
+router.post('/msgifts/get_gifts', verifyToken, GiftsController.getAllGifts);
 
 // Authentication doesn't require token verification
 router.post('/unblockIP', UtilsServerController.unblockIP);
@@ -92,6 +93,9 @@ router.delete('/msfavorites/delete_favorite', verifyToken, FavoritesController.d
 
 // MSDistributions
 router.delete('/msdistributions/delete_distribution', verifyToken, DistributionsController.deleteDistribution);
+
+// MSGifts
+router.delete('/msgifts/delete_gift', verifyToken, GiftsController.deleteGift);
 
 
 /*
@@ -122,5 +126,8 @@ router.patch('/msfavorites/update_favorite', verifyToken, FavoritesController.up
 
 // MSDistributions
 router.patch('/msdistributions/update_distribution', verifyToken, DistributionsController.updateDistribution);
+
+// MSGifts
+router.patch('/msgifts/update_gift', verifyToken, GiftsController.updateGift);
 
 module.exports = router;
