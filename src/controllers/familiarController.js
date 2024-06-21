@@ -80,12 +80,14 @@ const FamiliarController = {
     
             for (let familyMember of familyMembers) {
                 const newFamilyDocRef = familyCollectionRef.doc();
+                const now = new Date().toISOString().split('.')[0];
                 const dataToSave = {
                     Member: {
                         name: familyMember.name,
                         phone: familyMember.phone,
                         email: familyMember.email,
                         relationship: familyMember.relationship,
+                        dateAdded: now.replace('T', ' '),
                         memberID: newFamilyDocRef.id
                     }
                 };
