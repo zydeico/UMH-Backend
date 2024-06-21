@@ -9,6 +9,7 @@ const ContactsController = require('../controllers/contactsController');
 const FavoritesController = require('../controllers/favoritesController');
 const DistributionsController = require('../controllers/distributionsController');
 const GiftsController = require('../controllers/giftsController');
+const NotesController = require('../controllers/notesController');
 
 
 /*
@@ -27,7 +28,6 @@ router.get('/health', UserController.health);
 * Routes for the User model POST
 * This routes are separeted by the authentication required
 */
-// Authentication requires token verification
 router.post('/insertEmails', verifyToken, UserController.insertEmails);
 router.post('/msusers/register_user', verifyToken, UserController.registerUser);
 router.post('/msusers/update_general_info', verifyToken, UserController.updateUser);
@@ -41,6 +41,10 @@ router.post('/searchByUID', verifyToken, UtilsServerController.searchByUID);
 router.post('/postUnitedStatesStates', verifyToken, UtilsServerController.insertStates);
 router.post('/post_familiar', verifyToken, UtilsServerController.insertFamiliars);
 
+/* 
+* Routes for the User model POST
+* All routes require token verification
+*/
 // MSUsers
 router.post('/msusers/me', verifyToken, UserController.sendMEData);
 router.post('/msusers/linkAccount', verifyToken, UtilsServerController.linkEmailAndPhoneToFirebaseAccount);
@@ -67,10 +71,17 @@ router.post('/msdistributions/get_distributions', verifyToken, DistributionsCont
 router.post('/msgifts/register_gift', verifyToken, GiftsController.registerNewGift);
 router.post('/msgifts/get_gifts', verifyToken, GiftsController.getAllGifts);
 
-// Authentication doesn't require token verification
+// MSNotes
+router.post('/msnotes/register_note', verifyToken, NotesController.registerNewNote);
+router.post('/msnotes/get_notes', verifyToken, NotesController.getAllNotes);
+
+
+/*
+* Routes for the User model POST
+* This routes are separeted by the authentication required
+*/
 router.post('/unblockIP', UtilsServerController.unblockIP);
 router.post('/verifyToken', UserController.verifyToken);
-
 
 
 /*
@@ -96,6 +107,9 @@ router.delete('/msdistributions/delete_distribution', verifyToken, Distributions
 
 // MSGifts
 router.delete('/msgifts/delete_gift', verifyToken, GiftsController.deleteGift);
+
+// MSNotes
+router.delete('/msnotes/delete_note', verifyToken, NotesController.deleteNote);
 
 
 /*
@@ -129,5 +143,8 @@ router.patch('/msdistributions/update_distribution', verifyToken, DistributionsC
 
 // MSGifts
 router.patch('/msgifts/update_gift', verifyToken, GiftsController.updateGift);
+
+// MSNotes
+router.patch('/msnotes/update_note', verifyToken, NotesController.updateNote);
 
 module.exports = router;
