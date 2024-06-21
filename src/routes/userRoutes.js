@@ -8,6 +8,7 @@ const CardsController = require('../controllers/cardsController');
 const ContactsController = require('../controllers/contactsController');
 const FavoritesController = require('../controllers/favoritesController');
 const DistributionsController = require('../controllers/distributionsController');
+const GiftsController = require('../controllers/giftsController');
 
 
 /*
@@ -20,8 +21,6 @@ router.get('/getData', verifyToken, UserController.getAllData);
 // Authentication doesn't require token verification
 router.get('/newToken', UserController.generateToken);
 router.get('/health', UserController.health);
-
-
 
 
 /*
@@ -63,6 +62,9 @@ router.post('/msfavorites/get_favorites', verifyToken, FavoritesController.getFa
 // MSDistributions
 router.post('/msdistributions/register_distribution', verifyToken, DistributionsController.registerDistribution);
 router.post('/msdistributions/get_distributions', verifyToken, DistributionsController.geDistribution);
+
+// MSGifts
+router.post('/msgifts/register_gift', verifyToken, GiftsController.registerNewGift);
 
 // Authentication doesn't require token verification
 router.post('/unblockIP', UtilsServerController.unblockIP);
