@@ -134,6 +134,17 @@ const ContactsController = {
         }
     },
 
+    /**
+     * Updates a contact with new information.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} req.body - The request body.
+     * @param {string} req.body.uid - The user ID.
+     * @param {string} req.body.contactID - The contact ID.
+     * @param {Object} req.body.NewInformation - The new contact information.
+     * @param {Object} res - The response object.
+     * @returns {Object} The response object.
+     */
     async updateContact(req, res)  {
         try {
             const uid = req.body.uid;

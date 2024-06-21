@@ -6,6 +6,8 @@ const UtilsServerController = require('../controllers/utilsServerController');
 const FamiliarController = require('../controllers/familiarController');
 const CardsController = require('../controllers/cardsController');
 const ContactsController = require('../controllers/contactsController');
+const FavoritesController = require('../controllers/favoritesController');
+
 
 /*
 * Routes for the User model GET
@@ -17,6 +19,9 @@ router.get('/getData', verifyToken, UserController.getAllData);
 // Authentication doesn't require token verification
 router.get('/newToken', UserController.generateToken);
 router.get('/health', UserController.health);
+
+
+
 
 /*
 * Routes for the User model POST
@@ -50,9 +55,15 @@ router.post('/mscards/get_cards', verifyToken, CardsController.getCards);
 router.post('/mscontacts/new_contact', verifyToken, ContactsController.newContact);
 router.post('/mscontacts/get_contacts', verifyToken, ContactsController.getContacts);
 
+// MSFavorites
+router.post('/msfavorites/register_favorite', verifyToken, FavoritesController.registerFavorite);
+router.post('/msfavorites/get_favorites', verifyToken, FavoritesController.getFavorites);
+
 // Authentication doesn't require token verification
 router.post('/unblockIP', UtilsServerController.unblockIP);
 router.post('/verifyToken', UserController.verifyToken);
+
+
 
 /*
 * Routes for the User model DELETE
@@ -68,6 +79,9 @@ router.delete('/mscards/delete_card', verifyToken, CardsController.deleteCard);
 
 // MSContacts
 router.delete('/mscontacts/delete_contact', verifyToken, ContactsController.deleteContact);
+
+// MSFavorites
+router.delete('/msfavorites/delete_favorite', verifyToken, FavoritesController.deleteFavorite);
 
 
 /*
@@ -92,5 +106,8 @@ router.patch('/mscards/update_card', verifyToken, CardsController.updateCard);
 
 // MSContacts
 router.patch('/mscontacts/update_contact', verifyToken, ContactsController.updateContact);
+
+// MSFavorites
+router.patch('/msfavorites/update_favorite', verifyToken, FavoritesController.updateFavorite);
 
 module.exports = router;
