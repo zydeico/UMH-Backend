@@ -157,6 +157,7 @@ const FamiliarController = {
             const uid = req.body.uid;
             const memberID = req.body.memberID;
             const updatedInformationData = req.body.NewInformation;
+            
             if (!uid || !memberID || !updatedInformationData) {
                 return res.status(400).json({ message: 'Missing uid, memberID, or Information' });
             }
@@ -180,7 +181,7 @@ const FamiliarController = {
 
             await familyMemberDocRef.set({
                 Member: {
-                    ...docSnapshot.data().Information,
+                    ...docSnapshot.data().Member,
                     ...updatedInformationData
                 }
             }, { merge: true });
