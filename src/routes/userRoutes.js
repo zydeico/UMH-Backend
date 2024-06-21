@@ -4,6 +4,7 @@ const { verifyToken } = require('../middleware/authMiddleware');
 const UserController = require('../controllers/userController');
 const UtilsServerController = require('../controllers/utilsServerController');
 const FamiliarController = require('../controllers/familiarController');
+const CardsController = require('../controllers/cardsController');
 
 /*
 * Routes for the User model GET
@@ -37,6 +38,8 @@ router.post('/msusers/me', verifyToken, UserController.sendMEData);
 router.post('/msusers/linkAccount', verifyToken, UtilsServerController.linkEmailAndPhoneToFirebaseAccount);
 router.post('/msusers/retrieve_familiar_information', verifyToken, FamiliarController.getRegisteredFamily);
 router.post('/msusers/add_familiar', verifyToken, FamiliarController.addFamilyMember);
+router.post('/mscards/register_card', verifyToken, CardsController.registerCard);
+router.post('/mscards/get_cards', verifyToken, CardsController.getCards);
 
 // Authentication doesn't require token verification
 router.post('/unblockIP', UtilsServerController.unblockIP);
@@ -48,6 +51,7 @@ router.post('/verifyToken', UserController.verifyToken);
 */
 router.delete('/deleteUID', verifyToken, UserController.deleteUid);
 router.delete('/msusers/delete_familiar', verifyToken, FamiliarController.deleteFamilyMember);
+router.delete('/mscards/delete_card', verifyToken, CardsController.deleteCard);
 /*
 * WARNING: This route will delete all users from the database
 * USE WITH CAUTION
@@ -63,5 +67,6 @@ router.delete('/msusers/delete_familiar', verifyToken, FamiliarController.delete
 router.patch('/msusers/update_profile_user', verifyToken, UserController.patchData);
 router.patch('/msusers/verify_user_email', verifyToken, UserController.patchEmailVerification);
 router.patch('/msusers/update_familiar', verifyToken, FamiliarController.updateFamilyMember);
+router.patch('/mscards/update_card', verifyToken, CardsController.updateCard);
 
 module.exports = router;
