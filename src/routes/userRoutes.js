@@ -10,6 +10,7 @@ const FavoritesController = require('../controllers/favoritesController');
 const DistributionsController = require('../controllers/distributionsController');
 const GiftsController = require('../controllers/giftsController');
 const NotesController = require('../controllers/notesController');
+const TaskController = require('../controllers/taskController');
 
 
 /*
@@ -75,6 +76,10 @@ router.post('/msgifts/get_gifts', verifyToken, GiftsController.getAllGifts);
 router.post('/msnotes/register_note', verifyToken, NotesController.registerNewNote);
 router.post('/msnotes/get_notes', verifyToken, NotesController.getAllNotes);
 
+// MSTasks
+router.post('/mstasks/register_task', verifyToken, TaskController.registerNewTask);
+router.post('/mstasks/get_tasks', verifyToken, TaskController.getAllTasks);
+
 
 /*
 * Routes for the User model POST
@@ -111,6 +116,9 @@ router.delete('/msgifts/delete_gift', verifyToken, GiftsController.deleteGift);
 // MSNotes
 router.delete('/msnotes/delete_note', verifyToken, NotesController.deleteNote);
 
+// MSTasks
+router.delete('/mstasks/delete_task', verifyToken, TaskController.deleteTask);
+
 
 /*
 * WARNING: This route will delete all users from the database
@@ -146,5 +154,8 @@ router.patch('/msgifts/update_gift', verifyToken, GiftsController.updateGift);
 
 // MSNotes
 router.patch('/msnotes/update_note', verifyToken, NotesController.updateNote);
+
+// MSTasks
+router.patch('/mstasks/update_task', verifyToken, TaskController.updateTask);
 
 module.exports = router;
