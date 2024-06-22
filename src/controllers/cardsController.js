@@ -35,9 +35,9 @@ const CardsController = {
                 const dataToSave = {
                     Card: {
                         cardTitle: card.cardTitle,
-                        cardFamiliarMemberToWhom: card.cardFamiliar,
-                        cardType: card.cardType,
+                        cardFamiliar: card.cardFamiliar,
                         cardFileURL: card.fileURL,
+                        cardMessage: card.cardMessage,
                         dateAdded: now.replace('T', ' '),
                         cardID: newCardDocRef.id
                     },
