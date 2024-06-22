@@ -36,7 +36,7 @@ const CardsController = {
                     Card: {
                         cardTitle: card.cardTitle,
                         cardFamiliar: card.cardFamiliar,
-                        cardFileURL: card.fileURL,
+                        cardFileURL: card.cardFileURL,
                         cardMessage: card.cardMessage,
                         dateAdded: now.replace('T', ' '),
                         cardID: newCardDocRef.id
