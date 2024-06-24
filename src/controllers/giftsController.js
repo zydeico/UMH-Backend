@@ -145,39 +145,43 @@ const GiftsController = {
             const uid = req.body.uid;
             const giftID = req.body.giftID;
             const updatedGift = req.body.NewInformation;
-
+    
             if (!uid || !giftID || !updatedGift) {
                 return res.status(400).json({ message: 'Missing uid, giftID or NewInformation' });
             }
-
+    
             if (typeof uid !== 'string' || uid.trim() === '') {
                 return res.status(400).json({ message: 'Invalid UID format' });
             }
-
-            if (typeof updatedGift !== 'object' || !updatedGift.lovedPersonToGift || !updatedGift.giftType || !updatedGift.giftTypeDetailDescription || !updatedGift.giftToReason || !updatedGift.giftAccomplished || !updatedGift.giftDescription || !updatedGift.giftLinkURL) {
+    
+            if (typeof updatedGift !== 'object' || !updatedGift.lovedPersonToGift || !updatedGift.giftType || !updatedGift.giftTypeDetailDescription || !updatedGift.giftToReason || !updatedGift.giftAccomplished || !updatedGift.giftDescription) {
                 return res.status(400).json({ message: 'Invalid NewInformation format' });
             }
 
+            if ('giftLinkURL' in updatedGift && typeof updatedGift.giftLinkURL !== 'string' && updatedGift.giftLinkURL !== '') {
+                return res.status(400).json({ message: 'Invalid giftLinkURL format' });
+            }
+    
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
             const giftDocRef = mobileUserDocRef.collection(process.env.GIFTSSUBCOLLECTION).doc(giftID);
             const docSnapshot = await giftDocRef.get();
-
+    
             if (!docSnapshot.exists) {
                 return res.status(404).json({ message: 'Gift not found' });
             }
-
+            
             await giftDocRef.set({
                 Gift: {
                     ...docSnapshot.data().Gift,
                     ...updatedGift
                 }
             }, { merge: true });
-
+    
             return res.status(200).json({ message: 'Gift updated successfully' });
         } catch(error) {
             return res.status(500).send({ message: 'Unexpected error', error: error.message });
         }
-    }
+    }    
 };
 
 module.exports = GiftsController;
