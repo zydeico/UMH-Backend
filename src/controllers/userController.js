@@ -3,7 +3,6 @@ require('dotenv').config();
 const { getFirestore } = require('firebase-admin/firestore');
 const db = getFirestore();
 const jwt = require('jsonwebtoken');
-const UserModel = require('../models/userModel');
 const { generateRandomId, generateRandomEmail, generateUID } = require('../helpers/helpers');
 const axios = require('axios');
 const FirebaseUserModel = require('../models/FirebaseUserModel');
@@ -92,32 +91,28 @@ const UserController = {
     
             const userRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
             const userDoc = await userRef.get();
-    
-            if (userDoc.exists) {
-                await userRef.set(userData, { merge: true });
-                return res.status(200).json({ message: "User data updated successfully." });
+            const filteredUserData = { ...userData };
+            if (!filteredUserData.registrationDate) {
+                filteredUserData.registrationDate = new Date();
             }
-            
-            const filteredUserData = {};
-            Object.keys(userData).forEach(key => {
-                if (Object.keys(SignUpUserModel.schema.paths).includes(key)) {
-                    filteredUserData[key] = userData[key];
-                }
-            });
+
+            if (typeof filteredUserData.generatedByApi !== 'boolean') {
+                filteredUserData.generatedByApi = true;
+            }
     
-            filteredUserData.registrationDate = new Date();
             const newUser = new SignUpUserModel(filteredUserData);
             const validationError = newUser.validateSync();
             if (validationError) {
                 return res.status(400).json({ error: "Validation failed. Please check the input data.", details: validationError.errors });
             }
-    
-            if (!filteredUserData.hasOwnProperty('generatedByApi') || filteredUserData.generatedByApi !== true) {
-                filteredUserData.generatedByApi = true;
+
+            if (userDoc.exists) {
+                await userRef.set(filteredUserData, { merge: true });
+                return res.status(200).json({ message: "User data updated successfully." });
+            } else {
+                await userRef.set(filteredUserData);
+                return res.status(200).json({ message: "User registered successfully." });
             }
-    
-            await userRef.set(filteredUserData, { merge: true });
-            res.status(200).json({ message: "User registration successfully." });
         } catch (error) {
             if (error.name === 'ValidationError') {
                 return res.status(400).json({ error: "Validation failed. Please check the input data.", details: error.errors });
@@ -128,7 +123,7 @@ const UserController = {
             res.status(statusCode).json({ error: errorMessage });
             next(error);
         }
-    },    
+    },     
 
     /**
      * Updates a user's data.
@@ -382,7 +377,7 @@ const UserController = {
     async patchData(req, res, next) {
         try {
             const { uid } = req.body;
-            const { name, phone, email, pushTokenAPN, platform, socialSecurityNumber, state, photoURL } = req.body;
+            const { name, phone, email, pushTokenAPN, platform, socialSecurityNumber, state, photoURL, pin } = req.body;
             const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
             const mobileUserCollectionRef = db.collection(collectionName);
             await mobileUserCollectionRef.doc(uid).set({
@@ -393,7 +388,8 @@ const UserController = {
                 platform,
                 socialSecurityNumber,
                 state,
-                photoURL
+                photoURL,
+                pin
             }, { merge: true });
             res.status(200).json({ message: 'Successfully updated data' });
         } catch (error) {

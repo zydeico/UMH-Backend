@@ -45,6 +45,10 @@ const signUpUserSchema = new mongoose.Schema({
     photoURL: {
         type: String,
         required: false
+    },
+    pin: {
+        type: String,
+        required: false
     }
 }, { 
     strict: true 
