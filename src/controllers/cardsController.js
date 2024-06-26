@@ -90,7 +90,7 @@ const CardsController = {
             });
     
             if (cardsArray.length === 0) {
-                return res.status(202).json({ message: 'No cards found for the user' });
+                return res.status(202).json({ message: 'No cards found', data: []});
             }
     
             return res.status(200).json({ data: cardsArray });
