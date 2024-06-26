@@ -80,7 +80,7 @@ const GiftsController = {
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid).collection(process.env.GIFTSSUBCOLLECTION);
             const snapshot = await mobileUserDocRef.get();
             if(snapshot.empty) {
-                return res.status(404).json({ message: 'No gifts found' });
+                return res.status(202).json({ message: 'No gifts found', data: [] });
             }
 
             let gifts = [];

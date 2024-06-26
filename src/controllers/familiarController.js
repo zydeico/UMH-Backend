@@ -29,7 +29,7 @@ const FamiliarController = {
 
             const snapshot = await mobileUserDocRef.get();
             if (snapshot.empty) {
-                return res.status(404).json({ message: 'No family members found for the specified user', data: [] });
+                return res.status(202).json({ message: 'No family members found for the specified user', data: [] });
             }
 
             let familyData = [];

@@ -80,7 +80,7 @@ const ContactsController = {
             const snapshot = await contactCollectionRef.get();
 
             if (snapshot.empty) {
-                return res.status(404).json({ message: 'No contacts found' });
+                return res.status(202).json({ message: 'No contacts found', data: [] });
             }
 
             const contacts = [];

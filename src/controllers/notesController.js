@@ -78,7 +78,7 @@ const NotesController = {
             const snapshot = await mobileUserDocRef.get();
 
             if (snapshot.empty) {
-                return res.status(404).json({ message: 'No notes found' });
+                return res.status(202).json({ message: 'No notes found', data: [] });
             }
 
             let notes = [];

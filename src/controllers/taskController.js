@@ -72,33 +72,36 @@ const TaskController = {
      */
     async getAllTasks(req, res) {
         try {
-
             const uid = req.body.uid;
-
+    
             if (!uid) {
                 return res.status(404).json({ message: 'Missing uid' });
             }
-
+    
             if (typeof uid !== 'string' || uid.trim() === '') {
                 return res.status(400).json({ message: 'Invalid UID format' });
             }
-
+    
             const mobileUserCollectionName = process.env.MOBILEUSERCOLLECTIONNAME;
             const tasksSubCollectionName = process.env.TASKSSUBCOLLECTION;
-
+    
             if (!mobileUserCollectionName || !tasksSubCollectionName) {
                 return res.status(500).json({ message: 'Server configuration error: Missing collection names' });
             }
-
+    
             const mobileUserDocRef = db.collection(mobileUserCollectionName).doc(uid);
             const taskDocRef = mobileUserDocRef.collection(tasksSubCollectionName);
             const tasksSnapshot = await taskDocRef.get();
             const tasks = [];
-
+    
             tasksSnapshot.forEach((doc) => {
                 tasks.push(doc.data().Task);
             });
-
+    
+            if (tasks.length === 0) {
+                return res.status(202).json({ message: 'No tasks found', data: [] });
+            }
+            
             return res.status(200).json({ data: tasks });
         } catch (error) {
             return res.status(500).send({ message: 'Unexpected error', error: error.message });

@@ -69,25 +69,33 @@ const FavoritesController = {
     async getFavorites(req, res) {
         try {
             const uid = req.body.uid;
-
+    
             if (!uid) {
                 return res.status(404).json({ message: 'Missing uid' });
             }
-
+    
             if (typeof uid !== 'string' || uid.trim() === '') {
                 return res.status(400).json({ message: 'Invalid UID format' });
             }
-
+    
+            if (!process.env.FAVORITESSUBCOLLECTION) {
+                return res.status(202).json({ message: 'Favorites subcollection not defined', data: [] });
+            }
+    
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
             const favoriteCollectionRef = mobileUserDocRef.collection(process.env.FAVORITESSUBCOLLECTION);
             const favorites = [];
-
+    
             const snapshot = await favoriteCollectionRef.get();
             snapshot.forEach((doc) => {
                 const favorite = doc.data().Favorite;
                 favorites.push(favorite);
             });
-
+    
+            if (favorites.length === 0) {
+                return res.status(202).json({ message: 'No favorites found', data: [] });
+            }
+    
             return res.status(200).json({ data: favorites });
         } catch (error) {
             return res.status(500).send({ message: 'Unexpected error', error: error.message });

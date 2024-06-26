@@ -51,6 +51,10 @@ const CardsController = {
     
             await Promise.all(promises);
     
+            if (successfullyAddedCards.length === 0) {
+                return res.status(202).json({ message: 'No data found, but request accepted', data: [] });
+            }
+    
             return res.status(200).json({ message: 'Cards added successfully', data: successfullyAddedCards });
         } catch (error) {
             return res.status(500).send({ message: 'Unexpected error', error: error.message });
@@ -81,7 +85,7 @@ const CardsController = {
     
             const snapshot = await mobileUserDocRef.get();
             if (snapshot.empty) {
-                return res.status(404).json({ message: 'No cards found for the specified user', data: [] });
+                return res.status(202).json({ message: 'No cards found for the specified user', data: [] });
             }
     
             let cardData = [];
