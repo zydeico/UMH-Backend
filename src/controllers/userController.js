@@ -376,26 +376,22 @@ const UserController = {
      */
     async patchData(req, res, next) {
         try {
-            const { uid } = req.body;
-            const { name, phone, email, pushTokenAPN, platform, socialSecurityNumber, state, photoURL, pin } = req.body;
+            const { uid, ...updateFields } = req.body;
             const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
             const mobileUserCollectionRef = db.collection(collectionName);
-            await mobileUserCollectionRef.doc(uid).set({
-                name,
-                phone,
-                email,
-                pushTokenAPN,
-                platform,
-                socialSecurityNumber,
-                state,
-                photoURL,
-                pin
-            }, { merge: true });
+
+            Object.keys(updateFields).forEach(key => {
+                if (updateFields[key] === undefined) {
+                    delete updateFields[key];
+                }
+            });
+    
+            await mobileUserCollectionRef.doc(uid).update(updateFields);
             res.status(200).json({ message: 'Successfully updated data' });
         } catch (error) {
             next(error);
         }
-    },    
+    },   
 
     /**
      * Handles the health check endpoint.

@@ -11,6 +11,7 @@ const DistributionsController = require('../controllers/distributionsController'
 const GiftsController = require('../controllers/giftsController');
 const NotesController = require('../controllers/notesController');
 const TaskController = require('../controllers/taskController');
+const LegacyController = require('../controllers/legacyController');
 
 
 /*
@@ -80,6 +81,9 @@ router.post('/msnotes/get_notes', verifyToken, NotesController.getAllNotes);
 router.post('/mstasks/register_task', verifyToken, TaskController.registerNewTask);
 router.post('/mstasks/get_tasks', verifyToken, TaskController.getAllTasks);
 
+// MSLegacy
+router.post('/mslegacy/register_legacy_contact', verifyToken, LegacyController.registerLegacyContact);
+router.post('/mslegacy/get_legacy_contacts', verifyToken, LegacyController.getLegacyContacts);
 
 /*
 * Routes for the User model POST
@@ -119,6 +123,9 @@ router.delete('/msnotes/delete_note', verifyToken, NotesController.deleteNote);
 // MSTasks
 router.delete('/mstasks/delete_task', verifyToken, TaskController.deleteTask);
 
+// MSLegacy
+router.delete('/mslegacy/delete_legacy_contact', verifyToken, LegacyController.deleteLegacyContact);
+
 
 /*
 * WARNING: This route will delete all users from the database
@@ -157,5 +164,8 @@ router.patch('/msnotes/update_note', verifyToken, NotesController.updateNote);
 
 // MSTasks
 router.patch('/mstasks/update_task', verifyToken, TaskController.updateTask);
+
+// MSLegacy
+router.patch('/mslegacy/update_legacy_contact', verifyToken, LegacyController.updateLegacyContact);
 
 module.exports = router;
