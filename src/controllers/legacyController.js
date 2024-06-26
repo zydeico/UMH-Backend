@@ -12,47 +12,52 @@ const LegacyController = {
      * @returns {Promise<Object>} The response object containing the status and data.
      * @throws {Error} If an unexpected error occurs.
      */
-    async registerLegacyContact(req, res)  {
+    async registerLegacyContact(req, res) {
         try {
             const uid = req.body.uid;
             const legacy = req.body.Legacy;
-
+    
             if (!uid || !legacy || !Array.isArray(legacy) || legacy.length === 0) {
-                return res.status(404).json({ message: 'Missing uid or legacy' });
+                return res.status(400).json({ message: 'Missing uid or Legacy array' });
             }
-
+    
             if (typeof uid !== 'string' || uid.trim() === '') {
                 return res.status(400).json({ message: 'Invalid UID format' });
             }
-
-            const successfullyAddedLegacy = [];
+    
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
             const legacyCollectionRef = mobileUserDocRef.collection(process.env.LEGACYSUBCOLLECTION);
-
-            const promises = legacy.map(async (legacy) => {
+    
+            const promises = legacy.map(async (legacyItem) => {
+                const snapshot = await legacyCollectionRef.where(`Legacy.legacyEmail`, '==', legacyItem.legacyEmail)
+                    .where(`Legacy.legacyFullName`, '==', legacyItem.legacyFullName)
+                    .where(`Legacy.legacyPhone`, '==', legacyItem.legacyPhone)
+                    .get();
+    
+                if (!snapshot.empty) {
+                    return res.status(401).json({ message: 'Legacy contact already exists' });
+                }
+    
                 const newLegacyDocRef = legacyCollectionRef.doc();
                 const now = new Date().toISOString().split('.')[0];
                 const dataToSave = {
                     Legacy: {
-                        legacyFullName: legacy.legacyFullName,
-                        legacyEmail: legacy.legacyEmail,
-                        legacyPhone: legacy.legacyPhone,
-                        legacyPIN: legacy.legacyPIN,
+                        legacyFullName: legacyItem.legacyFullName,
+                        legacyEmail: legacyItem.legacyEmail,
+                        legacyPhone: legacyItem.legacyPhone,
+                        legacyPIN: legacyItem.legacyPIN,
                         dateAdded: now.replace('T', ' '),
                         legacyID: newLegacyDocRef.id
-                    },
+                    }
                 };
-
                 await newLegacyDocRef.set(dataToSave);
-                successfullyAddedLegacy.push({
-                    legacyID: newLegacyDocRef.id
-                });
+                return { legacyID: newLegacyDocRef.id };
             });
-
-            await Promise.all(promises);
-            return res.status (200).json({ message: 'Legacy Contact added successfully', data: successfullyAddedLegacy });
-        } catch(error) {
-            return res.status(500).send({ message: 'Unexpected error', error: error.message });
+    
+            const successfullyAddedLegacyIDs = await Promise.all(promises);
+            return res.status(200).json({ message: 'Legacy Contact added successfully', data: successfullyAddedLegacyIDs });
+        } catch (error) {
+            return res.status(500).json({ message: 'Unexpected error', error: error.message });
         }
     },
 
