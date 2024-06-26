@@ -81,6 +81,12 @@ Example:
 docker stop 123456789
 ```
 
+# Google cloud cache cleaning
+If you have any problem with the cache in Google Cloud Run, you can run the following command:
+```bash
+gcloud run revisions list --filter="status.conditions.type:Active AND status.conditions.status:'False'" --format='value(metadata.name)' | xargs -r -L1 gcloud run revisions delete --quiet
+```
+
 
 ## Errors solutions
 If I have any error on deployment, can I run 

@@ -48,13 +48,7 @@ const CardsController = {
                     cardID: newCardDocRef.id
                 });
             });
-    
             await Promise.all(promises);
-    
-            if (successfullyAddedCards.length === 0) {
-                return res.status(202).json({ message: 'No data found, but request accepted', data: [] });
-            }
-    
             return res.status(200).json({ message: 'Cards added successfully', data: successfullyAddedCards });
         } catch (error) {
             return res.status(500).send({ message: 'Unexpected error', error: error.message });
@@ -72,30 +66,37 @@ const CardsController = {
     async getCards(req, res) {
         try {
             const uid = req.body.uid;
-    
+
             if (!uid) {
-                return res.status(400).json({ message: 'Missing uid' });
+                return res.status(404).json({ message: 'Missing uid' });
             }
     
             if (typeof uid !== 'string' || uid.trim() === '') {
                 return res.status(400).json({ message: 'Invalid UID format' });
             }
     
-            const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid).collection(process.env.CARDSSUBCOLLECTION);
-    
-            const snapshot = await mobileUserDocRef.get();
-            if (snapshot.empty) {
-                return res.status(202).json({ message: 'No cards found for the specified user', data: [] });
+            if (!process.env.CARDSSUBCOLLECTION) {
+                return res.status(202).json({ message: 'Favorites subcollection not defined', data: [] });
             }
     
-            let cardData = [];
-            snapshot.forEach(doc => {
-                cardData.push(doc.data().Card);
+            const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
+            const cardsCollectionRef = mobileUserDocRef.collection(process.env.CARDSSUBCOLLECTION);
+            const cardsArray = [];
+
+            const snapshot = await cardsCollectionRef.get();
+            snapshot.forEach((doc) => {
+                const card = doc.data().Card;
+                cardsArray.push(card);
             });
     
-            return res.status(200).json({ data: cardData });
+            if (cardsArray.length === 0) {
+                return res.status(202).json({ message: 'No cards found for the user' });
+            }
+    
+            return res.status(200).json({ data: cardsArray });
+    
         } catch (error) {
-            return res.status(500).send({ message: 'Unexpected error', error: error.message });
+            return res.status(500).json({ message: 'Unexpected error', error: error.message });
         }
     },
 
