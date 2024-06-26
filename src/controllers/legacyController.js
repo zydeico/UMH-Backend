@@ -27,7 +27,7 @@ const LegacyController = {
     
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
             const legacyCollectionRef = mobileUserDocRef.collection(process.env.LEGACYSUBCOLLECTION);
-    
+            
             const promises = legacy.map(async (legacyItem) => {
                 const snapshot = await legacyCollectionRef.where(`Legacy.legacyEmail`, '==', legacyItem.legacyEmail)
                     .where(`Legacy.legacyFullName`, '==', legacyItem.legacyFullName)
@@ -35,7 +35,7 @@ const LegacyController = {
                     .get();
     
                 if (!snapshot.empty) {
-                    return res.status(401).json({ message: 'Legacy contact already exists' });
+                    return null;
                 }
     
                 const newLegacyDocRef = legacyCollectionRef.doc();
@@ -53,9 +53,15 @@ const LegacyController = {
                 await newLegacyDocRef.set(dataToSave);
                 return { legacyID: newLegacyDocRef.id };
             });
+
+            const results = await Promise.all(promises);
+            const successfullyAddedLegacyIDs = results.filter(result => result !== null);
     
-            const successfullyAddedLegacyIDs = await Promise.all(promises);
-            return res.status(200).json({ message: 'Legacy Contact added successfully', data: successfullyAddedLegacyIDs });
+            if (successfullyAddedLegacyIDs.length === 0) {
+                return res.status(401).json({ message: 'Legacy contacts already exist' });
+            }
+
+            return res.status(200).json({ message: 'Legacy Contacts added successfully', data: successfullyAddedLegacyIDs });
         } catch (error) {
             return res.status(500).json({ message: 'Unexpected error', error: error.message });
         }
