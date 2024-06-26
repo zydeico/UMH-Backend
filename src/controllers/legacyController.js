@@ -93,7 +93,7 @@ const LegacyController = {
                 return res.status(202).json({ message: 'No legacy contacts found', data: [] });
             }
 
-            return res.status(200).json({ message: 'Legacy contacts retrieved successfully', data: legacyArray });
+            return res.status(200).json({ data: legacyArray });
         } catch(error) {
             return res.status(500).send({ message: 'Unexpected error', error: error.message });
         }
