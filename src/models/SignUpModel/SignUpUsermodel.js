@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 const signUpUserSchema = new mongoose.Schema(
     {
+        uid: {
+            type: String,
+            required: true,
+            unique: true
+        },
         name: {
             type: String,
             required: false
@@ -49,6 +54,14 @@ const signUpUserSchema = new mongoose.Schema(
         },
         pin: {
             type: String,
+            required: false
+        },
+        generatedByApi: {
+            type: Boolean,
+            required: false
+        }, 
+        registrationDate: {
+            type: Date,
             required: false
         }
     },

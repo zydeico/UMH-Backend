@@ -3,7 +3,7 @@ require('dotenv').config();
 const { getFirestore } = require('firebase-admin/firestore');
 const db = getFirestore();
 const jwt = require('jsonwebtoken');
-const { generateRandomId, generateRandomEmail, generateUID } = require('../helpers/helpers');
+const { generateRandomId, generateRandomEmail} = require('../helpers/helpers');
 const axios = require('axios');
 const FirebaseUserModel = require('../models/FirebaseUserModel');
 const SignUpEmailModel = require('../models/SignUpModel/SignUpEmailModel');
@@ -379,19 +379,19 @@ const UserController = {
             const { uid, ...updateFields } = req.body;
             const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
             const mobileUserCollectionRef = db.collection(collectionName);
-
+    
             Object.keys(updateFields).forEach(key => {
                 if (updateFields[key] === undefined) {
                     delete updateFields[key];
                 }
             });
-    
-            await mobileUserCollectionRef.doc(uid).update(updateFields);
+
+            await mobileUserCollectionRef.doc(uid).set(updateFields, { merge: true });
             res.status(200).json({ message: 'Successfully updated data' });
         } catch (error) {
             next(error);
         }
-    },   
+    },
 
     /**
      * Handles the health check endpoint.
