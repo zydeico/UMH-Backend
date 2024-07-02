@@ -163,38 +163,34 @@ const TaskController = {
             const taskID = req.body.taskID;
             const updatedTask = req.body.NewInformation;
 
-            if (!uid || !taskID || !updatedTask) {
-                return res.status(404).json({ message: 'Missing uid, taskID or updatedTask' });
-            }
-
             if (typeof uid !== 'string' || uid.trim() === '' || typeof taskID !== 'string' || taskID.trim() === '') {
                 return res.status(400).json({ message: 'Invalid UID or taskID format' });
             }
-
-            if (!updatedTask.taskName || !updatedTask.taskDescription || !updatedTask.taskFileURL || updatedTask.taskCompleted === undefined) {
-                return res.status(400).json({ message: 'Missing taskName, taskDescription, taskFileURL or taskCompleted' });
+    
+            if (!uid || !taskID || !updatedTask) {
+                return res.status(404).json({ message: 'Missing uid, taskID or updatedTask' });
             }
-
+    
             const mobileUserCollectionName = process.env.MOBILEUSERCOLLECTIONNAME;
             const taskDocRef = db.collection(mobileUserCollectionName).doc(uid).collection(process.env.TASKSSUBCOLLECTION).doc(taskID);
             const docSnapshot = await taskDocRef.get();
-
+    
             if (!docSnapshot.exists) {
                 return res.status(404).json({ message: 'Task not found' });
             }
-
+    
             await taskDocRef.set({
                 Task: {
                     ...docSnapshot.data().Task,
                     ...updatedTask
                 }
             }, { merge: true });
-
+    
             return res.status(200).json({ message: 'Task updated successfully' });
-        } catch(error) {
+        } catch (error) {
             return res.status(500).send({ message: 'Unexpected error', error: error.message });
         }
-    }
+    }    
 };
 
 module.exports = TaskController;
