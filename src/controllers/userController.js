@@ -22,29 +22,43 @@ const UserController = {
      */
     async getAllData(req, res, next) {
         try {
-            const collectionsSnapshot = await db.listCollections();
             const allData = {};
-    
-            for (const collectionRef of collectionsSnapshot) {
-                const collectionName = collectionRef.id;
-                const docsSnapshot = await collectionRef.get();
-                const docs = [];
-    
-                docsSnapshot.forEach(doc => {
-                    const docData = doc.data();
-                    const docWithId = { ...docData, id: doc.id };
-                    docs.push(docWithId);
-                });
-    
-                allData[collectionName] = docs;
+            async function getAllDocumentsAndSubcollections(parentPath, parentRef) {
+                try {
+                    const querySnapshot = await parentRef.get();
+                    const collectionData = [];
+                    
+                    querySnapshot.forEach(doc => {
+                        const docData = doc.data();
+                        const docWithId = { id: doc.id, ...docData };
+                        collectionData.push(docWithId);
+                    });
+
+                    allData[parentPath] = collectionData;
+
+                    const subCollections = await parentRef.listCollections();
+                    await Promise.all(subCollections.map(async subCollectionRef => {
+                        const subCollectionName = subCollectionRef.id;
+                        const subCollectionPath = `${parentPath}/${subCollectionName}`;
+                        await getAllDocumentsAndSubcollections(subCollectionPath, subCollectionRef);
+                    }));
+                } catch (error) {
+                    res.status(500).json({ error: 'Error retrieving data' });
+                }
             }
-    
+
+            const rootCollections = await db.listCollections();
+            await Promise.all(rootCollections.map(async rootCollectionRef => {
+                const rootCollectionName = rootCollectionRef.id;
+                const rootCollectionPath = `${rootCollectionName}`;
+                await getAllDocumentsAndSubcollections(rootCollectionPath, rootCollectionRef);
+            }));
             res.status(200).json(allData);
         } catch (error) {
-            next(error);
+            res.status(500).json({ error: 'Error retrieving data' });
         }
-    },    
-
+    },
+    
     /**
      * Inserts random emails into the 'emails' collection in the database.
      * @param {Object} res - The response object.
