@@ -20,24 +20,19 @@ jobs:
           ./google-cloud-sdk/install.sh --quiet
           echo "${{ secrets.GCLOUD_AUTH }}" > /tmp/gcloud.json
           ./google-cloud-sdk/bin/gcloud auth activate-service-account --key-file=/tmp/gcloud.json
-          ./google-cloud-sdk/bin/gcloud config set project cdtest-406103
+          ./google-cloud-sdk/bin/gcloud config set project umhbackend
+          ./google-cloud-sdk/bin/gcloud config set run/region us-west1
 
-      - name: Build Docker image
+      - name: Build and Submit Docker image to Google Container Registry
         run: |
-          docker build -t nodejs-sample-image .
-
-      - name: Configure Docker and push image
-        run: |
-          ./google-cloud-sdk/bin/gcloud auth configure-docker
-          docker tag nodejs-sample-image gcr.io/cdtest-406103/nodejs-sample-image
-          docker push gcr.io/cdtest-406103/nodejs-sample-image
+          ./google-cloud-sdk/bin/gcloud builds submit --tag gcr.io/umhbackend/umhbackend
 
       - name: Deploy to Google Cloud Run
         run: |
-          ./google-cloud-sdk/bin/gcloud run deploy nodejs-sample-service \
-            --image=gcr.io/cdtest-406103/nodejs-sample-image \
+          ./google-cloud-sdk/bin/gcloud run deploy umhbackend \
+            --image gcr.io/umhbackend/umhbackend \
             --platform=managed \
-            --region=us-central1 \
+            --region=us-west1 \
             --allow-unauthenticated
 
   send-notification-successful:
