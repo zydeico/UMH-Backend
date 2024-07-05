@@ -37,6 +37,7 @@ const DistributionsController = {
                         distributionTo: distributions.distributionTo,
                         distributionAmmount: distributions.distributionAmmount,
                         distributionReason: distributions.distributionReason,
+                        distributionRelationShip: distributions.distributionRelationShip,
                         dateAdded: now.replace('T', ' '),
                         distributionID: newDistributionDocRef.id
                     },
@@ -152,7 +153,7 @@ const DistributionsController = {
                 return res.status(400).json({ message: 'Invalid UID format' });
             }
 
-            if (typeof updateDistribution !== 'object' || !updateDistribution.distributionTo || !updateDistribution.distributionAmmount || !updateDistribution.distributionReason) {
+            if (typeof updateDistribution !== 'object' || !updateDistribution.distributionTo || !updateDistribution.distributionAmmount || !updateDistribution.distributionReason || !updateDistribution.distributionRelationShip) {
                 return res.status(400).json({ message: 'Invalid distribution format' });
             }
 
