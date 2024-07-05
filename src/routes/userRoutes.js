@@ -53,9 +53,9 @@ router.post('/msusers/linkAccount', verifyToken, UtilsServerController.linkEmail
 router.post('/msusers/retrieve_familiar_information', verifyToken, FamiliarController.getRegisteredFamily);
 router.post('/msusers/add_familiar', verifyToken, FamiliarController.addFamilyMember);
 
-// MSCards
-router.post('/mscards/register_card', verifyToken, CardsController.registerCard);
-router.post('/mscards/get_cards', verifyToken, CardsController.getCards);
+// MSLetters
+router.post('/msletters/register_letter', verifyToken, CardsController.registerCard);
+router.post('/msletters/get_letters', verifyToken, CardsController.getCards);
 
 // MSContacts
 router.post('/mscontacts/new_contact', verifyToken, ContactsController.newContact);
@@ -102,8 +102,8 @@ router.delete('/deleteUID', verifyToken, UserController.deleteUid);
 // MSUsers
 router.delete('/msusers/delete_familiar', verifyToken, FamiliarController.deleteFamilyMember);
 
-// MSCards
-router.delete('/mscards/delete_card', verifyToken, CardsController.deleteCard);
+// MSLetters
+router.delete('/msletters/delete_letter', verifyToken, CardsController.deleteCard);
 
 // MSContacts
 router.delete('/mscontacts/delete_contact', verifyToken, ContactsController.deleteContact);
@@ -144,8 +144,8 @@ router.patch('/msusers/update_profile_user', verifyToken, UserController.patchDa
 router.patch('/msusers/verify_user_email', verifyToken, UserController.patchEmailVerification);
 router.patch('/msusers/update_familiar', verifyToken, FamiliarController.updateFamilyMember);
 
-// MSCards
-router.patch('/mscards/update_card', verifyToken, CardsController.updateCard);
+// MSLetters
+router.patch('/msletters/update_letter', verifyToken, CardsController.updateCard);
 
 // MSContacts
 router.patch('/mscontacts/update_contact', verifyToken, ContactsController.updateContact);

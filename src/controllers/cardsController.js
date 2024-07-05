@@ -156,7 +156,7 @@ const CardsController = {
                 return res.status(400).json({ message: 'Invalid UID format' });
             }
     
-            if (typeof updatedCardData !== 'object' || !updatedCardData.cardFamiliarMemberToWhom || !updatedCardData.cardFileURL || !updatedCardData.cardType || !updatedCardData.cardTitle) {
+            if (typeof updatedCardData !== 'object' || !updatedCardData.cardFamiliar || !updatedCardData.cardFileURL || !updatedCardData.cardMessage || !updatedCardData.cardTitle) {
                 return res.status(400).json({ message: 'Invalid Information format' });
             }
     
