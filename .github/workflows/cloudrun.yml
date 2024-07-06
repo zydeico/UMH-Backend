@@ -13,26 +13,32 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js environment
-        uses: actions/setup-node@v2
-        with:
-          node-version: '22'
-
-      - name: Install dependencies
-        run: npm install
+      - name: Set up Google Cloud SDK
+        run: |
+          curl -o google-cloud-sdk.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-372.0.0-linux-x86_64.tar.gz
+          tar -xf google-cloud-sdk.tar.gz
+          ./google-cloud-sdk/install.sh --quiet
+          echo "${{ secrets.GCLOUD_AUTH }}" > /tmp/gcloud.json
+          ./google-cloud-sdk/bin/gcloud auth activate-service-account --key-file=/tmp/gcloud.json
+          ./google-cloud-sdk/bin/gcloud config set project umhbackend
+          ./google-cloud-sdk/bin/gcloud config set run/region us-west1
 
       - name: Build Docker image
-        run: docker build -t umhbackend .
-
-      - name: Configure Google Cloud SDK and deploy
         run: |
-          gcloud config set project umhbackend
-          gcloud config set run/region us-west1
-          gcloud builds submit --tag gcr.io/umhbackend/umhbackend
-          gcloud run deploy umhbackend \
-            --image gcr.io/umhbackend/umhbackend \
-            --platform managed \
-            --region us-west1 \
+          docker build -t umhbackend .
+
+      - name: Configure Docker and push image
+        run: |
+          ./google-cloud-sdk/bin/gcloud auth configure-docker
+          docker tag umhbackend gcr.io/umhbackend/umhbackend
+          docker push gcr.io/umhbackend/umhbackend
+
+      - name: Deploy to Google Cloud Run
+        run: |
+          ./google-cloud-sdk/bin/gcloud run deploy umhbackend \
+            --image=gcr.io/umhbackend/umhbackend \
+            --platform=managed \
+            --region=us-west1 \
             --allow-unauthenticated
 
   send-notification-successful:
