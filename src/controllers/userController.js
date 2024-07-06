@@ -22,42 +22,55 @@ const UserController = {
      */
     async getAllData(req, res, next) {
         try {
+            const collectionsSnapshot = await db.listCollections();
             const allData = {};
-            async function getAllDocumentsAndSubcollections(parentPath, parentRef) {
-                try {
-                    const querySnapshot = await parentRef.get();
-                    const collectionData = [];
-                    
-                    querySnapshot.forEach(doc => {
-                        const docData = doc.data();
-                        const docWithId = { id: doc.id, ...docData };
-                        collectionData.push(docWithId);
+    
+            async function getAllDocs(collectionRef) {
+                const snapshot = await collectionRef.get();
+                const docs = [];
+    
+                // Array to store all promises for fetching subcollections
+                const subcollectionPromises = [];
+    
+                snapshot.forEach(doc => {
+                    const docData = doc.data();
+                    const docWithId = { id: doc.id, ...docData };
+    
+                    // Add promise for fetching subcollections to array
+                    const promise = doc.ref.listCollections().then(subcollections => {
+                        const subcollectionPromises = subcollections.map(async subcollectionRef => {
+                            const subcollectionName = subcollectionRef.id;
+                            const subDocs = await getAllDocs(subcollectionRef);
+                            docWithId[subcollectionName] = subDocs;
+                        });
+    
+                        // Return promise that resolves when all subcollections are fetched
+                        return Promise.all(subcollectionPromises);
                     });
-
-                    allData[parentPath] = collectionData;
-
-                    const subCollections = await parentRef.listCollections();
-                    await Promise.all(subCollections.map(async subCollectionRef => {
-                        const subCollectionName = subCollectionRef.id;
-                        const subCollectionPath = `${parentPath}/${subCollectionName}`;
-                        await getAllDocumentsAndSubcollections(subCollectionPath, subCollectionRef);
-                    }));
-                } catch (error) {
-                    res.status(500).json({ error: 'Error retrieving data' });
-                }
+    
+                    subcollectionPromises.push(promise);
+    
+                    docs.push(docWithId);
+                });
+    
+                // Wait for all subcollection promises to resolve before returning docs
+                await Promise.all(subcollectionPromises);
+    
+                return docs;
             }
-
-            const rootCollections = await db.listCollections();
-            await Promise.all(rootCollections.map(async rootCollectionRef => {
-                const rootCollectionName = rootCollectionRef.id;
-                const rootCollectionPath = `${rootCollectionName}`;
-                await getAllDocumentsAndSubcollections(rootCollectionPath, rootCollectionRef);
-            }));
+    
+            // Iterate through collections and fetch all documents and subcollections
+            for (const collectionRef of collectionsSnapshot) {
+                const collectionName = collectionRef.id;
+                const docs = await getAllDocs(collectionRef);
+                allData[collectionName] = docs;
+            }
+    
             res.status(200).json(allData);
         } catch (error) {
-            res.status(500).json({ error: 'Error retrieving data' });
+            res.status(500).send(`Something went wrong: ${error.message}`);
         }
-    },
+    },    
     
     /**
      * Inserts random emails into the 'emails' collection in the database.
