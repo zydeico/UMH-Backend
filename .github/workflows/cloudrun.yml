@@ -18,7 +18,7 @@ jobs:
           curl -o google-cloud-sdk.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-372.0.0-linux-x86_64.tar.gz
           tar -xf google-cloud-sdk.tar.gz
           ./google-cloud-sdk/install.sh --quiet
-          echo "${{ secrets.GCLOUD_AUTH }}" > /tmp/gcloud.json
+          echo '${{ secrets.GCLOUD_AUTH }}' > /tmp/gcloud.json
           ./google-cloud-sdk/bin/gcloud auth activate-service-account --key-file=/tmp/gcloud.json
           ./google-cloud-sdk/bin/gcloud config set project umhbackend
           ./google-cloud-sdk/bin/gcloud config set run/region us-west1
