@@ -36,9 +36,10 @@ jobs:
       - name: Deploy to Google Cloud Run
         run: |
           ./google-cloud-sdk/bin/gcloud run deploy umhbackend \
-            --image=gcr.io/umhbackend/umhbackend \
-            --platform=managed \
-            --region=us-west1 \
+            --image gcr.io/umhbackend/umhbackend \
+            --platform managed \
+            --region us-west1 \
+            --project umhbackend \
             --allow-unauthenticated
 
   send-notification-successful:
