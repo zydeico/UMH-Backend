@@ -1,5 +1,5 @@
 {
-  "name": "umh-backend",
+  "name": "umhbackend",
   "version": "3.4.1",
   "description": "Backend for the UMH project",
   "main": "index.js",
