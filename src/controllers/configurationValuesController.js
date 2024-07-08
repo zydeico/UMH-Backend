@@ -76,7 +76,7 @@ const ConfigurationValuesController = {
      */
     async getFamiliarMembers(req, res) {
         try {
-            const familyCode = req.body.familyCode;
+            const familyCode = req.body.languageCode;
             if (!familyCode) {
                 return res.status(400).json({ message: 'Missing family code in the request body' });
             }
@@ -118,7 +118,7 @@ const ConfigurationValuesController = {
      */
     async getContactsTypes(req, res) {
         try {
-            const contactCode = req.body.contactCode;
+            const contactCode = req.body.languageCode;
             if (!contactCode) {
                 return res.status(400).json({ message: 'Missing contact code in the request body' });
             }
