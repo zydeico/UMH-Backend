@@ -39,6 +39,7 @@ const FavoritesController = {
                         favoriteType: favorite.favoriteType,
                         favoriteCategory: favorite.favoriteCategory,
                         favoriteNote: favorite.favoriteNote,
+                        favoriteURL: favorite.favoriteURL,
                         dateAdded: now.replace('T', ' '),
                         favoriteID: newFavoriteDocRef.id
                     },
@@ -163,7 +164,7 @@ const FavoritesController = {
                 return res.status(400).json({ message: 'Invalid UID or favoriteID format' });
             }
 
-            if (typeof updateFavoriteData !== 'object' || !updateFavoriteData.favoriteTitle || !updateFavoriteData.favoriteType || !updateFavoriteData.favoriteCategory || !updateFavoriteData.favoriteNote) {
+            if (typeof updateFavoriteData !== 'object' || !updateFavoriteData.favoriteTitle || !updateFavoriteData.favoriteType || !updateFavoriteData.favoriteCategory || !updateFavoriteData.favoriteNote || !updateFavoriteData.favoriteURL) {
                 return res.status(400).json({ message: 'Invalid Information format' });
             }
 
