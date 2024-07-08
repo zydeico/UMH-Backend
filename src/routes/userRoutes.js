@@ -12,6 +12,7 @@ const GiftsController = require('../controllers/giftsController');
 const NotesController = require('../controllers/notesController');
 const TaskController = require('../controllers/taskController');
 const LegacyController = require('../controllers/legacyController');
+const ConfigurationValuesController = require('../controllers/configurationValuesController');
 
 
 /*
@@ -24,6 +25,7 @@ router.get('/getData', verifyToken, UserController.getAllData);
 // Authentication doesn't require token verification
 router.get('/newToken', UserController.generateToken);
 router.get('/health', UserController.health);
+router.get('/msconfigurations/get_links', verifyToken, ConfigurationValuesController.getLinks);
 
 
 /*
@@ -42,6 +44,10 @@ router.post('/searchSpecificUser', verifyToken, UtilsServerController.searchUser
 router.post('/searchByUID', verifyToken, UtilsServerController.searchByUID);
 router.post('/postUnitedStatesStates', verifyToken, UtilsServerController.insertStates);
 router.post('/post_familiar', verifyToken, UtilsServerController.insertFamiliars);
+router.post('/msconfigurations/get_states', verifyToken, ConfigurationValuesController.getStates);
+router.post('/msconfigurations/get_familiar_relationships', verifyToken, ConfigurationValuesController.getFamiliarMembers);
+router.post('/msconfigurations/get_contact_types', verifyToken, ConfigurationValuesController.getContactsTypes);
+router.post('/msconfigurations/get_category_types', verifyToken, ConfigurationValuesController.getCategoryTypes);
 
 /* 
 * Routes for the User model POST
