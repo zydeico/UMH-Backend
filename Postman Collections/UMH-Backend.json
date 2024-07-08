@@ -1,0 +1,3799 @@
+{
+	"info": {
+		"_postman_id": "a874a85c-a68e-4c55-9ffe-dc5672710247",
+		"name": "Donut",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "UMH",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "MSConfigurations",
+							"item": [
+								{
+									"name": "Get links",
+									"id": "4c08799f-bdd2-4823-979a-df2dfbe30294",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ2MDI1OSwiZXhwIjoxNzIwNDYzODU5fQ.4smDYUa-z3IzumYaylUI3fRW3Ypnd4dOetwfw5SQ-ko",
+												"type": "text"
+											}
+										],
+										"url": "{{UMH Local}}api/msconfigurations/get_links"
+									},
+									"response": []
+								}
+							],
+							"id": "6774ab2e-685f-4350-abad-e17f83126e2f"
+						},
+						{
+							"name": "GET Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "207655c4-c2b8-483d-a58e-8b8199c291e0",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"id": "ea9aa118-139d-41d3-a65d-7c7d40ca9dd2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Ocp-Apim-Subscription-Key",
+										"value": "86A5A3BB5EC4A4A6B7CFC5FA414C8"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{UMH Local}}api/newToken",
+								"description": "### API Request Description\n\nThis endpoint makes an HTTP GET request to `{{UMH Local}}api/newToken` to retrieve a new token.\n\n#### Request Body\n\nThis request does not require a request body.\n\n#### Response Body\n\nThe response is in JSON format with the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"Authorization\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```\n\nThe response includes the `Authorization` key, which contains the new token."
+							},
+							"response": []
+						},
+						{
+							"name": "Get all data",
+							"id": "1e9d50be-f188-4784-a4be-7cf425bcbaf0",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDI4NTg4NCwiZXhwIjoxNzIwMjg5NDg0fQ.4mf02J9LTFs0J9g8tNOZCC3zjarlsWMVaelRlZdXmYU"
+									}
+								],
+								"url": "{{UMH Local}}api/getData",
+								"description": "\n### Get Data\n\nThis endpoint is used to retrieve data from the server.\n\n#### Request Body\nThis request does not require a request body.\n\n#### Response\nThe response will contain the data requested from the server.\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Health",
+							"id": "d7af89da-8f7e-4938-bca5-c6bcb59ad69b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{UMHProdGCloud}}api/health",
+								"description": "### Health Check API\n\nThis API endpoint sends an HTTP GET request to {{UMHProdGCloud}}api/health to perform a health check of the system.\n\n#### Request\n\nThe request does not require a request body. It simply sends an HTTP GET request to the specified endpoint.\n\n#### Response\n\nThe response for this request is a JSON object representing the health status of the system. Below is a JSON schema representing the structure of the response:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"details\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```\n\nThe `status` property indicates the overall health status, while the `details` property provides additional details about the health status."
+							},
+							"response": []
+						}
+					],
+					"id": "f80e0d2b-e43f-4833-b4b3-25f9925606c3"
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "MSUsers",
+							"item": [
+								{
+									"name": "Add a familiar member",
+									"id": "5d4decc3-6bed-4ab5-80d7-d60686d5b78d",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODk3NTU2OSwiZXhwIjoxNzE4OTc5MTY5fQ.1cZTo42dI8YuWj1NaRqh095U0y3k-i-aPzYnK33qlOk",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Member\": [\n        {\n            \"email\": \"{{$randomEmail}}\",\n            \"name\": \"{{$randomFullName}}\",\n            \"phone\": \"{{$randomPhoneNumber}}\",\n            \"relationship\": \"son\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msusers/add_familiar",
+										"description": "This endpoint allows you to add a familiar member for a user. The HTTP POST request should be made to {{UMH Local}}api/msusers/add_familiar.\n\n### Request Body\n\nThe request body should be in raw format and include the following parameters:\n\n- `uid` (string): The ID of the user for whom the familiar member is being added.\n    \n- `Member` (array): An array containing the details of the familiar member to be added, including:\n    - `email` (string): The email address of the familiar member.\n        \n    - `name` (string): The name of the familiar member.\n        \n    - `phone` (string): The phone number of the familiar member.\n        \n    - `relationship` (string): The relationship of the familiar member with the user.\n        \n\n### Response\n\nThe response to the request will include the status of the operation, along with any relevant message or error information."
+									},
+									"response": []
+								},
+								{
+									"name": "Get all familiar information",
+									"id": "9bd57250-60f0-4476-802b-796686bc1642",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTM2ODcyMCwiZXhwIjoxNzE5MzcyMzIwfQ.FkwR1pBofuToMnGvErIce2YhGQTT_LotJLn7x2X8cyQ"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msusers/retrieve_familiar_information"
+									},
+									"response": []
+								},
+								{
+									"name": "Getting user data /me",
+									"id": "7d303cd8-05c0-463f-a1a3-94cf63a82512",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true,
+										"disabledSystemHeaders": {}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTU4MzE2OCwiZXhwIjoxNzE5NTg2NzY4fQ.Dn7ysUIYRQBHLUQtsTxezHmMu9pXVAEjwJyk5mV76R4"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"667ec10f000b0e7bf13c915f\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msusers/me"
+									},
+									"response": []
+								},
+								{
+									"name": "Register new user",
+									"id": "e02f9efa-29aa-4da5-af37-d057b3347718",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTU4MzE2OCwiZXhwIjoxNzE5NTg2NzY4fQ.Dn7ysUIYRQBHLUQtsTxezHmMu9pXVAEjwJyk5mV76R4"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"Zs6VFGoBlIfo94phkUBL8KWgjyy2\",\n    \"pushTokenAPN\": \"esk2pdPXIEEUiSfad8gZc4:APA91bH0Vh0O6E6HtIWVWqEfTrAxoifVtbksPcsV7AyH3oAnlraM9R5XyxGsPSwqej5js8dupqcmhsDcQ8QKCiCGSn5kmyK0BSyVOBJNBPnHZ7dou74E8ign52RJEY3NTDU1gxU77S4B\",\n    \"photoURL\": \"https://firebasestorage.googleapis.com:443/v0/b/umhbackend.appspot.com/o/mobile_user%2FnS0pMWe1xVRpXtwOtW1VRb9X9Ei1%2FProfilePictures%2FprofilePhoto_1716423997.824535.jpeg?alt=media&token=16edeb57-d0ce-4760-bf6d-a79c84f22dce\",\n    \"name\": \"{{$randomFullName}}\",\n    \"isBiometricActive\": {{$randomBoolean}},\n    \"generatedByApi\": \"{{$randomBoolean}}\",\n    \"socialSecurityNumber\": \"4324234234\",\n    \"email\": \"{{$randomEmail}}\",\n    \"platform\": \"iOS\",\n    \"phone\": \"{{$randomPhoneNumber}}\",\n    \"password\": \"{{$randomPassword}}\",\n    \"birthDay\": \"96/97/94\",\n    \"state\": \"California\",\n    \"pin\": \"1234\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msusers/register_user"
+									},
+									"response": []
+								},
+								{
+									"name": "General update user data",
+									"id": "019a8af9-6d12-49d5-85f5-8e0f25a1ef1c",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNjkwMzY1OSwiZXhwIjoxNzE2OTA3MjU5fQ.0ZxuhfZCJyZmcq9hlMvFoysmiKNHcYjz5BULU7xL3xQ"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"DNLqNpyTmiuhDFht3fWO9iuBnMgE\",\n    \"userData\": {\n        \"ssn\": \"43434\"\n    }\n}"
+										},
+										"url": "{{UMH Local}}api/msusers/update_general_info"
+									},
+									"response": []
+								},
+								{
+									"name": "Link phone and email",
+									"id": "7653e8db-7963-4f17-9873-29bd0e2cb8ea",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNjg2MDg4MSwiZXhwIjoxNzE2ODY0NDgxfQ.wbdjO52EFCm-LCSer_1jcjw3DARWRl1FHUPMME2Kz1I"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"mrocha.dev92@gmail.com\",\n    \"phone\": \"+524433063061\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msusers/linkAccount"
+									},
+									"response": []
+								}
+							],
+							"id": "a756853b-8aae-4397-94b8-e2eee643e691"
+						},
+						{
+							"name": "MSLetters",
+							"item": [
+								{
+									"name": "Post a new letter",
+									"id": "06fc45eb-5dc1-4934-b3a0-b15171eb11fe",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDIxMDk2MSwiZXhwIjoxNzIwMjE0NTYxfQ.cDUJjx04bgAqvQE45A1PqXNMyHR72a77rUlAAB962OY",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Card\": [\n        {\n            \"cardTitle\": \"Hola mundo, esta es una nueva carta\",\n            \"cardFamiliar\": \"Pedro navajas\",\n            \"cardFileURL\": \"\",\n            \"cardMessage\": \"Hola mundo\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msletters/register_letter"
+									},
+									"response": []
+								},
+								{
+									"name": "Get all letters",
+									"id": "43793c2f-9380-4a18-8cf1-5947d2205ea5",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDIxMDk2MSwiZXhwIjoxNzIwMjE0NTYxfQ.cDUJjx04bgAqvQE45A1PqXNMyHR72a77rUlAAB962OY",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msletters/get_letters"
+									},
+									"response": []
+								}
+							],
+							"id": "cc4659c7-8823-419f-acf3-e2906cbe8e5a"
+						},
+						{
+							"name": "MSContacts",
+							"item": [
+								{
+									"name": "New contact",
+									"id": "30650627-cbd2-45bd-8dfe-678b45d9ab21",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTA2NzU3MCwiZXhwIjoxNzE5MDcxMTcwfQ.9XiI8W9fZwE_xpgj9g1v7rZ8NFV9y3On6HbKeyoV5RQ",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Contact\": [\n        {\n            \"contactName\": \"Israel\",\n            \"contactPhone\": \"{{$randomPhoneNumber}}\",\n            \"contactEmail\": \"{{$randomEmail}}\",\n            \"contactType\": \"Project manager\",\n            \"contactAddress\": \"{{$randomStreetAddress}}\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mscontacts/new_contact"
+									},
+									"response": []
+								},
+								{
+									"name": "Get all contacts",
+									"id": "ceace49d-62aa-4ad3-9855-474a201e8eb6",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTA2NjQ1NywiZXhwIjoxNzE5MDcwMDU3fQ.0ModFwtUhbUJDwM7zbMNzOyEInz90YsFGCloUJIx-18",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mscontacts/get_contacts"
+									},
+									"response": []
+								}
+							],
+							"id": "0dc19b9e-4cda-4caa-b4a8-748697c63df5"
+						},
+						{
+							"name": "MSFavorites",
+							"item": [
+								{
+									"name": "Register favorite",
+									"id": "2cbc2324-6ab6-4fbb-9b8d-2d33c29614cf",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ0OTg1MiwiZXhwIjoxNzIwNDUzNDUyfQ.v4lU9Ayw2nog5jBFq1nbvWpfK30GrsRcK4hzGaGBBM0",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Favorite\": [\n        {\n            \"favoriteTitle\": \"La monja\",\n            \"favoriteType\": \"Cancion\",\n            \"favoriteCategory\": \"Director\",\n            \"favoriteNote\": \"Estas son notas\",\n            \"favoriteURL\": \"google.com\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msfavorites/register_favorite"
+									},
+									"response": []
+								},
+								{
+									"name": "Get favorites",
+									"id": "254b3bdd-9afb-4fe1-ae70-6dac13fec2c5",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ0OTg1MiwiZXhwIjoxNzIwNDUzNDUyfQ.v4lU9Ayw2nog5jBFq1nbvWpfK30GrsRcK4hzGaGBBM0",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msfavorites/get_favorites"
+									},
+									"response": []
+								}
+							],
+							"id": "4d85dda6-0e9d-4530-ad3e-5fa6ea596090"
+						},
+						{
+							"name": "MSDistributions",
+							"item": [
+								{
+									"name": "Add distribution",
+									"id": "91011fd5-f5d0-4e6c-ba03-049c4b180b8f",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDE5MTQyNCwiZXhwIjoxNzIwMTk1MDI0fQ.AJaQjkrTvjsiNhmESbgy7T2sZrpf6GTbel6hclog0ek",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Distribution\": [\n        {\n            \"distributionTo\": \"Daniel\",\n            \"distributionAmmount\": \"12323\",\n            \"distributionReason\": \"No reason\",\n            \"distributionRelationShip\": \"Hijo\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msdistributions/register_distribution",
+										"description": "### Register Distribution\n\nThis endpoint is used to register a distribution by making an HTTP POST request to {{UMH Local}}api/msdistributions/register_distribution.\n\n#### Request Body\n\n- `uid` (string, required): The unique identifier of the user.\n    \n- `Distribution` (array, required): An array containing distribution details.\n    - `distributionTo` (string, required): The recipient of the distribution.\n        \n    - `distributionAmmount` (string, required): The amount of distribution.\n        \n    - `distributionReason` (string, required): The reason for the distribution.\n        \n\n#### Response\n\nThe response will contain the status of the distribution registration, along with any relevant information or error messages."
+									},
+									"response": []
+								},
+								{
+									"name": "Get distributions",
+									"id": "19a02c65-7e22-4f66-9eb7-521c1c6920f8",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTMyMzA3NywiZXhwIjoxNzE5MzI2Njc3fQ.3wjOQFNLYPAP5Nf8pzpRtTh4AAIi1pvIolga2JsOzr4",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msdistributions/get_distributions"
+									},
+									"response": []
+								}
+							],
+							"id": "58972a0e-1906-48fd-aedb-33f3538aef08"
+						},
+						{
+							"name": "MSGifts",
+							"item": [
+								{
+									"name": "Register new gift",
+									"id": "2289b81a-f5b2-441d-956c-97c180906bec",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTI2NzkzNiwiZXhwIjoxNzE5MjcxNTM2fQ.jwDAD-RBLHA-ozGvzQUbcsKZtteXtYVHaag49cYq8cQ",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Gift\": [\n        {\n            \"lovedPersonToGift\": \"Daniel\",\n            \"giftType\": \"Regalo de bodas\",\n            \"giftTypeDetailDescription\": \"Este es un regalos de bodas\",\n            \"giftToReason\": \"El motivo es simple...\",\n            \"giftAccomplished\": \"Boda\",\n            \"giftDescription\": \"Hola Daniel, este es tu regalo de bodas\",\n            \"giftLinkURL\": \"https://console.firebase.google.com/u/0/project/umhbackend/firestore/databases/-default-/data/~2Fmobile_user~2F7mwmamnUzkUlQmNJnX6y5XpRqw93~2FGifts~2FCGuDPJD0QiWsqI3iipaW\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msgifts/register_gift"
+									},
+									"response": []
+								},
+								{
+									"name": "Get all gifts",
+									"id": "879e6e26-2197-4031-9d86-a3e9171c6edb",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTIzOTc1MiwiZXhwIjoxNzE5MjQzMzUyfQ.YHbpEYpTmYyEbz3nNUluXsIFmFGieUIRPUXWUXLoVWQ",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msgifts/get_gifts"
+									},
+									"response": []
+								}
+							],
+							"id": "f1642599-8668-4e80-9cb7-4f06b3b88cff"
+						},
+						{
+							"name": "MSNotes",
+							"item": [
+								{
+									"name": "Register new note",
+									"id": "46770f98-6f0b-47db-bda3-39a841715483",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTQzMzkyMCwiZXhwIjoxNzE5NDM3NTIwfQ.qOi1cgh8cRhD5eIENkn7Gh1rqbQy30WMnym1eF-wrlQ",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Note\": [\n        {\n            \"noteTitle\": \"{{$randomJobTitle}}\",\n            \"noteDescription\": \"{{$randomJobDescriptor}}\",\n            \"noteFileURL\": \"{{$randomUrl}}\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msnotes/register_note"
+									},
+									"response": []
+								},
+								{
+									"name": "Get notes",
+									"id": "94a278e6-b1cd-4865-9598-749c38f2ea24",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTMyMzA3NywiZXhwIjoxNzE5MzI2Njc3fQ.3wjOQFNLYPAP5Nf8pzpRtTh4AAIi1pvIolga2JsOzr4",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msnotes/get_notes"
+									},
+									"response": []
+								}
+							],
+							"id": "a26d79be-61b7-47c9-8b40-f935e84f5166"
+						},
+						{
+							"name": "MSTask",
+							"item": [
+								{
+									"name": "Create new task",
+									"id": "05ea96ef-e5e0-4b8b-a8af-f83c31f5398b",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTYwMDQ4MCwiZXhwIjoxNzE5NjA0MDgwfQ.sMyhzYHzkz7d7PBHVpPHPNVnE6kUgmgrZCUi8qyjoAo",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Task\": [\n        {\n            \"taskName\": \"Ir de viaje\",\n            \"taskDescription\": \"Ir a subir una montaña en un viaje\",\n            \"taskFileURL\": \"{{$randomUrl}}\",\n            \"taskCompleted\": true\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mstasks/register_task",
+										"description": "### Register Task\n\nThis endpoint is used to register a new task.\n\n#### Request Body\n\n- `uid` (string, required): The user ID.\n    \n- `Task` (array, required): An array of tasks containing the following parameters:\n    - `taskName` (string, required): The name of the task.\n        \n    - `taskDescription` (string, required): The description of the task.\n        \n    - `taskFileURL` (string, optional): The URL of the file related to the task.\n        \n    - `taskCompleted` (boolean, required): Indicates whether the task is completed.\n        \n\n#### Response\n\nThe response for this request is a JSON object with the following properties:\n\n- `status` (string): Indicates the status of the request.\n    \n- `message` (string): A message providing additional information about the request status.\n    \n\nExample:\n\n``` json\n{\n  \"status\": \"success\",\n  \"message\": \"Task registered successfully\"\n}\n\n ```\n\n#### JSON Schema for Response\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```"
+									},
+									"response": []
+								},
+								{
+									"name": "Get all task",
+									"id": "c96a0ae3-392b-4422-9f8d-0eb875f28409",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTUyNjY4NCwiZXhwIjoxNzE5NTMwMjg0fQ.ha2RNdjJCJRDa7VUh1T4rGulf8rLPTW_PTYTGK3IVo4",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mstasks/get_tasks"
+									},
+									"response": []
+								}
+							],
+							"id": "6acf9ea5-73c6-4bfe-84b5-29d633a79344"
+						},
+						{
+							"name": "MSLegacy",
+							"item": [
+								{
+									"name": "Register new Legacy contact",
+									"id": "c9b092a5-8a82-4b9d-acc9-30f0c230f3bc",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTUyNzU4MywiZXhwIjoxNzE5NTMxMTgzfQ.MamuzW1j2s17GozHggEnSPl0GSb2hcMVLFHqm4-nzRM",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Legacy\": [\n        {\n            \"legacyEmail\": \"mail@mail.com\",\n            \"legacyFullName\": \"Daniel\",\n            \"legacyPIN\": \"4324\",\n            \"legacyPhone\": \"432423432\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mslegacy/register_legacy_contact",
+										"description": "### Register Legacy Contact\n\nThis endpoint allows you to register a legacy contact by providing the necessary details.\n\n#### Request Body\n\n- `uid` (string, required): The user ID associated with the legacy contact.\n    \n- `Legacy` (array, required): An array containing the details of the legacy contact.\n    - `legacyEmail` (string, required): The email address of the legacy contact.\n        \n    - `legacyFullName` (string, required): The full name of the legacy contact.\n        \n    - `legacyPIN` (string, required): The PIN of the legacy contact.\n        \n    - `legacyPhone` (string, required): The phone number of the legacy contact.\n        \n\n#### Response\n\nThe response will contain the status of the registration process."
+									},
+									"response": []
+								},
+								{
+									"name": "Get legacy contacts",
+									"id": "c5805204-37e1-4dcf-a344-80a4b77e5b9d",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTQzMzkyMCwiZXhwIjoxNzE5NDM3NTIwfQ.qOi1cgh8cRhD5eIENkn7Gh1rqbQy30WMnym1eF-wrlQ",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mslegacy/get_legacy_contacts"
+									},
+									"response": []
+								}
+							],
+							"id": "3a27d7cd-cd7e-4594-a787-89fb0e3b8524"
+						},
+						{
+							"name": "MSConfigurations",
+							"item": [
+								{
+									"name": "Get states",
+									"id": "57f6ddea-7c94-44be-a881-280c221cebfb",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ3MzgyMSwiZXhwIjoxNzIwNDc3NDIxfQ.nLweTkX2pQ25BGXJcN5zREClL6zSZaql6L7m4Jx2VDI",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"languageCode\": \"es-mx\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msconfigurations/get_states"
+									},
+									"response": []
+								},
+								{
+									"name": "Get familiar relations",
+									"id": "d4008319-6e28-453c-ac38-c85544a9be9a",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ3NDIzNCwiZXhwIjoxNzIwNDc3ODM0fQ.hjokySZjpBzy2In3Br4kWI0dFfYY8-c7RBMm8xxrtvA",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"languageCode\": \"es-mx\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msconfigurations/get_familiar_relationships"
+									},
+									"response": []
+								},
+								{
+									"name": "Get contact types",
+									"id": "614857d6-f1e6-4ac9-877d-1632618ae8b3",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ3NDIzNCwiZXhwIjoxNzIwNDc3ODM0fQ.hjokySZjpBzy2In3Br4kWI0dFfYY8-c7RBMm8xxrtvA",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"languageCode\": \"en\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msconfigurations/get_contact_types"
+									},
+									"response": []
+								},
+								{
+									"name": "Get category types",
+									"id": "4632cb8a-2eb9-4be9-bae1-16c000d7a5e3",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ3NzIzMywiZXhwIjoxNzIwNDgwODMzfQ.q3Tj0i-PAQU7XothZWBWGCMaq4694UH4tLWzOe8VUwk",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"languageCode\": \"es-mx\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msconfigurations/get_category_types"
+									},
+									"response": []
+								}
+							],
+							"id": "b7fb15c5-5551-4558-8c4d-149043e157f7"
+						},
+						{
+							"name": "Insert dummy Data",
+							"id": "54c12446-1177-4c07-a4bf-7a04cb270d8b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxMTc0ODE5OX0.N3zJDorwZZhg_X4eB0cC6K2N6EDdXfMUKAw8bABzTec"
+									}
+								],
+								"url": "{{UMH Local}}api/insertEmails"
+							},
+							"response": []
+						},
+						{
+							"name": "Verify Token",
+							"id": "042b73b9-116c-41bc-9f98-259f56953f3c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Ocp-Apim-Subscription-Key",
+										"value": "86A5A3BB5EC4A4A6B7CFC5FA414C8"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"token\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCj6.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNzA0Mjk2NSwiZXhwIjoxNzE3MDQ2NTY1fQ.arW9J9N4K5MdCdvKv_xeNFJSdjqN-3DgDV4VVldLYlM\"\n}"
+								},
+								"url": "{{UMH Local}}api/verifyToken"
+							},
+							"response": []
+						},
+						{
+							"name": "Add email to email collection",
+							"id": "f5770780-9cf8-4196-a54c-c18f111b68a8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNjU3MzkwOSwiZXhwIjoxNzE2NTc3NTA5fQ.kX3Zwgsym16BBtU9Vhkl0mLEcLKFPDb7jOXEc22xBT0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"daniel.prolite@gmail.com\",\n    \"uid\": \"4QZGU08JcOuFMjZ4M9rO\"\n}"
+								},
+								"url": "{{UMH Local}}api/recordEmail"
+							},
+							"response": []
+						},
+						{
+							"name": "Search email",
+							"id": "1d029add-fac7-45f1-8b7a-f0dab38ca5a4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxMzEzMjE1NiwiZXhwIjoxNzEzMTM1NzU2fQ.MkWn2UnAv-6--ntonMh5XXR1eZL2uEkAszGdYCBia4Y"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"daniel.prolite@gmail.com\",\n    \"collections\": [\n        \"mobile_user\",\n        \"emails\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{UMH Local}}api/searchEmail"
+							},
+							"response": []
+						},
+						{
+							"name": "Search Phone",
+							"id": "05df6cf6-b59a-4169-b5c3-638d167fb15a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxMzEzMjE1NiwiZXhwIjoxNzEzMTM1NzU2fQ.MkWn2UnAv-6--ntonMh5XXR1eZL2uEkAszGdYCBia4Y",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"phone\": \"524131232261\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{UMH Local}}api/searchPhone"
+							},
+							"response": []
+						},
+						{
+							"name": "Search username",
+							"id": "37ae5042-a847-432f-ac69-25f8b8365bd1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxMzEzMjE1NiwiZXhwIjoxNzEzMTM1NzU2fQ.MkWn2UnAv-6--ntonMh5XXR1eZL2uEkAszGdYCBia4Y",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Pepito\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{UMH Local}}api/searchUserName"
+							},
+							"response": []
+						},
+						{
+							"name": "Search specific user",
+							"id": "5ef4459a-736d-48c7-8809-0d3934405995",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxMzM2Mjk1NSwiZXhwIjoxNzEzMzY2NTU1fQ.-cMS5XOkbeuyjH64_RlF2Q6hv4Y4JXti1vEGGzeMz2o",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"usuarioemail@example.com\",\n    \"phone\": \"524101000000\",\n    \"name\": \"Pepito\",\n    \"collections\": [\n        \"mobile_user\",\n        \"emails\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{UMHProdGCloud}}api/searchSpecificUser"
+							},
+							"response": []
+						},
+						{
+							"name": "Search by UID",
+							"id": "1c88fe3e-f8c9-4df7-95af-89c03695c242",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODM3NDQ5OCwiZXhwIjoxNzE4Mzc4MDk4fQ.fqF2zb86UklsifV-R3dfyX8j_M1JVY0ZwdqQ8T08WdA"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{UMH Local}}api/searchByUID"
+							},
+							"response": []
+						},
+						{
+							"name": "Insert states",
+							"id": "4a31b09e-6f37-408c-8e4e-31370d37f703",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNTk5NTcxMCwiZXhwIjoxNzE1OTk5MzEwfQ.H2Bbd7lkCvTualfPmhcJesZXyCuce5mfUsHZyTD1X7g"
+									}
+								],
+								"url": "{{UMH Local}}api/postUnitedStatesStates"
+							},
+							"response": []
+						},
+						{
+							"name": "Insert Familiar",
+							"id": "03d690d6-a35f-4fe5-92cf-e0153a44cd5c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNzY5MTA4OSwiZXhwIjoxNzE3Njk0Njg5fQ.DAw5SXYPOolljQbTQGU05CRQ1X05_LUtb7X7wsBfk_g"
+									}
+								],
+								"url": "{{UMH Local}}api/post_familiar"
+							},
+							"response": []
+						}
+					],
+					"id": "1fcc74d3-a9cd-4673-a654-24c58ab92669"
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "MSUSers",
+							"item": [
+								{
+									"name": "Delete familiar member",
+									"id": "c15a5027-5898-414c-a95b-b35093e65310",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODYzNTgxOSwiZXhwIjoxNzE4NjM5NDE5fQ.C54o4izEjkKvrHT2yIbHsElUzqcllW96Krx4guK3oF4"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"memberID\": \"0byyQ1eGxcky1WF9AcK9\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msusers/delete_familiar"
+									},
+									"response": []
+								}
+							],
+							"id": "feb4703d-180b-4b7a-bd5c-74ce57b9f4b2"
+						},
+						{
+							"name": "MSLetters",
+							"item": [
+								{
+									"name": "Delete letter",
+									"id": "c444c48a-990e-4eef-b05c-d890fb346d50",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODk3MzM1MSwiZXhwIjoxNzE4OTc2OTUxfQ.lsiZtvZGTiiJMXmHj_51jYG5WmhfoJHgbj34H8eLveE",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"cardID\": \"Q2QewhKGxgCmwK3icnO9\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msletters/delete_letter"
+									},
+									"response": []
+								}
+							],
+							"id": "674137a1-cb58-4e11-b901-242edc3ce0e0"
+						},
+						{
+							"name": "MSContacts",
+							"item": [
+								{
+									"name": "Delete specific contact",
+									"id": "73568946-842d-4ffc-b55c-2aab711f3cbc",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTA2NjQ1NywiZXhwIjoxNzE5MDcwMDU3fQ.0ModFwtUhbUJDwM7zbMNzOyEInz90YsFGCloUJIx-18",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"contactID\": \"7zh4vm7mykaOSRFgyEz5\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mscontacts/delete_contact"
+									},
+									"response": []
+								}
+							],
+							"id": "c9ef1739-0c82-4462-a269-1838567d30a0"
+						},
+						{
+							"name": "MSFavorites",
+							"item": [
+								{
+									"name": "Delete favorite",
+									"id": "515abe47-e2d1-43f5-b6c9-39f5ba537727",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDExMzgxNywiZXhwIjoxNzIwMTE3NDE3fQ.Nldajz2wigAGWxB9QwPHU4I3t5xWz5M2RC_2oicPqu0",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"favoriteID\": \"hXgtN8gVs3PxC6AfufYc\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msfavorites/delete_favorite"
+									},
+									"response": []
+								}
+							],
+							"id": "8716e149-d1e5-4ad4-b3d4-3c734d95b5cc"
+						},
+						{
+							"name": "MSDistributions",
+							"item": [
+								{
+									"name": "Delete distribution",
+									"id": "fa5a5db0-3397-425e-b541-81a3c1a86b2d",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODk4ODU2NSwiZXhwIjoxNzE4OTkyMTY1fQ.xl642MrWDNFaeXnyc45X3AYhAaWR7kjU_-qqVvHW3Ac",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"distributionID\": \"8gGf8eUJK5KwIQsaKOEj\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msdistributions/delete_distribution"
+									},
+									"response": []
+								}
+							],
+							"id": "59232c0f-89cb-4b7b-afa0-9f5756e1b3b7"
+						},
+						{
+							"name": "MSGifts",
+							"item": [
+								{
+									"name": "Delete gift",
+									"id": "92f9fce8-a817-4d32-85c5-3df82ed66881",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODk5MzE0NywiZXhwIjoxNzE4OTk2NzQ3fQ.qIEUqwy3D17-vG6rOVoLH7rlPgDQ2Ca9sUeqhzm22x0",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"giftID\": \"pCYv1oWWJMUfqPQ95gHn\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msgifts/delete_gift"
+									},
+									"response": []
+								}
+							],
+							"id": "86bdd3b8-aa38-4f94-b639-97e334575ac9"
+						},
+						{
+							"name": "MSNotes",
+							"item": [
+								{
+									"name": "Delete note",
+									"id": "3e22352f-2572-4f7c-85a5-c116cc90d735",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTAwODE1NCwiZXhwIjoxNzE5MDExNzU0fQ.bihd0kG9FCdRRXVMdBUDEpK2oDMyiNBeHVqZLkRNuj4",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"noteID\": \"K9172OQS447HiHPE3yve\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msnotes/delete_note"
+									},
+									"response": []
+								}
+							],
+							"id": "ad8ec110-21ec-4e40-b488-9fcdedcf4c67"
+						},
+						{
+							"name": "MSTask",
+							"item": [
+								{
+									"name": "Delete Task",
+									"id": "b1fbb559-3898-4b71-b44e-a470a9a43fed",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTAxMzM0MCwiZXhwIjoxNzE5MDE2OTQwfQ.Vh-6C9Sx0tSRRVfwVjzoNqijrvk9U9ceOgii8fmvIQU",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"taskID\": \"UezPdIu45aPdfE8bj4Y0\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mstasks/delete_task"
+									},
+									"response": []
+								}
+							],
+							"id": "4ea292b5-598d-4a29-9252-3a56f594a4e9"
+						},
+						{
+							"name": "MSLegacy",
+							"item": [
+								{
+									"name": "Delete legacy contact",
+									"id": "d42c2ba0-70b3-4579-be20-e68f6e2c4031",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTQyMjYyMSwiZXhwIjoxNzE5NDI2MjIxfQ.UJO8dCLpDTS3a_xVygVrQ1h_KY3bWhDaufKKQNmoqOU",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"legacyID\": \"0suC32Yf5JbcPSsbNrVP\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mslegacy/delete_legacy_contact"
+									},
+									"response": []
+								}
+							],
+							"id": "8430c48a-f6db-4fa5-ac5d-e440a1d0fc24"
+						},
+						{
+							"name": "Delete UID",
+							"id": "780573cd-60ae-4839-ba04-8589a209c97f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTM0Mzc5NSwiZXhwIjoxNzE5MzQ3Mzk1fQ.SHUYFgP9VFvQy-0bC6bhCYIpYnQ1cJbCyi1uKubZKbc"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"uid\": \"4444444\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{UMH Local}}api/deleteUID"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete all data from mobile user collection",
+							"id": "9e45fbb1-51a8-4d6f-a413-07b9c106b8be",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNjgzNDcwOSwiZXhwIjoxNzE2ODM4MzA5fQ.zIUlfES3-BjaYjDTQ9zFWtdBniQuWv_yIam1C7LGqDE"
+									}
+								],
+								"url": "{{UMH Local}}api/deleteAllUsers"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete all auth users",
+							"id": "35058619-5356-403c-96bf-719f2e214dea",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNjgzNDcwOSwiZXhwIjoxNzE2ODM4MzA5fQ.zIUlfES3-BjaYjDTQ9zFWtdBniQuWv_yIam1C7LGqDE"
+									}
+								],
+								"url": "{{UMH Local}}api/deleteAllAuthUsers"
+							},
+							"response": []
+						}
+					],
+					"id": "5ccd4e2f-9830-4e7a-ac87-b7702d897c12"
+				},
+				{
+					"name": "PATCH",
+					"item": [
+						{
+							"name": "MSUsers",
+							"item": [
+								{
+									"name": "Update family member information",
+									"id": "f76c1963-0e87-4581-b4a2-5c1235141182",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODY0NTE4NCwiZXhwIjoxNzE4NjQ4Nzg0fQ.3MBfQTHQiS6y-YQtJoAmI_TYv0ccv1N9ad_E6GAyFOs"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"memberID\": \"N0yLikDfp1G3f5UP8AUo\",\n    \"NewInformation\": {\n        \"phone\": \"547-342-2119\",\n        \"name\": \"Pedro que gusto de vere\",\n        \"relationship\": \"son\",\n        \"email\": \"mail22@mail.com\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msusers/update_familiar"
+									},
+									"response": []
+								},
+								{
+									"name": "Update profile user data",
+									"id": "6c98305a-56f3-4940-9412-cca9a58e131f",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTUwODE3MCwiZXhwIjoxNzE5NTExNzcwfQ.C78NdmnxnmjhxaXI74eRRgzbzJ1J0DbG1mlOmvMVCxU"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n  \"pin\": \"32423\"\n}"
+										},
+										"url": "{{UMH Local}}api/msusers/update_profile_user"
+									},
+									"response": []
+								}
+							],
+							"id": "90c3c203-ffc5-4eaf-8789-06a75b8d6e92"
+						},
+						{
+							"name": "MSLetters",
+							"item": [
+								{
+									"name": "Update Letter",
+									"id": "52556995-32bc-4117-9415-d7db0b6cbd37",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDIxMDk2MSwiZXhwIjoxNzIwMjE0NTYxfQ.cDUJjx04bgAqvQE45A1PqXNMyHR72a77rUlAAB962OY",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"cardID\": \"j975E7HVVsUvIt6olC36\",\n    \"NewInformation\": {\n        \"cardFileURL\": \"https://www.google.com/\",\n        \"cardMessage\": \"Testamento\",\n        \"cardFamiliar\": \"Pedro navajas\",\n        \"cardTitle\": \"Hola mundo, Estaas\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msletters/update_letter"
+									},
+									"response": []
+								}
+							],
+							"id": "0ddb1c71-6d84-46ab-ada7-3020aa06719a"
+						},
+						{
+							"name": "MSContacts",
+							"item": [
+								{
+									"name": "Update contact",
+									"id": "29df9fd2-49aa-4051-819e-c54bd4c96ab2",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODk3Njk2MSwiZXhwIjoxNzE4OTgwNTYxfQ.zCZ_Pf3yBVqg0QQaL3Vr0HxgOpg5cbvV1mGt4am1JBk",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"contactID\": \"CvSDuiobDutGtmulT7g7\",\n    \"NewInformation\": {\n        \"contactName\": \"547-342-2119\",\n        \"contactPhone\": \"Pedro que gusto de vere\",\n        \"contactEmail\": \"son\",\n        \"contactAddress\": \"mail@mail.com\",\n        \"contactType\": \"Holaaa\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mscontacts/update_contact"
+									},
+									"response": []
+								}
+							],
+							"id": "d2c1de61-486d-444a-a6a4-018d8e91b929"
+						},
+						{
+							"name": "MSFavorites",
+							"item": [
+								{
+									"name": "Update favorite",
+									"id": "687c34cb-e3dc-438e-b72b-7a1e1caec904",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ0OTg1MiwiZXhwIjoxNzIwNDUzNDUyfQ.v4lU9Ayw2nog5jBFq1nbvWpfK30GrsRcK4hzGaGBBM0",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"favoriteID\": \"nM9ADIY6KBWFpbM0iHUG\",\n    \"NewInformation\": {\n        \"favoriteTitle\": \"Hola titulo\",\n        \"favoriteType\": \"Pelicula\",\n        \"favoriteCategory\": \"Movie\",\n        \"favoriteNote\": \"Estas son las notas\",\n        \"favoriteURL\": \"https://image.jimcdn.com/app/cms/image/transf/dimension=4000x3000:format=png/path/s8e1b4e0972d222ee/image/i2bf012de67b26a23/version/1616881339/elaboraci%C3%B3n-de-un-libro-qu%C3%A9-es-el-libro.png\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msfavorites/update_favorite"
+									},
+									"response": []
+								}
+							],
+							"id": "997103b2-391e-4bfa-be62-7bca17e9c35e"
+						},
+						{
+							"name": "MSDistributions",
+							"item": [
+								{
+									"name": "Update distribution",
+									"id": "cf4f6d97-5e98-4741-969e-fe39c109df57",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDE5MTQyNCwiZXhwIjoxNzIwMTk1MDI0fQ.AJaQjkrTvjsiNhmESbgy7T2sZrpf6GTbel6hclog0ek",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"distributionID\": \"WdEXO84mOtEbVVRdNg1Z\",\n    \"NewInformation\": {\n        \"distributionTo\": \"Pedro pedro pedro\",\n        \"distributionAmmount\": \"1000\",\n        \"distributionReason\": \"Morido\",\n        \"distributionRelationShip\": \"Hijo\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msdistributions/update_distribution",
+										"description": "\nThis endpoint allows you to update distribution information using an HTTP PATCH request. The request should be sent to {{UMH Local}}api/msdistributions/update_distribution.\n\n### Request Body\n- `uid` (string): The unique identifier of the user.\n- `distributionID` (string): The identifier of the distribution to be updated.\n- `NewInformation` (object): An object containing the updated distribution information.\n  - `distributionTo` (string): The recipient of the distribution.\n  - `distributionAmmount` (number): The updated amount of the distribution.\n  - `distributionReason` (string): The reason for the distribution update.\n  - `distributionRelationShip` (string): The relationship associated with the distribution.\n\n### Response\nUpon successful execution, the response will have a status code of 200 and a JSON object with a `message` key indicating the outcome of the update operation.\n"
+									},
+									"response": []
+								}
+							],
+							"id": "9a1aa6da-c45a-486a-b589-b7ff86fc8eaf"
+						},
+						{
+							"name": "MSGifts",
+							"item": [
+								{
+									"name": "Update gift",
+									"id": "1affa7b5-e229-460f-b586-0e311d710d6c",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTI1ODg2MSwiZXhwIjoxNzE5MjYyNDYxfQ.58YEphAFe7LnwMyvVvPeVlcU_nphYDI888tQGWbPDks",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"giftID\": \"wX6S1T5MBedyvwh4BbDF\",\n    \"NewInformation\": {\n        \"lovedPersonToGift\": \"Daniel\",\n        \"giftType\": \"$123232\",\n        \"giftTypeDetailDescription\": \"No reason\",\n        \"giftToReason\": \"La razon es la actulizacion\",\n        \"giftAccomplished\": \"No reason\",\n        \"giftDescription\": \"ffffff\",\n        \"giftLinkURL\": \"https://console.firebase.google.com/u/0/project/umhbackend/firestore/databases/-default-/data/~2Fmobile_user~2F7mwmamnUzkUlQmNJnX6y5XpRqw93~2FGifts~2FCGuDPJD0QiWsqI3iipaW\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msgifts/update_gift"
+									},
+									"response": []
+								}
+							],
+							"id": "d1fb2095-8ab4-4cd2-bddf-30e67cca79f1"
+						},
+						{
+							"name": "MSNotes",
+							"item": [
+								{
+									"name": "Update note",
+									"id": "8289a920-e379-4c87-9ec1-83d968974aa6",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTAwODE1NCwiZXhwIjoxNzE5MDExNzU0fQ.bihd0kG9FCdRRXVMdBUDEpK2oDMyiNBeHVqZLkRNuj4",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"noteID\": \"MOxQ4IOjEn9h1xkp2HMz\",\n    \"NewInformation\": {\n        \"noteTitle\": \"{{$randomJobTitle}}\",\n        \"noteDescription\": \"{{$randomJobDescriptor}}\",\n        \"noteFileURL\": \"{{$randomUrl}}\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msnotes/update_note"
+									},
+									"response": []
+								}
+							],
+							"id": "e7209e74-562f-40cf-8f29-c53ede76a5d6"
+						},
+						{
+							"name": "MSTask",
+							"item": [
+								{
+									"name": "Update task",
+									"id": "9e2b86ef-7003-453f-98b6-b36fa4e6655b",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTg2NzcwOSwiZXhwIjoxNzE5ODcxMzA5fQ.WHWxnezB0ZH8RxwtHZGXpXjI0b5lBz18MPvfy-aWu1s",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"taskID\": \"XlIx6g4flphgCAAOPszZ\",\n    \"NewInformation\": {\n        \"taskCompleted\": true,\n        \"taskDescription\": \"Holaaaaaaaa\",\n        \"taskName\": \"Hola\",\n        \"taskFileURL\": \"http://leilani.com\",\n        \"taskDoneFileURL\": \"{{$randomUrl}}\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mstasks/update_task",
+										"description": "### Update Task\n\nThis endpoint is used to update a specific task.\n\n#### Request Body\n\n- `uid` (string, required): The user ID.\n    \n- `taskID` (string, required): The ID of the task to be updated.\n    \n- `NewInformation` (object, required): The new information to be updated for the task.\n    - `taskCompleted` (boolean, optional): Indicates whether the task is completed.\n        \n    - `taskDescription` (string, optional): The description of the task.\n        \n    - `taskName` (string, optional): The name of the task.\n        \n    - `taskFileURL` (string, optional): The URL of the task file.\n        \n    - `taskDoneFileURL` (string, optional): The URL of the completed task file.\n        \n\n#### Response (JSON Schema)\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```"
+									},
+									"response": []
+								}
+							],
+							"id": "ce135baf-d0c8-46e2-9ead-d55cfc4924c7"
+						},
+						{
+							"name": "MSLegacy",
+							"item": [
+								{
+									"name": "Update legacy contact",
+									"id": "e7e315da-366e-4db6-82a5-b707a0939d5a",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTQyMjYyMSwiZXhwIjoxNzE5NDI2MjIxfQ.UJO8dCLpDTS3a_xVygVrQ1h_KY3bWhDaufKKQNmoqOU",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"legacyID\": \"wzB8GMKqiPPw1bq4CE9M\",\n    \"NewInformation\": {\n        \"legacyFullName\": \"{{$randomFullName}}\",\n        \"legacyEmail\": \"{{$randomEmail}}\",\n        \"legacyPhone\": \"{{$randomPhoneNumber}}\",\n        \"legacyPIN\": \"1234\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mslegacy/update_legacy_contact"
+									},
+									"response": []
+								}
+							],
+							"id": "769e8cdc-b85a-47f8-8ce2-e650fbe4ddef"
+						},
+						{
+							"name": "Verify user email",
+							"id": "94e33e0d-074f-4a3e-bc6f-8bb496154156",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxMjAyNTAzMCwiZXhwIjoxNzEyMDI4NjMwfQ.QAyWXqdk0v6kE27BZDcx0RfbpZAvxlidVki77JwufYk"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"uid\": \"y7sjKWkULlpLN5Xd1R7a\",\n    \"email\": \"usuario@example.com\"\n}"
+								},
+								"url": "{{UMH Local}}api/verifyUserEmail"
+							},
+							"response": []
+						}
+					],
+					"id": "e9e0244d-3bc1-4381-a364-28f7e80029cc"
+				}
+			],
+			"id": "bb4cf1ce-9d02-4396-91e7-e7231f28138e",
+			"description": "**UMH Backend endpoints**"
+		},
+		{
+			"name": "UMH Dev",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "MSConfigurations",
+							"item": [
+								{
+									"name": "Get links",
+									"id": "24f1cd7f-fc1e-45e8-9205-2aedad521130",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ2MDI1OSwiZXhwIjoxNzIwNDYzODU5fQ.4smDYUa-z3IzumYaylUI3fRW3Ypnd4dOetwfw5SQ-ko",
+												"type": "text"
+											}
+										],
+										"url": "{{UMH Local}}api/msconfigurations/get_links"
+									},
+									"response": []
+								}
+							],
+							"id": "5974c31e-034f-4bdb-a236-f0ce1abd176f"
+						},
+						{
+							"name": "GET Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "207655c4-c2b8-483d-a58e-8b8199c291e0",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"id": "c2374524-5988-4dea-8289-940c5a85cf52",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Ocp-Apim-Subscription-Key",
+										"value": "86A5A3BB5EC4A4A6B7CFC5FA414C8"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{UMH Local}}api/newToken",
+								"description": "### API Request Description\n\nThis endpoint makes an HTTP GET request to `{{UMH Local}}api/newToken` to retrieve a new token.\n\n#### Request Body\n\nThis request does not require a request body.\n\n#### Response Body\n\nThe response is in JSON format with the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"Authorization\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```\n\nThe response includes the `Authorization` key, which contains the new token."
+							},
+							"response": []
+						},
+						{
+							"name": "Get all data",
+							"id": "98bd2931-18c1-4e49-b46a-5a8a412c3f86",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDI4NTg4NCwiZXhwIjoxNzIwMjg5NDg0fQ.4mf02J9LTFs0J9g8tNOZCC3zjarlsWMVaelRlZdXmYU"
+									}
+								],
+								"url": "{{UMH Local}}api/getData",
+								"description": "\n### Get Data\n\nThis endpoint is used to retrieve data from the server.\n\n#### Request Body\nThis request does not require a request body.\n\n#### Response\nThe response will contain the data requested from the server.\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Health",
+							"id": "f95ce064-c016-4de3-be1d-6e57454816a1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{UMHProdGCloud}}api/health",
+								"description": "### Health Check API\n\nThis API endpoint sends an HTTP GET request to {{UMHProdGCloud}}api/health to perform a health check of the system.\n\n#### Request\n\nThe request does not require a request body. It simply sends an HTTP GET request to the specified endpoint.\n\n#### Response\n\nThe response for this request is a JSON object representing the health status of the system. Below is a JSON schema representing the structure of the response:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"details\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```\n\nThe `status` property indicates the overall health status, while the `details` property provides additional details about the health status."
+							},
+							"response": []
+						}
+					],
+					"id": "2d77ccfe-be8c-41b2-81e2-cdd1095c7053"
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "MSUsers",
+							"item": [
+								{
+									"name": "Add a familiar member",
+									"id": "dfb5bc07-a665-4f13-b7bc-4cb595b9f52a",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODk3NTU2OSwiZXhwIjoxNzE4OTc5MTY5fQ.1cZTo42dI8YuWj1NaRqh095U0y3k-i-aPzYnK33qlOk",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Member\": [\n        {\n            \"email\": \"{{$randomEmail}}\",\n            \"name\": \"{{$randomFullName}}\",\n            \"phone\": \"{{$randomPhoneNumber}}\",\n            \"relationship\": \"son\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msusers/add_familiar",
+										"description": "This endpoint allows you to add a familiar member for a user. The HTTP POST request should be made to {{UMH Local}}api/msusers/add_familiar.\n\n### Request Body\n\nThe request body should be in raw format and include the following parameters:\n\n- `uid` (string): The ID of the user for whom the familiar member is being added.\n    \n- `Member` (array): An array containing the details of the familiar member to be added, including:\n    - `email` (string): The email address of the familiar member.\n        \n    - `name` (string): The name of the familiar member.\n        \n    - `phone` (string): The phone number of the familiar member.\n        \n    - `relationship` (string): The relationship of the familiar member with the user.\n        \n\n### Response\n\nThe response to the request will include the status of the operation, along with any relevant message or error information."
+									},
+									"response": []
+								},
+								{
+									"name": "Get all familiar information",
+									"id": "5604887e-d3e4-4368-9a04-1abba846861d",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTM2ODcyMCwiZXhwIjoxNzE5MzcyMzIwfQ.FkwR1pBofuToMnGvErIce2YhGQTT_LotJLn7x2X8cyQ"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msusers/retrieve_familiar_information"
+									},
+									"response": []
+								},
+								{
+									"name": "Getting user data /me",
+									"id": "b0ac2ed4-285d-4386-9a33-45c318e5f7e9",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true,
+										"disabledSystemHeaders": {}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTU4MzE2OCwiZXhwIjoxNzE5NTg2NzY4fQ.Dn7ysUIYRQBHLUQtsTxezHmMu9pXVAEjwJyk5mV76R4"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"667ec10f000b0e7bf13c915f\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msusers/me"
+									},
+									"response": []
+								},
+								{
+									"name": "Register new user",
+									"id": "4722caee-3482-4520-aab9-2f8a4276ce0c",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTU4MzE2OCwiZXhwIjoxNzE5NTg2NzY4fQ.Dn7ysUIYRQBHLUQtsTxezHmMu9pXVAEjwJyk5mV76R4"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"Zs6VFGoBlIfo94phkUBL8KWgjyy2\",\n    \"pushTokenAPN\": \"esk2pdPXIEEUiSfad8gZc4:APA91bH0Vh0O6E6HtIWVWqEfTrAxoifVtbksPcsV7AyH3oAnlraM9R5XyxGsPSwqej5js8dupqcmhsDcQ8QKCiCGSn5kmyK0BSyVOBJNBPnHZ7dou74E8ign52RJEY3NTDU1gxU77S4B\",\n    \"photoURL\": \"https://firebasestorage.googleapis.com:443/v0/b/umhbackend.appspot.com/o/mobile_user%2FnS0pMWe1xVRpXtwOtW1VRb9X9Ei1%2FProfilePictures%2FprofilePhoto_1716423997.824535.jpeg?alt=media&token=16edeb57-d0ce-4760-bf6d-a79c84f22dce\",\n    \"name\": \"{{$randomFullName}}\",\n    \"isBiometricActive\": {{$randomBoolean}},\n    \"generatedByApi\": \"{{$randomBoolean}}\",\n    \"socialSecurityNumber\": \"4324234234\",\n    \"email\": \"{{$randomEmail}}\",\n    \"platform\": \"iOS\",\n    \"phone\": \"{{$randomPhoneNumber}}\",\n    \"password\": \"{{$randomPassword}}\",\n    \"birthDay\": \"96/97/94\",\n    \"state\": \"California\",\n    \"pin\": \"1234\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msusers/register_user"
+									},
+									"response": []
+								},
+								{
+									"name": "General update user data",
+									"id": "384272de-f8ca-403d-8507-7c94260ada13",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNjkwMzY1OSwiZXhwIjoxNzE2OTA3MjU5fQ.0ZxuhfZCJyZmcq9hlMvFoysmiKNHcYjz5BULU7xL3xQ"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"DNLqNpyTmiuhDFht3fWO9iuBnMgE\",\n    \"userData\": {\n        \"ssn\": \"43434\"\n    }\n}"
+										},
+										"url": "{{UMH Local}}api/msusers/update_general_info"
+									},
+									"response": []
+								},
+								{
+									"name": "Link phone and email",
+									"id": "24933244-9176-4c10-ab09-a3fe8010be63",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNjg2MDg4MSwiZXhwIjoxNzE2ODY0NDgxfQ.wbdjO52EFCm-LCSer_1jcjw3DARWRl1FHUPMME2Kz1I"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"mrocha.dev92@gmail.com\",\n    \"phone\": \"+524433063061\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msusers/linkAccount"
+									},
+									"response": []
+								}
+							],
+							"id": "b37863a0-6463-493c-801a-3b7c1d7a33b2"
+						},
+						{
+							"name": "MSLetters",
+							"item": [
+								{
+									"name": "Post a new letter",
+									"id": "7e4efa53-4400-4130-b06b-9e29ba8356d4",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDIxMDk2MSwiZXhwIjoxNzIwMjE0NTYxfQ.cDUJjx04bgAqvQE45A1PqXNMyHR72a77rUlAAB962OY",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Card\": [\n        {\n            \"cardTitle\": \"Hola mundo, esta es una nueva carta\",\n            \"cardFamiliar\": \"Pedro navajas\",\n            \"cardFileURL\": \"\",\n            \"cardMessage\": \"Hola mundo\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msletters/register_letter"
+									},
+									"response": []
+								},
+								{
+									"name": "Get all letters",
+									"id": "d4f0445a-f4ec-4223-948b-8930977e81f8",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDIxMDk2MSwiZXhwIjoxNzIwMjE0NTYxfQ.cDUJjx04bgAqvQE45A1PqXNMyHR72a77rUlAAB962OY",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msletters/get_letters"
+									},
+									"response": []
+								}
+							],
+							"id": "82331c17-e8f7-4ab7-84b1-a79cad6189c9"
+						},
+						{
+							"name": "MSContacts",
+							"item": [
+								{
+									"name": "New contact",
+									"id": "6cd68cc0-d955-4228-a642-4c8e5216f584",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTA2NzU3MCwiZXhwIjoxNzE5MDcxMTcwfQ.9XiI8W9fZwE_xpgj9g1v7rZ8NFV9y3On6HbKeyoV5RQ",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Contact\": [\n        {\n            \"contactName\": \"Israel\",\n            \"contactPhone\": \"{{$randomPhoneNumber}}\",\n            \"contactEmail\": \"{{$randomEmail}}\",\n            \"contactType\": \"Project manager\",\n            \"contactAddress\": \"{{$randomStreetAddress}}\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mscontacts/new_contact"
+									},
+									"response": []
+								},
+								{
+									"name": "Get all contacts",
+									"id": "8407ad35-ec4b-48e7-9c43-f34ec44a2e80",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTA2NjQ1NywiZXhwIjoxNzE5MDcwMDU3fQ.0ModFwtUhbUJDwM7zbMNzOyEInz90YsFGCloUJIx-18",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mscontacts/get_contacts"
+									},
+									"response": []
+								}
+							],
+							"id": "241cfa44-49bc-4fcf-bbe2-8034042ff1c8"
+						},
+						{
+							"name": "MSFavorites",
+							"item": [
+								{
+									"name": "Register favorite",
+									"id": "5fed36fb-9f39-4b4d-8d2a-8667c1dea0d2",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ0OTg1MiwiZXhwIjoxNzIwNDUzNDUyfQ.v4lU9Ayw2nog5jBFq1nbvWpfK30GrsRcK4hzGaGBBM0",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Favorite\": [\n        {\n            \"favoriteTitle\": \"La monja\",\n            \"favoriteType\": \"Cancion\",\n            \"favoriteCategory\": \"Director\",\n            \"favoriteNote\": \"Estas son notas\",\n            \"favoriteURL\": \"google.com\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msfavorites/register_favorite"
+									},
+									"response": []
+								},
+								{
+									"name": "Get favorites",
+									"id": "e99ca41a-00a0-4e98-8e2c-acd6f0d5c735",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ0OTg1MiwiZXhwIjoxNzIwNDUzNDUyfQ.v4lU9Ayw2nog5jBFq1nbvWpfK30GrsRcK4hzGaGBBM0",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msfavorites/get_favorites"
+									},
+									"response": []
+								}
+							],
+							"id": "16d85ed0-1d31-4aa5-a3ed-04a16c68f2b1"
+						},
+						{
+							"name": "MSDistributions",
+							"item": [
+								{
+									"name": "Add distribution",
+									"id": "68c3f0e1-5892-4874-b287-a892e6eb29f9",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDE5MTQyNCwiZXhwIjoxNzIwMTk1MDI0fQ.AJaQjkrTvjsiNhmESbgy7T2sZrpf6GTbel6hclog0ek",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Distribution\": [\n        {\n            \"distributionTo\": \"Daniel\",\n            \"distributionAmmount\": \"12323\",\n            \"distributionReason\": \"No reason\",\n            \"distributionRelationShip\": \"Hijo\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msdistributions/register_distribution",
+										"description": "### Register Distribution\n\nThis endpoint is used to register a distribution by making an HTTP POST request to {{UMH Local}}api/msdistributions/register_distribution.\n\n#### Request Body\n\n- `uid` (string, required): The unique identifier of the user.\n    \n- `Distribution` (array, required): An array containing distribution details.\n    - `distributionTo` (string, required): The recipient of the distribution.\n        \n    - `distributionAmmount` (string, required): The amount of distribution.\n        \n    - `distributionReason` (string, required): The reason for the distribution.\n        \n\n#### Response\n\nThe response will contain the status of the distribution registration, along with any relevant information or error messages."
+									},
+									"response": []
+								},
+								{
+									"name": "Get distributions",
+									"id": "aa250e0f-b807-4bce-83c8-85487315a2bb",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTMyMzA3NywiZXhwIjoxNzE5MzI2Njc3fQ.3wjOQFNLYPAP5Nf8pzpRtTh4AAIi1pvIolga2JsOzr4",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msdistributions/get_distributions"
+									},
+									"response": []
+								}
+							],
+							"id": "b48f5819-9913-455d-8bc4-2680da51fc7f"
+						},
+						{
+							"name": "MSGifts",
+							"item": [
+								{
+									"name": "Register new gift",
+									"id": "90ec4de4-d1fb-4eee-933e-a9020b4973e9",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTI2NzkzNiwiZXhwIjoxNzE5MjcxNTM2fQ.jwDAD-RBLHA-ozGvzQUbcsKZtteXtYVHaag49cYq8cQ",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Gift\": [\n        {\n            \"lovedPersonToGift\": \"Daniel\",\n            \"giftType\": \"Regalo de bodas\",\n            \"giftTypeDetailDescription\": \"Este es un regalos de bodas\",\n            \"giftToReason\": \"El motivo es simple...\",\n            \"giftAccomplished\": \"Boda\",\n            \"giftDescription\": \"Hola Daniel, este es tu regalo de bodas\",\n            \"giftLinkURL\": \"https://console.firebase.google.com/u/0/project/umhbackend/firestore/databases/-default-/data/~2Fmobile_user~2F7mwmamnUzkUlQmNJnX6y5XpRqw93~2FGifts~2FCGuDPJD0QiWsqI3iipaW\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msgifts/register_gift"
+									},
+									"response": []
+								},
+								{
+									"name": "Get all gifts",
+									"id": "f72fce2f-e1d7-48ce-920d-084ae303114b",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTIzOTc1MiwiZXhwIjoxNzE5MjQzMzUyfQ.YHbpEYpTmYyEbz3nNUluXsIFmFGieUIRPUXWUXLoVWQ",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msgifts/get_gifts"
+									},
+									"response": []
+								}
+							],
+							"id": "f702867d-955d-4ed9-8b7d-490de3826a57"
+						},
+						{
+							"name": "MSNotes",
+							"item": [
+								{
+									"name": "Register new note",
+									"id": "6c76f049-2901-4100-bc31-07f937a3949e",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTQzMzkyMCwiZXhwIjoxNzE5NDM3NTIwfQ.qOi1cgh8cRhD5eIENkn7Gh1rqbQy30WMnym1eF-wrlQ",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Note\": [\n        {\n            \"noteTitle\": \"{{$randomJobTitle}}\",\n            \"noteDescription\": \"{{$randomJobDescriptor}}\",\n            \"noteFileURL\": \"{{$randomUrl}}\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msnotes/register_note"
+									},
+									"response": []
+								},
+								{
+									"name": "Get notes",
+									"id": "0d3e800a-18d7-4556-9cbb-6825ff325765",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTMyMzA3NywiZXhwIjoxNzE5MzI2Njc3fQ.3wjOQFNLYPAP5Nf8pzpRtTh4AAIi1pvIolga2JsOzr4",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msnotes/get_notes"
+									},
+									"response": []
+								}
+							],
+							"id": "421b82aa-a229-48ff-bb5a-30768db4055a"
+						},
+						{
+							"name": "MSTask",
+							"item": [
+								{
+									"name": "Create new task",
+									"id": "adc67e8d-2c96-4f17-b9fd-f4bbc7567111",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTYwMDQ4MCwiZXhwIjoxNzE5NjA0MDgwfQ.sMyhzYHzkz7d7PBHVpPHPNVnE6kUgmgrZCUi8qyjoAo",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Task\": [\n        {\n            \"taskName\": \"Ir de viaje\",\n            \"taskDescription\": \"Ir a subir una montaña en un viaje\",\n            \"taskFileURL\": \"{{$randomUrl}}\",\n            \"taskCompleted\": true\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mstasks/register_task",
+										"description": "### Register Task\n\nThis endpoint is used to register a new task.\n\n#### Request Body\n\n- `uid` (string, required): The user ID.\n    \n- `Task` (array, required): An array of tasks containing the following parameters:\n    - `taskName` (string, required): The name of the task.\n        \n    - `taskDescription` (string, required): The description of the task.\n        \n    - `taskFileURL` (string, optional): The URL of the file related to the task.\n        \n    - `taskCompleted` (boolean, required): Indicates whether the task is completed.\n        \n\n#### Response\n\nThe response for this request is a JSON object with the following properties:\n\n- `status` (string): Indicates the status of the request.\n    \n- `message` (string): A message providing additional information about the request status.\n    \n\nExample:\n\n``` json\n{\n  \"status\": \"success\",\n  \"message\": \"Task registered successfully\"\n}\n\n ```\n\n#### JSON Schema for Response\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```"
+									},
+									"response": []
+								},
+								{
+									"name": "Get all task",
+									"id": "5720a25e-7ed0-4ec3-9663-45f1f14815c6",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTUyNjY4NCwiZXhwIjoxNzE5NTMwMjg0fQ.ha2RNdjJCJRDa7VUh1T4rGulf8rLPTW_PTYTGK3IVo4",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mstasks/get_tasks"
+									},
+									"response": []
+								}
+							],
+							"id": "ea36b4eb-6592-41cd-ad08-d52d2be9ac7f"
+						},
+						{
+							"name": "MSLegacy",
+							"item": [
+								{
+									"name": "Register new Legacy contact",
+									"id": "fb3e9b68-4ee4-4cb1-9fc5-50cd36e1827f",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTUyNzU4MywiZXhwIjoxNzE5NTMxMTgzfQ.MamuzW1j2s17GozHggEnSPl0GSb2hcMVLFHqm4-nzRM",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Legacy\": [\n        {\n            \"legacyEmail\": \"mail@mail.com\",\n            \"legacyFullName\": \"Daniel\",\n            \"legacyPIN\": \"4324\",\n            \"legacyPhone\": \"432423432\"\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mslegacy/register_legacy_contact",
+										"description": "### Register Legacy Contact\n\nThis endpoint allows you to register a legacy contact by providing the necessary details.\n\n#### Request Body\n\n- `uid` (string, required): The user ID associated with the legacy contact.\n    \n- `Legacy` (array, required): An array containing the details of the legacy contact.\n    - `legacyEmail` (string, required): The email address of the legacy contact.\n        \n    - `legacyFullName` (string, required): The full name of the legacy contact.\n        \n    - `legacyPIN` (string, required): The PIN of the legacy contact.\n        \n    - `legacyPhone` (string, required): The phone number of the legacy contact.\n        \n\n#### Response\n\nThe response will contain the status of the registration process."
+									},
+									"response": []
+								},
+								{
+									"name": "Get legacy contacts",
+									"id": "e2cbd17a-d055-48bc-96bb-3eaa16a52c3e",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTQzMzkyMCwiZXhwIjoxNzE5NDM3NTIwfQ.qOi1cgh8cRhD5eIENkn7Gh1rqbQy30WMnym1eF-wrlQ",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mslegacy/get_legacy_contacts"
+									},
+									"response": []
+								}
+							],
+							"id": "59ce411c-e5f7-4f96-94da-0fcb95136808"
+						},
+						{
+							"name": "MSConfigurations",
+							"item": [
+								{
+									"name": "Get states",
+									"id": "e43c9cf2-03ea-4fce-89cf-4b5e98658208",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ3MzgyMSwiZXhwIjoxNzIwNDc3NDIxfQ.nLweTkX2pQ25BGXJcN5zREClL6zSZaql6L7m4Jx2VDI",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"languageCode\": \"es-mx\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msconfigurations/get_states"
+									},
+									"response": []
+								},
+								{
+									"name": "Get familiar relations",
+									"id": "24ab66b8-a5b2-43ca-bcbc-eac3ebaa3b7a",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ3NDIzNCwiZXhwIjoxNzIwNDc3ODM0fQ.hjokySZjpBzy2In3Br4kWI0dFfYY8-c7RBMm8xxrtvA",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"languageCode\": \"es-mx\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msconfigurations/get_familiar_relationships"
+									},
+									"response": []
+								},
+								{
+									"name": "Get contact types",
+									"id": "1823d628-d452-48f5-b270-89080c481a0e",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ3NDIzNCwiZXhwIjoxNzIwNDc3ODM0fQ.hjokySZjpBzy2In3Br4kWI0dFfYY8-c7RBMm8xxrtvA",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"languageCode\": \"en\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msconfigurations/get_contact_types"
+									},
+									"response": []
+								},
+								{
+									"name": "Get category types",
+									"id": "6622a185-fbd2-432d-bfc2-68f973eaebd1",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ3NzIzMywiZXhwIjoxNzIwNDgwODMzfQ.q3Tj0i-PAQU7XothZWBWGCMaq4694UH4tLWzOe8VUwk",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"languageCode\": \"es-mx\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msconfigurations/get_category_types"
+									},
+									"response": []
+								}
+							],
+							"id": "c0e173de-b931-414d-b137-fca330882335"
+						},
+						{
+							"name": "Insert dummy Data",
+							"id": "4efc67ba-7834-45a7-b00e-0017f8006d5d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxMTc0ODE5OX0.N3zJDorwZZhg_X4eB0cC6K2N6EDdXfMUKAw8bABzTec"
+									}
+								],
+								"url": "{{UMH Local}}api/insertEmails"
+							},
+							"response": []
+						},
+						{
+							"name": "Verify Token",
+							"id": "0a805469-faab-465e-9aec-d7f203431cfe",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Ocp-Apim-Subscription-Key",
+										"value": "86A5A3BB5EC4A4A6B7CFC5FA414C8"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"token\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCj6.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNzA0Mjk2NSwiZXhwIjoxNzE3MDQ2NTY1fQ.arW9J9N4K5MdCdvKv_xeNFJSdjqN-3DgDV4VVldLYlM\"\n}"
+								},
+								"url": "{{UMH Local}}api/verifyToken"
+							},
+							"response": []
+						},
+						{
+							"name": "Add email to email collection",
+							"id": "38cdea10-17a4-40f8-851a-f88c4759cf06",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNjU3MzkwOSwiZXhwIjoxNzE2NTc3NTA5fQ.kX3Zwgsym16BBtU9Vhkl0mLEcLKFPDb7jOXEc22xBT0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"daniel.prolite@gmail.com\",\n    \"uid\": \"4QZGU08JcOuFMjZ4M9rO\"\n}"
+								},
+								"url": "{{UMH Local}}api/recordEmail"
+							},
+							"response": []
+						},
+						{
+							"name": "Search email",
+							"id": "07217518-d0a0-4b5e-960b-1e75e4a0803f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxMzEzMjE1NiwiZXhwIjoxNzEzMTM1NzU2fQ.MkWn2UnAv-6--ntonMh5XXR1eZL2uEkAszGdYCBia4Y"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"daniel.prolite@gmail.com\",\n    \"collections\": [\n        \"mobile_user\",\n        \"emails\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{UMH Local}}api/searchEmail"
+							},
+							"response": []
+						},
+						{
+							"name": "Search Phone",
+							"id": "5b5fc98e-6d43-4f04-8507-84f2c4b81a59",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxMzEzMjE1NiwiZXhwIjoxNzEzMTM1NzU2fQ.MkWn2UnAv-6--ntonMh5XXR1eZL2uEkAszGdYCBia4Y",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"phone\": \"524131232261\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{UMH Local}}api/searchPhone"
+							},
+							"response": []
+						},
+						{
+							"name": "Search username",
+							"id": "890a1971-2ea1-4d22-a1d8-4f94035c6fc6",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxMzEzMjE1NiwiZXhwIjoxNzEzMTM1NzU2fQ.MkWn2UnAv-6--ntonMh5XXR1eZL2uEkAszGdYCBia4Y",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Pepito\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{UMH Local}}api/searchUserName"
+							},
+							"response": []
+						},
+						{
+							"name": "Search specific user",
+							"id": "251bacc1-2ba9-435d-a8a2-72e6d6c79d3f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxMzM2Mjk1NSwiZXhwIjoxNzEzMzY2NTU1fQ.-cMS5XOkbeuyjH64_RlF2Q6hv4Y4JXti1vEGGzeMz2o",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"usuarioemail@example.com\",\n    \"phone\": \"524101000000\",\n    \"name\": \"Pepito\",\n    \"collections\": [\n        \"mobile_user\",\n        \"emails\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{UMHProdGCloud}}api/searchSpecificUser"
+							},
+							"response": []
+						},
+						{
+							"name": "Search by UID",
+							"id": "80b16a8c-55b4-495e-8a5e-3c3b144e82bd",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODM3NDQ5OCwiZXhwIjoxNzE4Mzc4MDk4fQ.fqF2zb86UklsifV-R3dfyX8j_M1JVY0ZwdqQ8T08WdA"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{UMH Local}}api/searchByUID"
+							},
+							"response": []
+						},
+						{
+							"name": "Insert states",
+							"id": "b29d3bc7-ad13-453d-8ffe-897e45f4591e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNTk5NTcxMCwiZXhwIjoxNzE1OTk5MzEwfQ.H2Bbd7lkCvTualfPmhcJesZXyCuce5mfUsHZyTD1X7g"
+									}
+								],
+								"url": "{{UMH Local}}api/postUnitedStatesStates"
+							},
+							"response": []
+						},
+						{
+							"name": "Insert Familiar",
+							"id": "d78b2641-c9de-46e8-9d4f-5ac168f55c16",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNzY5MTA4OSwiZXhwIjoxNzE3Njk0Njg5fQ.DAw5SXYPOolljQbTQGU05CRQ1X05_LUtb7X7wsBfk_g"
+									}
+								],
+								"url": "{{UMH Local}}api/post_familiar"
+							},
+							"response": []
+						}
+					],
+					"id": "5b39da5a-486c-4f76-9484-41e11b22dcf5"
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "MSUSers",
+							"item": [
+								{
+									"name": "Delete familiar member",
+									"id": "6e0afc36-e4d8-4544-93c2-6f3df51ca204",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODYzNTgxOSwiZXhwIjoxNzE4NjM5NDE5fQ.C54o4izEjkKvrHT2yIbHsElUzqcllW96Krx4guK3oF4"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"memberID\": \"0byyQ1eGxcky1WF9AcK9\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msusers/delete_familiar"
+									},
+									"response": []
+								}
+							],
+							"id": "9f98b884-16a9-4b79-805e-84ca92f9a07f"
+						},
+						{
+							"name": "MSLetters",
+							"item": [
+								{
+									"name": "Delete letter",
+									"id": "912c0dc0-5edc-4d82-a76a-c46d0e73601b",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODk3MzM1MSwiZXhwIjoxNzE4OTc2OTUxfQ.lsiZtvZGTiiJMXmHj_51jYG5WmhfoJHgbj34H8eLveE",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"cardID\": \"Q2QewhKGxgCmwK3icnO9\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msletters/delete_letter"
+									},
+									"response": []
+								}
+							],
+							"id": "bf53ee1b-e82f-431e-b4de-65b47bd5e02d"
+						},
+						{
+							"name": "MSContacts",
+							"item": [
+								{
+									"name": "Delete specific contact",
+									"id": "40b5ba53-2ab7-497d-aa53-816f5f1d80cb",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTA2NjQ1NywiZXhwIjoxNzE5MDcwMDU3fQ.0ModFwtUhbUJDwM7zbMNzOyEInz90YsFGCloUJIx-18",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"contactID\": \"7zh4vm7mykaOSRFgyEz5\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mscontacts/delete_contact"
+									},
+									"response": []
+								}
+							],
+							"id": "79a9f616-e7c6-4e24-ab3d-b636af0086a6"
+						},
+						{
+							"name": "MSFavorites",
+							"item": [
+								{
+									"name": "Delete favorite",
+									"id": "3480b9e0-7b6f-4802-9855-dcced2d63362",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDExMzgxNywiZXhwIjoxNzIwMTE3NDE3fQ.Nldajz2wigAGWxB9QwPHU4I3t5xWz5M2RC_2oicPqu0",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"favoriteID\": \"hXgtN8gVs3PxC6AfufYc\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msfavorites/delete_favorite"
+									},
+									"response": []
+								}
+							],
+							"id": "b3413709-0880-43e7-9b70-d8b25b40633e"
+						},
+						{
+							"name": "MSDistributions",
+							"item": [
+								{
+									"name": "Delete distribution",
+									"id": "26106fbf-a151-4d8f-a703-5f7435f28816",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODk4ODU2NSwiZXhwIjoxNzE4OTkyMTY1fQ.xl642MrWDNFaeXnyc45X3AYhAaWR7kjU_-qqVvHW3Ac",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"distributionID\": \"8gGf8eUJK5KwIQsaKOEj\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msdistributions/delete_distribution"
+									},
+									"response": []
+								}
+							],
+							"id": "8de2164b-ccfd-495b-973c-cf06449533bf"
+						},
+						{
+							"name": "MSGifts",
+							"item": [
+								{
+									"name": "Delete gift",
+									"id": "b70ba4a3-aba0-4536-b27f-58b7174d198a",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODk5MzE0NywiZXhwIjoxNzE4OTk2NzQ3fQ.qIEUqwy3D17-vG6rOVoLH7rlPgDQ2Ca9sUeqhzm22x0",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"giftID\": \"pCYv1oWWJMUfqPQ95gHn\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msgifts/delete_gift"
+									},
+									"response": []
+								}
+							],
+							"id": "11912f7a-ea94-4c1f-87f1-b213ac50ae89"
+						},
+						{
+							"name": "MSNotes",
+							"item": [
+								{
+									"name": "Delete note",
+									"id": "b2f0596b-513a-48e1-b12c-1b2ebe067bae",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTAwODE1NCwiZXhwIjoxNzE5MDExNzU0fQ.bihd0kG9FCdRRXVMdBUDEpK2oDMyiNBeHVqZLkRNuj4",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"noteID\": \"K9172OQS447HiHPE3yve\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msnotes/delete_note"
+									},
+									"response": []
+								}
+							],
+							"id": "9fcaae5c-cf9e-4e54-9e05-77d590fa9d9e"
+						},
+						{
+							"name": "MSTask",
+							"item": [
+								{
+									"name": "Delete Task",
+									"id": "470b4600-c7a5-4f90-bd99-f1b9864332ab",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTAxMzM0MCwiZXhwIjoxNzE5MDE2OTQwfQ.Vh-6C9Sx0tSRRVfwVjzoNqijrvk9U9ceOgii8fmvIQU",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"taskID\": \"UezPdIu45aPdfE8bj4Y0\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mstasks/delete_task"
+									},
+									"response": []
+								}
+							],
+							"id": "bf731d0b-e27d-4198-b178-79808437b4c5"
+						},
+						{
+							"name": "MSLegacy",
+							"item": [
+								{
+									"name": "Delete legacy contact",
+									"id": "a0188df1-fd3c-488f-b63f-2ec67d705876",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTQyMjYyMSwiZXhwIjoxNzE5NDI2MjIxfQ.UJO8dCLpDTS3a_xVygVrQ1h_KY3bWhDaufKKQNmoqOU",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"legacyID\": \"0suC32Yf5JbcPSsbNrVP\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mslegacy/delete_legacy_contact"
+									},
+									"response": []
+								}
+							],
+							"id": "06a26cee-59ae-45e6-b9a1-5b91c3716096"
+						},
+						{
+							"name": "Delete UID",
+							"id": "28b225ac-facf-4fd1-aa02-369aed3386f4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTM0Mzc5NSwiZXhwIjoxNzE5MzQ3Mzk1fQ.SHUYFgP9VFvQy-0bC6bhCYIpYnQ1cJbCyi1uKubZKbc"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"uid\": \"4444444\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{UMH Local}}api/deleteUID"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete all data from mobile user collection",
+							"id": "f367564f-e103-434a-b938-e4b0f5e7811c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNjgzNDcwOSwiZXhwIjoxNzE2ODM4MzA5fQ.zIUlfES3-BjaYjDTQ9zFWtdBniQuWv_yIam1C7LGqDE"
+									}
+								],
+								"url": "{{UMH Local}}api/deleteAllUsers"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete all auth users",
+							"id": "1bb3dbf6-5764-459a-a332-a5e1edfeefd9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxNjgzNDcwOSwiZXhwIjoxNzE2ODM4MzA5fQ.zIUlfES3-BjaYjDTQ9zFWtdBniQuWv_yIam1C7LGqDE"
+									}
+								],
+								"url": "{{UMH Local}}api/deleteAllAuthUsers"
+							},
+							"response": []
+						}
+					],
+					"id": "8f297ec1-9acf-413b-a128-70cf9b6e9b78"
+				},
+				{
+					"name": "PATCH",
+					"item": [
+						{
+							"name": "MSUsers",
+							"item": [
+								{
+									"name": "Update family member information",
+									"id": "9228357c-7740-476c-a75f-7f350c6eb86a",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODY0NTE4NCwiZXhwIjoxNzE4NjQ4Nzg0fQ.3MBfQTHQiS6y-YQtJoAmI_TYv0ccv1N9ad_E6GAyFOs"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"memberID\": \"N0yLikDfp1G3f5UP8AUo\",\n    \"NewInformation\": {\n        \"phone\": \"547-342-2119\",\n        \"name\": \"Pedro que gusto de vere\",\n        \"relationship\": \"son\",\n        \"email\": \"mail22@mail.com\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msusers/update_familiar"
+									},
+									"response": []
+								},
+								{
+									"name": "Update profile user data",
+									"id": "b45ca435-59c4-41f3-aca4-0ba4616441c7",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTUwODE3MCwiZXhwIjoxNzE5NTExNzcwfQ.C78NdmnxnmjhxaXI74eRRgzbzJ1J0DbG1mlOmvMVCxU"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n  \"pin\": \"32423\"\n}"
+										},
+										"url": "{{UMH Local}}api/msusers/update_profile_user"
+									},
+									"response": []
+								}
+							],
+							"id": "0da6c299-bb82-40b1-bdbe-45c984ddc778"
+						},
+						{
+							"name": "MSLetters",
+							"item": [
+								{
+									"name": "Update Letter",
+									"id": "d476815e-2a97-4559-830b-b7dfa9391de8",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDIxMDk2MSwiZXhwIjoxNzIwMjE0NTYxfQ.cDUJjx04bgAqvQE45A1PqXNMyHR72a77rUlAAB962OY",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"cardID\": \"j975E7HVVsUvIt6olC36\",\n    \"NewInformation\": {\n        \"cardFileURL\": \"https://www.google.com/\",\n        \"cardMessage\": \"Testamento\",\n        \"cardFamiliar\": \"Pedro navajas\",\n        \"cardTitle\": \"Hola mundo, Estaas\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msletters/update_letter"
+									},
+									"response": []
+								}
+							],
+							"id": "7a082943-fa9a-44ce-862a-288f462e9aaf"
+						},
+						{
+							"name": "MSContacts",
+							"item": [
+								{
+									"name": "Update contact",
+									"id": "b1e29a15-b850-464e-9664-6ac1ce79fcec",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxODk3Njk2MSwiZXhwIjoxNzE4OTgwNTYxfQ.zCZ_Pf3yBVqg0QQaL3Vr0HxgOpg5cbvV1mGt4am1JBk",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"contactID\": \"CvSDuiobDutGtmulT7g7\",\n    \"NewInformation\": {\n        \"contactName\": \"547-342-2119\",\n        \"contactPhone\": \"Pedro que gusto de vere\",\n        \"contactEmail\": \"son\",\n        \"contactAddress\": \"mail@mail.com\",\n        \"contactType\": \"Holaaa\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mscontacts/update_contact"
+									},
+									"response": []
+								}
+							],
+							"id": "aac19899-5883-46ed-8fad-a979b7b2324c"
+						},
+						{
+							"name": "MSFavorites",
+							"item": [
+								{
+									"name": "Update favorite",
+									"id": "853482a4-361d-4258-89ec-47ddca51aa57",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ0OTg1MiwiZXhwIjoxNzIwNDUzNDUyfQ.v4lU9Ayw2nog5jBFq1nbvWpfK30GrsRcK4hzGaGBBM0",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"favoriteID\": \"nM9ADIY6KBWFpbM0iHUG\",\n    \"NewInformation\": {\n        \"favoriteTitle\": \"Hola titulo\",\n        \"favoriteType\": \"Pelicula\",\n        \"favoriteCategory\": \"Movie\",\n        \"favoriteNote\": \"Estas son las notas\",\n        \"favoriteURL\": \"https://image.jimcdn.com/app/cms/image/transf/dimension=4000x3000:format=png/path/s8e1b4e0972d222ee/image/i2bf012de67b26a23/version/1616881339/elaboraci%C3%B3n-de-un-libro-qu%C3%A9-es-el-libro.png\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msfavorites/update_favorite"
+									},
+									"response": []
+								}
+							],
+							"id": "8944d5c3-32f2-4c0c-9b6c-323ca8efbf89"
+						},
+						{
+							"name": "MSDistributions",
+							"item": [
+								{
+									"name": "Update distribution",
+									"id": "05d8a6ce-f00b-4241-b69d-dfdf60b80500",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDE5MTQyNCwiZXhwIjoxNzIwMTk1MDI0fQ.AJaQjkrTvjsiNhmESbgy7T2sZrpf6GTbel6hclog0ek",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"distributionID\": \"WdEXO84mOtEbVVRdNg1Z\",\n    \"NewInformation\": {\n        \"distributionTo\": \"Pedro pedro pedro\",\n        \"distributionAmmount\": \"1000\",\n        \"distributionReason\": \"Morido\",\n        \"distributionRelationShip\": \"Hijo\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msdistributions/update_distribution",
+										"description": "\nThis endpoint allows you to update distribution information using an HTTP PATCH request. The request should be sent to {{UMH Local}}api/msdistributions/update_distribution.\n\n### Request Body\n- `uid` (string): The unique identifier of the user.\n- `distributionID` (string): The identifier of the distribution to be updated.\n- `NewInformation` (object): An object containing the updated distribution information.\n  - `distributionTo` (string): The recipient of the distribution.\n  - `distributionAmmount` (number): The updated amount of the distribution.\n  - `distributionReason` (string): The reason for the distribution update.\n  - `distributionRelationShip` (string): The relationship associated with the distribution.\n\n### Response\nUpon successful execution, the response will have a status code of 200 and a JSON object with a `message` key indicating the outcome of the update operation.\n"
+									},
+									"response": []
+								}
+							],
+							"id": "27e08d04-b93a-4796-83e9-ceb766c124dd"
+						},
+						{
+							"name": "MSGifts",
+							"item": [
+								{
+									"name": "Update gift",
+									"id": "d03a0e29-fb30-4cc1-8373-f015e5fd37e1",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTI1ODg2MSwiZXhwIjoxNzE5MjYyNDYxfQ.58YEphAFe7LnwMyvVvPeVlcU_nphYDI888tQGWbPDks",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"giftID\": \"wX6S1T5MBedyvwh4BbDF\",\n    \"NewInformation\": {\n        \"lovedPersonToGift\": \"Daniel\",\n        \"giftType\": \"$123232\",\n        \"giftTypeDetailDescription\": \"No reason\",\n        \"giftToReason\": \"La razon es la actulizacion\",\n        \"giftAccomplished\": \"No reason\",\n        \"giftDescription\": \"ffffff\",\n        \"giftLinkURL\": \"https://console.firebase.google.com/u/0/project/umhbackend/firestore/databases/-default-/data/~2Fmobile_user~2F7mwmamnUzkUlQmNJnX6y5XpRqw93~2FGifts~2FCGuDPJD0QiWsqI3iipaW\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msgifts/update_gift"
+									},
+									"response": []
+								}
+							],
+							"id": "790ca8aa-d018-448f-96b6-5da988a40dc6"
+						},
+						{
+							"name": "MSNotes",
+							"item": [
+								{
+									"name": "Update note",
+									"id": "c5d2f7cf-2d6d-476b-8e80-d17da84e4170",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTAwODE1NCwiZXhwIjoxNzE5MDExNzU0fQ.bihd0kG9FCdRRXVMdBUDEpK2oDMyiNBeHVqZLkRNuj4",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"noteID\": \"MOxQ4IOjEn9h1xkp2HMz\",\n    \"NewInformation\": {\n        \"noteTitle\": \"{{$randomJobTitle}}\",\n        \"noteDescription\": \"{{$randomJobDescriptor}}\",\n        \"noteFileURL\": \"{{$randomUrl}}\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msnotes/update_note"
+									},
+									"response": []
+								}
+							],
+							"id": "9775d1eb-50a9-4caa-8fd7-4a27c659341d"
+						},
+						{
+							"name": "MSTask",
+							"item": [
+								{
+									"name": "Update task",
+									"id": "91675202-b2d5-47d9-a2b9-76a079518502",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTg2NzcwOSwiZXhwIjoxNzE5ODcxMzA5fQ.WHWxnezB0ZH8RxwtHZGXpXjI0b5lBz18MPvfy-aWu1s",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"taskID\": \"XlIx6g4flphgCAAOPszZ\",\n    \"NewInformation\": {\n        \"taskCompleted\": true,\n        \"taskDescription\": \"Holaaaaaaaa\",\n        \"taskName\": \"Hola\",\n        \"taskFileURL\": \"http://leilani.com\",\n        \"taskDoneFileURL\": \"{{$randomUrl}}\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mstasks/update_task",
+										"description": "### Update Task\n\nThis endpoint is used to update a specific task.\n\n#### Request Body\n\n- `uid` (string, required): The user ID.\n    \n- `taskID` (string, required): The ID of the task to be updated.\n    \n- `NewInformation` (object, required): The new information to be updated for the task.\n    - `taskCompleted` (boolean, optional): Indicates whether the task is completed.\n        \n    - `taskDescription` (string, optional): The description of the task.\n        \n    - `taskName` (string, optional): The name of the task.\n        \n    - `taskFileURL` (string, optional): The URL of the task file.\n        \n    - `taskDoneFileURL` (string, optional): The URL of the completed task file.\n        \n\n#### Response (JSON Schema)\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```"
+									},
+									"response": []
+								}
+							],
+							"id": "b5db7e97-b308-42e9-bfff-563113ad4bb8"
+						},
+						{
+							"name": "MSLegacy",
+							"item": [
+								{
+									"name": "Update legacy contact",
+									"id": "9d126943-5415-496a-8e85-5c18ec016d1b",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTQyMjYyMSwiZXhwIjoxNzE5NDI2MjIxfQ.UJO8dCLpDTS3a_xVygVrQ1h_KY3bWhDaufKKQNmoqOU",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"legacyID\": \"wzB8GMKqiPPw1bq4CE9M\",\n    \"NewInformation\": {\n        \"legacyFullName\": \"{{$randomFullName}}\",\n        \"legacyEmail\": \"{{$randomEmail}}\",\n        \"legacyPhone\": \"{{$randomPhoneNumber}}\",\n        \"legacyPIN\": \"1234\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/mslegacy/update_legacy_contact"
+									},
+									"response": []
+								}
+							],
+							"id": "2b34d760-e2ce-4b79-8e0f-79c551970439"
+						},
+						{
+							"name": "Verify user email",
+							"id": "c1946c38-a860-4dd4-9bd1-58233726dbd0",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxMjAyNTAzMCwiZXhwIjoxNzEyMDI4NjMwfQ.QAyWXqdk0v6kE27BZDcx0RfbpZAvxlidVki77JwufYk"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"uid\": \"y7sjKWkULlpLN5Xd1R7a\",\n    \"email\": \"usuario@example.com\"\n}"
+								},
+								"url": "{{UMH Local}}api/verifyUserEmail"
+							},
+							"response": []
+						}
+					],
+					"id": "e4617df4-0506-4d69-90c5-44f765d0b2be"
+				}
+			],
+			"id": "bf449a1b-e9d1-495c-b1b8-6bfec97d2258",
+			"description": "**UMH Backend endpoints**"
+		}
+	],
+	"variable": [
+		{
+			"key": "oneclickprod",
+			"value": "https://oneclickapi-nodejs-production.up.railway.ap"
+		}
+	]
+}
