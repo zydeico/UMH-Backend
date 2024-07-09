@@ -198,6 +198,48 @@ const ConfigurationValuesController = {
         } catch (error) {
             return res.status(500).json({ message: 'Unexpected error', error: error.message });
         }
+    },
+
+    async getSpecialOcassionTypes(req, res) {
+        try {
+            const languageCode = req.body.languageCode;
+            if (!languageCode) {
+                return res.status(400).json({ message: 'Missing language code in the request body' });
+            }
+            let categoryCollection;
+            
+            if (languageCode === process.env.UNITEDSTATESLANGUAGECODE) {
+                categoryCollection = process.env.SpecialOcassionEN;
+            } else if (languageCode === process.env.MEXICOLANGUAGECODE) {
+                categoryCollection = process.env.SpecialOcassionES;
+            } else {
+                return res.status(400).json({ message: 'Unsupported language code' });
+            }
+
+            const snapshot = await db.collection(process.env.CONFIGURATIONVALUESCOLLECTION).doc(process.env.GIFTSCONFIGURATIONVALUESSUBCOLLECTION).get();
+    
+            if (!snapshot.exists) {
+                return res.status(404).json({ message: 'Category types configuration not found' });
+            }
+    
+            const categoryData = snapshot.data();
+            if (!categoryData) {
+                return res.status(500).json({ message: 'Category types data not found or invalid format' });
+            }
+    
+            if (!categoryData.hasOwnProperty(categoryCollection)) {
+                return res.status(500).json({ message: `Category types data for ${categoryCollection} not found` });
+            }
+    
+            if (!Array.isArray(categoryData[categoryCollection])) {
+                return res.status(500).json({ message: `Category types data for ${categoryCollection} is not in the correct format` });
+            }
+    
+            const categoryTypes = categoryData[categoryCollection];
+            return res.status(200).json({ data: categoryTypes });
+        } catch(error) {
+            return res.status(500).json({ message: 'Unexpected error', error: error.message });
+        }
     }
 };
 
