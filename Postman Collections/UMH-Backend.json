@@ -622,13 +622,13 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTI2NzkzNiwiZXhwIjoxNzE5MjcxNTM2fQ.jwDAD-RBLHA-ozGvzQUbcsKZtteXtYVHaag49cYq8cQ",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDUzMzI2NSwiZXhwIjoxNzIwNTM2ODY1fQ.rcgzmaSegkpMlNZQqqLgV87AaFlWG1zvdmjjSE1siog",
 												"type": "text"
 											}
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Gift\": [\n        {\n            \"lovedPersonToGift\": \"Daniel\",\n            \"giftType\": \"Regalo de bodas\",\n            \"giftToReason\": \"El motivo es simple...\",\n            \"giftAccomplished\": \"Boda\",\n            \"giftDescription\": \"Hola Daniel, este es tu regalo de bodas\",\n        }\n    ]\n}",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Gift\": [\n        {\n            \"lovedPersonToGift\": \"Daniel\",\n            \"giftType\": \"Regalo de bodas\",\n            \"giftDescription\": \"Hola Daniel, este es tu regalo de bodas\",\n            \"giftFileURL\": \"gooogle.com\"\n        }\n    ]\n}",
 											"options": {
 												"raw": {
 													"language": "json"
