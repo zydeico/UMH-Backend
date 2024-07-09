@@ -43,11 +43,13 @@ router.post('/searchUserName', verifyToken, UtilsServerController.getAndSearchSp
 router.post('/searchSpecificUser', verifyToken, UtilsServerController.searchUser);
 router.post('/searchByUID', verifyToken, UtilsServerController.searchByUID);
 router.post('/postUnitedStatesStates', verifyToken, UtilsServerController.insertStates);
+router.post('/insert_generic_info', verifyToken, UtilsServerController.insertGenericData);
 router.post('/post_familiar', verifyToken, UtilsServerController.insertFamiliars);
 router.post('/msconfigurations/get_states', verifyToken, ConfigurationValuesController.getStates);
 router.post('/msconfigurations/get_familiar_relationships', verifyToken, ConfigurationValuesController.getFamiliarMembers);
 router.post('/msconfigurations/get_contact_types', verifyToken, ConfigurationValuesController.getContactsTypes);
 router.post('/msconfigurations/get_category_types', verifyToken, ConfigurationValuesController.getCategoryTypes);
+router.post('/msconfigurations/get_special_ocassion_types', verifyToken, ConfigurationValuesController.getSpecialOcassionTypes);
 
 /* 
 * Routes for the User model POST
