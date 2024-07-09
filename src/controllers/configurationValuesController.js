@@ -209,8 +209,8 @@ const ConfigurationValuesController = {
             if (!languageCode) {
                 return res.status(400).json({ message: 'Missing language code in the request body' });
             }
-            let categoryCollection;
             
+            let categoryCollection;
             if (languageCode === process.env.UNITEDSTATESLANGUAGECODE) {
                 categoryCollection = process.env.SpecialOcassionEN;
             } else if (languageCode === process.env.MEXICOLANGUAGECODE) {
@@ -221,12 +221,16 @@ const ConfigurationValuesController = {
 
             const snapshot = await db.collection(process.env.CONFIGURATIONVALUESCOLLECTION).doc(process.env.GIFTSCONFIGURATIONVALUESSUBCOLLECTION).get();
     
+            const snapshot = await db.collection(process.env.CONFIGURATIONVALUESCOLLECTION)
+                                  .doc(process.env.CATEGORYTYPESSUBCOLLECTION)
+                                  .get();
+    
             if (!snapshot.exists) {
                 return res.status(404).json({ message: 'Category types configuration not found' });
             }
     
             const categoryData = snapshot.data();
-            if (!categoryData) {
+            if (!categoryData || typeof categoryData !== 'object') {
                 return res.status(500).json({ message: 'Category types data not found or invalid format' });
             }
     
@@ -234,11 +238,11 @@ const ConfigurationValuesController = {
                 return res.status(500).json({ message: `Category types data for ${categoryCollection} not found` });
             }
     
-            if (!Array.isArray(categoryData[categoryCollection])) {
+            const categoryTypes = categoryData[categoryCollection];
+            if (!Array.isArray(categoryTypes)) {
                 return res.status(500).json({ message: `Category types data for ${categoryCollection} is not in the correct format` });
             }
     
-            const categoryTypes = categoryData[categoryCollection];
             return res.status(200).json({ data: categoryTypes });
         } catch(error) {
             return res.status(500).json({ message: 'Unexpected error', error: error.message });
