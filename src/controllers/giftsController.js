@@ -36,11 +36,8 @@ const GiftsController = {
                     Gift: {
                         lovedPersonToGift: gifts.lovedPersonToGift,
                         giftType: gifts.giftType,
-                        giftTypeDetailDescription: gifts.giftTypeDetailDescription,
-                        giftToReason: gifts.giftToReason,
-                        giftAccomplished: gifts.giftAccomplished,
+                        giftFileURL: gifts.giftFileURL,
                         giftDescription: gifts.giftDescription,
-                        giftLinkURL: gifts.giftLinkURL,
                         dateAdded: now.replace('T', ' '),
                         giftID: newGiftDocRef.id
                     },
@@ -154,12 +151,8 @@ const GiftsController = {
                 return res.status(400).json({ message: 'Invalid UID format' });
             }
     
-            if (typeof updatedGift !== 'object' || !updatedGift.lovedPersonToGift || !updatedGift.giftType || !updatedGift.giftTypeDetailDescription || !updatedGift.giftToReason || !updatedGift.giftAccomplished || !updatedGift.giftDescription) {
+            if (typeof updatedGift !== 'object' || !updatedGift.lovedPersonToGift || !updatedGift.giftType || !updatedGift.giftFileURL || !updatedGift.giftDescription) {
                 return res.status(400).json({ message: 'Invalid NewInformation format' });
-            }
-
-            if ('giftLinkURL' in updatedGift && typeof updatedGift.giftLinkURL !== 'string' && updatedGift.giftLinkURL !== '') {
-                return res.status(400).json({ message: 'Invalid giftLinkURL format' });
             }
     
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
