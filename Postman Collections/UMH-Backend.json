@@ -650,7 +650,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTIzOTc1MiwiZXhwIjoxNzE5MjQzMzUyfQ.YHbpEYpTmYyEbz3nNUluXsIFmFGieUIRPUXWUXLoVWQ",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDUzMzI2NSwiZXhwIjoxNzIwNTM2ODY1fQ.rcgzmaSegkpMlNZQqqLgV87AaFlWG1zvdmjjSE1siog",
 												"type": "text"
 											}
 										],
@@ -1907,13 +1907,13 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcxOTI1ODg2MSwiZXhwIjoxNzE5MjYyNDYxfQ.58YEphAFe7LnwMyvVvPeVlcU_nphYDI888tQGWbPDks",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDUzMzI2NSwiZXhwIjoxNzIwNTM2ODY1fQ.rcgzmaSegkpMlNZQqqLgV87AaFlWG1zvdmjjSE1siog",
 												"type": "text"
 											}
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"giftID\": \"wX6S1T5MBedyvwh4BbDF\",\n    \"NewInformation\": {\n        \"lovedPersonToGift\": \"Daniel\",\n        \"giftType\": \"$123232\",\n        \"giftTypeDetailDescription\": \"No reason\",\n        \"giftToReason\": \"La razon es la actulizacion\",\n        \"giftAccomplished\": \"No reason\",\n        \"giftDescription\": \"ffffff\",\n        \"giftLinkURL\": \"https://console.firebase.google.com/u/0/project/umhbackend/firestore/databases/-default-/data/~2Fmobile_user~2F7mwmamnUzkUlQmNJnX6y5XpRqw93~2FGifts~2FCGuDPJD0QiWsqI3iipaW\"\n    }\n}",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"giftID\": \"N1VtXTRNK19TCCZ4hNUP\",\n    \"NewInformation\": {\n        \"lovedPersonToGift\": \"Daniel Vazquez\",\n        \"giftType\": \"Regalo de Graduacion\",\n        \"giftDescription\": \"Hola Daniel Vazquez, este es tu regalo de bodas\",\n        \"giftFileURL\": \"amazon.com\"\n    }\n}",
 											"options": {
 												"raw": {
 													"language": "json"
