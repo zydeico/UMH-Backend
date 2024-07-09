@@ -993,6 +993,7 @@
 										{
 											"listen": "test",
 											"script": {
+												"id": "92c5382f-baf8-48d2-b5cc-f93e899400cd",
 												"exec": [
 													"pm.test(\"Response status code is 200\", function () {",
 													"  pm.response.to.have.status(200);",
@@ -1040,7 +1041,8 @@
 													"  });",
 													"});"
 												],
-												"type": "text/javascript"
+												"type": "text/javascript",
+												"packages": {}
 											}
 										}
 									],
@@ -1053,7 +1055,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDQ3NzIzMywiZXhwIjoxNzIwNDgwODMzfQ.q3Tj0i-PAQU7XothZWBWGCMaq4694UH4tLWzOe8VUwk",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDU0OTYxMCwiZXhwIjoxNzIwNTUzMjEwfQ.sF9sw_Ute1rm1DBpxWweOvdyV9lYXSPpSLY6G-SQAN8",
 												"type": "text"
 											}
 										],
@@ -1067,6 +1069,34 @@
 											}
 										},
 										"url": "{{UMH Local}}api/msconfigurations/get_category_types"
+									},
+									"response": []
+								},
+								{
+									"name": "Get special ocassions",
+									"id": "e136bd6b-39a8-4765-a255-07fe66d97995",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDU0OTExMywiZXhwIjoxNzIwNTUyNzEzfQ.u-JAuenFebAvA7aMo0X4NF496-ww5XvRbOpDiXBNaJs",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"languageCode\": \"es-mx\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{UMH Local}}api/msconfigurations/get_special_ocassion_types"
 									},
 									"response": []
 								}
