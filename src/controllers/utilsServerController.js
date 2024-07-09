@@ -33,6 +33,22 @@ const familyMembers = [
     "Spouse", "Husband", "Wife"
 ];
 
+const giftsTypes = [
+    "Cumpleaños número 13",
+    "Cumpleaños número 15",
+    "Primer coche",
+    "Graduación de la escuela secundaria",
+    "Graduación universitaria",
+    "Primera casa",
+    "Boda",
+    "Primer hijo",
+    "Segundo hijo",
+    "Tercer hijo",
+    "Otro",
+    "Aniversario de bodas",
+    "Feliz cumpleaños"
+];
+
 const UtilsServerController = {
     /*
     * Get and search for a specific email in multiple collections
@@ -256,6 +272,19 @@ const UtilsServerController = {
             const docRef = mainCollectionName.doc(process.env.STATESSUBCOLLECTION);
             await docRef.set({ unitedStates: states }, { merge: true });
             res.status(200).json({ message: "States inserted successfully" });
+        } catch (error) {
+            console.error("Error occurred:", error);
+            res.status(500).json({ message: "Internal server error" });
+            next(error);
+        }
+    },
+
+    async insertGenericData(req, res, next) {
+        try {
+            const mainCollectionName = db.collection(process.env.CONFIGURATIONVALUESCOLLECTION);
+            const docRef = mainCollectionName.doc(process.env.GIFTSCONFIGURATIONVALUESSUBCOLLECTION);
+            await docRef.set({ SpecialOcassionES: giftsTypes }, { merge: true });
+            res.status(200).json({ message: "Familiar info inserted successfully" });
         } catch (error) {
             console.error("Error occurred:", error);
             res.status(500).json({ message: "Internal server error" });
