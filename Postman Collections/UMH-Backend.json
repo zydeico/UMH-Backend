@@ -628,7 +628,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Gift\": [\n        {\n            \"lovedPersonToGift\": \"Daniel\",\n            \"giftType\": \"Regalo de bodas\",\n            \"giftTypeDetailDescription\": \"Este es un regalos de bodas\",\n            \"giftToReason\": \"El motivo es simple...\",\n            \"giftAccomplished\": \"Boda\",\n            \"giftDescription\": \"Hola Daniel, este es tu regalo de bodas\",\n            \"giftLinkURL\": \"https://console.firebase.google.com/u/0/project/umhbackend/firestore/databases/-default-/data/~2Fmobile_user~2F7mwmamnUzkUlQmNJnX6y5XpRqw93~2FGifts~2FCGuDPJD0QiWsqI3iipaW\"\n        }\n    ]\n}",
+											"raw": "{\n    \"uid\": \"7mwmamnUzkUlQmNJnX6y5XpRqw93\",\n    \"Gift\": [\n        {\n            \"lovedPersonToGift\": \"Daniel\",\n            \"giftType\": \"Regalo de bodas\",\n            \"giftToReason\": \"El motivo es simple...\",\n            \"giftAccomplished\": \"Boda\",\n            \"giftDescription\": \"Hola Daniel, este es tu regalo de bodas\",\n        }\n    ]\n}",
 											"options": {
 												"raw": {
 													"language": "json"
