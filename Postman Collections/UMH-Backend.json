@@ -1316,6 +1316,34 @@
 								"url": "{{UMH Local}}api/post_familiar"
 							},
 							"response": []
+						},
+						{
+							"name": "Insert generic data",
+							"id": "ad9ee127-b408-4c33-a84f-ec04d70ae7bb",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhITVVNSHhzc1VzZXJEb3ROZXQiLCJ1c2VybmFtZSI6IlVNSFN1cGVyVXNlckRvdE5ldCIsImlhdCI6MTcyMDU0OTExMywiZXhwIjoxNzIwNTUyNzEzfQ.u-JAuenFebAvA7aMo0X4NF496-ww5XvRbOpDiXBNaJs",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{UMH Local}}api//insert_generic_info"
+							},
+							"response": []
 						}
 					],
 					"id": "1fcc74d3-a9cd-4673-a654-24c58ab92669"
