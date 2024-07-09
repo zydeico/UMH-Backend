@@ -160,28 +160,31 @@ const ConfigurationValuesController = {
      */
     async getCategoryTypes(req, res) {
         try {
-            const languageCode = req.body.languageCode;
-            if (!languageCode) {
-                return res.status(400).json({ message: 'Missing language code in the request body' });
+            const { languageCode } = req.body;
+    
+            if (!languageCode || typeof languageCode !== 'string') {
+                return res.status(400).json({ message: 'Invalid or missing language code in the request body' });
             }
-            let categoryCollection;
             
+            let categoryCollection;
             if (languageCode === process.env.UNITEDSTATESLANGUAGECODE) {
-                categoryCollection = process.env.CategoryTypeEN;
+                categoryCollection = process.env.CATEGORYTYPEEN;
             } else if (languageCode === process.env.MEXICOLANGUAGECODE) {
-                categoryCollection = process.env.CategoryTypeES;
+                categoryCollection = process.env.CATEGORYTYPEES;
             } else {
                 return res.status(400).json({ message: 'Unsupported language code' });
             }
-
-            const snapshot = await db.collection(process.env.CONFIGURATIONVALUESCOLLECTION).doc(process.env.CATEGORYTYPESSUBCOLLECTION).get();
+    
+            const snapshot = await db.collection(process.env.CONFIGURATIONVALUESCOLLECTION)
+                                  .doc(process.env.CATEGORYTYPESSUBCOLLECTION)
+                                  .get();
     
             if (!snapshot.exists) {
                 return res.status(404).json({ message: 'Category types configuration not found' });
             }
     
             const categoryData = snapshot.data();
-            if (!categoryData) {
+            if (!categoryData || typeof categoryData !== 'object') {
                 return res.status(500).json({ message: 'Category types data not found or invalid format' });
             }
     
@@ -189,11 +192,11 @@ const ConfigurationValuesController = {
                 return res.status(500).json({ message: `Category types data for ${categoryCollection} not found` });
             }
     
-            if (!Array.isArray(categoryData[categoryCollection])) {
+            const categoryTypes = categoryData[categoryCollection];
+            if (!Array.isArray(categoryTypes)) {
                 return res.status(500).json({ message: `Category types data for ${categoryCollection} is not in the correct format` });
             }
     
-            const categoryTypes = categoryData[categoryCollection];
             return res.status(200).json({ data: categoryTypes });
         } catch (error) {
             return res.status(500).json({ message: 'Unexpected error', error: error.message });
