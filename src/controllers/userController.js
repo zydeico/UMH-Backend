@@ -473,7 +473,6 @@ const UserController = {
             }
     
             // Deleting some data on response for security reasons
-            delete userData.password;
             delete userData.pushTokenAPN;
             delete userData.will;
             delete userData.insurancePolicy;
