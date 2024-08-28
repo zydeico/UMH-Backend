@@ -12,6 +12,9 @@
   "keywords": [],
   "author": "Daniel Vazquez",
   "license": "ISC",
+  "engines": {
+    "node": "22.5.0"
+  },
   "dependencies": {
     "axios": "^1.6.8",
     "dotenv": "^16.4.5",
