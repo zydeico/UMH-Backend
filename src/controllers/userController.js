@@ -3,7 +3,7 @@ require('dotenv').config();
 const { getFirestore } = require('firebase-admin/firestore');
 const db = getFirestore();
 const jwt = require('jsonwebtoken');
-const { generateRandomId, generateRandomEmail} = require('../helpers/helpers');
+const { generateRandomId, generateRandomEmail } = require('../helpers/helpers');
 const axios = require('axios');
 const FirebaseUserModel = require('../models/FirebaseUserModel');
 const SignUpEmailModel = require('../models/SignUpModel/SignUpEmailModel');
@@ -24,18 +24,18 @@ const UserController = {
         try {
             const collectionsSnapshot = await db.listCollections();
             const allData = {};
-    
+
             async function getAllDocs(collectionRef) {
                 const snapshot = await collectionRef.get();
                 const docs = [];
-    
+
                 // Array to store all promises for fetching subcollections
                 const subcollectionPromises = [];
-    
+
                 snapshot.forEach(doc => {
                     const docData = doc.data();
                     const docWithId = { id: doc.id, ...docData };
-    
+
                     // Add promise for fetching subcollections to array
                     const promise = doc.ref.listCollections().then(subcollections => {
                         const subcollectionPromises = subcollections.map(async subcollectionRef => {
@@ -43,35 +43,35 @@ const UserController = {
                             const subDocs = await getAllDocs(subcollectionRef);
                             docWithId[subcollectionName] = subDocs;
                         });
-    
+
                         // Return promise that resolves when all subcollections are fetched
                         return Promise.all(subcollectionPromises);
                     });
-    
+
                     subcollectionPromises.push(promise);
-    
+
                     docs.push(docWithId);
                 });
-    
+
                 // Wait for all subcollection promises to resolve before returning docs
                 await Promise.all(subcollectionPromises);
-    
+
                 return docs;
             }
-    
+
             // Iterate through collections and fetch all documents and subcollections
             for (const collectionRef of collectionsSnapshot) {
                 const collectionName = collectionRef.id;
                 const docs = await getAllDocs(collectionRef);
                 allData[collectionName] = docs;
             }
-    
+
             res.status(200).json(allData);
         } catch (error) {
             res.status(500).send(`Something went wrong: ${error.message}`);
         }
-    },    
-    
+    },
+
     /**
      * Inserts random emails into the 'emails' collection in the database.
      * @param {Object} res - The response object.
@@ -111,11 +111,11 @@ const UserController = {
         try {
             const uid = req.body.uid;
             const userData = req.body;
-    
+
             if (!uid) {
                 return res.status(400).json({ error: "Firebase UID is required." });
             }
-    
+
             const userRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
             const userDoc = await userRef.get();
             const filteredUserData = { ...userData };
@@ -126,7 +126,7 @@ const UserController = {
             if (typeof filteredUserData.generatedByApi !== 'boolean') {
                 filteredUserData.generatedByApi = true;
             }
-    
+
             const newUser = new SignUpUserModel(filteredUserData);
             const validationError = newUser.validateSync();
             if (validationError) {
@@ -144,13 +144,13 @@ const UserController = {
             if (error.name === 'ValidationError') {
                 return res.status(400).json({ error: "Validation failed. Please check the input data.", details: error.errors });
             }
-    
+
             const statusCode = error.statusCode || 500;
             const errorMessage = error.message || 'Internal Server Error';
             res.status(statusCode).json({ error: errorMessage });
             next(error);
         }
-    },     
+    },
 
     /**
      * Updates a user's data.
@@ -277,12 +277,12 @@ const UserController = {
             if (!subscriptionKey) {
                 return res.status(400).json({ error: 'Subscription key is missing' });
             }
-    
+
             const expectedKey = process.env.OCMP_SUBSCRIPTION_KEY;
             if (!expectedKey) {
                 throw new Error('Subscription key is not configured in the environment');
             }
-    
+
             if (subscriptionKey !== expectedKey) {
                 return res.status(403).json({ error: 'Invalid subscription key' });
             }
@@ -290,11 +290,11 @@ const UserController = {
             const userId = process.env.USER_ID;
             const username = process.env.USERNAME;
             const secretKey = process.env.SECRET_KEY;
-            
+
             if (!userId || !username || !secretKey) {
                 throw new Error('Required environment variables (USER_ID, USERNAME, SECRET_KEY) are not defined');
             }
-    
+
             const user = { id: userId, username: username };
             const token = jwt.sign(user, secretKey, { expiresIn: '1h' });
             return res.json({
@@ -406,7 +406,7 @@ const UserController = {
             const { uid, ...updateFields } = req.body;
             const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
             const mobileUserCollectionRef = db.collection(collectionName);
-    
+
             Object.keys(updateFields).forEach(key => {
                 if (updateFields[key] === undefined) {
                     delete updateFields[key];
@@ -446,7 +446,7 @@ const UserController = {
             if (!uid) {
                 return res.status(400).json({ message: 'UID is required', data: [] });
             }
-            
+
             if (typeof uid !== 'string' || uid.trim() === '') {
                 return res.status(400).json({ message: 'Invalid UID format', data: [] });
             }
@@ -455,7 +455,7 @@ const UserController = {
             if (keys.length !== 1 || keys[0] !== 'uid') {
                 return res.status(400).json({ message: 'Only one UID is allowed in the request body', data: [] });
             }
-    
+
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
             let userData;
             try {
@@ -467,23 +467,23 @@ const UserController = {
             } catch (error) {
                 return res.status(500).json({ message: 'Error retrieving user data', data: [] });
             }
-    
+
             if (!userData) {
                 return res.status(500).json({ message: 'Error processing user data', data: [] });
             }
-    
+
             // Deleting some data on response for security reasons
             delete userData.pushTokenAPN;
             delete userData.will;
             delete userData.insurancePolicy;
             delete userData.generatedByApi;
-            
+
             res.status(200).json({ data: [userData] });
         } catch (error) {
             res.status(500).json({ message: 'Unexpected error', data: [] });
             next(error);
         }
-    },  
+    },
 
     // Warning: This function will delete all users from the database
     /**
@@ -522,6 +522,39 @@ const UserController = {
         } catch (error) {
             console.error('Unexpected error:', error);
             return res.status(500).json({ message: 'Unexpected error', data: [] });
+        }
+    },
+
+    /**
+     * Renames subcollections from "Cards" to "Letters".
+     * 
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {Promise<void>} - A promise that resolves when the subcollections are renamed successfully.
+     * @throws {Error} - If there is an error renaming the subcollections.
+     */
+    async renameCards(req, res, next) {
+        try {
+            const batch = db.batch();
+            const collections = await db.collection(process.env.MOBILEUSERCOLLECTIONNAME).listDocuments();
+            for (const doc of collections) {
+                const cardsCollectionRef = doc.collection('Cards');
+                const cardsDocs = await cardsCollectionRef.listDocuments();
+                for (const cardDoc of cardsDocs) {
+                    const data = await cardDoc.get();
+                    const lettersCollectionRef = doc.collection('Letters');
+                    const newDocRef = lettersCollectionRef.doc(cardDoc.id);
+                    batch.set(newDocRef, data.data());
+                    batch.delete(cardDoc);
+                }
+            }
+
+            await batch.commit();
+            return res.status(200).json({ message: 'Subcolecciones renombradas exitosamente de "Cards" a "Letters".' });
+        } catch (error) {
+            console.error('Error renombrando subcolecciones:', error);
+            res.status(500).send('Hubo un error al renombrar las subcolecciones.');
         }
     }
 };

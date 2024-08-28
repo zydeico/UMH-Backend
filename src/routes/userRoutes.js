@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { verifyToken } = require('../middleware/authMiddleware');
+
+// Controllers
 const UserController = require('../controllers/userController');
 const UtilsServerController = require('../controllers/utilsServerController');
 const FamiliarController = require('../controllers/familiarController');
@@ -99,6 +101,8 @@ router.post('/mslegacy/get_legacy_contacts', verifyToken, LegacyController.getLe
 */
 router.post('/unblockIP', UtilsServerController.unblockIP);
 router.post('/verifyToken', UserController.verifyToken);
+
+router.post('/msconfigurations/rename_cards', verifyToken, UserController.renameCards);
 
 
 /*

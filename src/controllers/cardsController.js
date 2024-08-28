@@ -49,7 +49,7 @@ const CardsController = {
                 });
             });
             await Promise.all(promises);
-            return res.status(200).json({ message: 'Cards added successfully', data: successfullyAddedCards });
+            return res.status(200).json({ message: 'Letter added successfully', data: successfullyAddedCards });
         } catch (error) {
             return res.status(500).send({ message: 'Unexpected error', error: error.message });
         }
