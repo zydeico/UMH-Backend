@@ -1,6 +1,9 @@
 require('dotenv').config();
 
 const { getFirestore } = require('firebase-admin/firestore');
+
+const admin = require('firebase-admin');
+
 const db = getFirestore();
 const jwt = require('jsonwebtoken');
 const { generateRandomId, generateRandomEmail } = require('../helpers/helpers');
@@ -554,7 +557,48 @@ const UserController = {
             return res.status(200).json({ message: 'Subcolecciones renombradas exitosamente de "Cards" a "Letters".' });
         } catch (error) {
             console.error('Error renombrando subcolecciones:', error);
-            res.status(500).send('Hubo un error al renombrar las subcolecciones.');
+            return res.status(500).send('Hubo un error al renombrar las subcolecciones.');
+        }
+    },
+
+    /**
+     * Renames the "Letter" field to "Card" for all documents in the "Letters" collection of each user.
+     * 
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @param {Function} next - The next middleware function.
+     * @returns {Object} The response object with a success or error message.
+     * @throws {Error} If there is an error while renaming the field.
+     */
+    async renameCardsToLetters(req, res, next) {
+        try {
+            const batch = db.batch();
+            const users = await db.collection(process.env.MOBILEUSERCOLLECTIONNAME).listDocuments();
+    
+            for (const userDoc of users) {
+                const lettersCollectionRef = userDoc.collection('Letters');
+                const lettersDocs = await lettersCollectionRef.listDocuments();
+    
+                for (const letterDocRef of lettersDocs) {
+                    const letterDoc = await letterDocRef.get();
+                    const data = letterDoc.data();
+                    const documentPath = letterDocRef.path;
+                    console.log(`Accediendo a la ruta: ${documentPath}`);
+    
+                    if (data && data.Letter) {
+                        const updatedData = {
+                            Letter: admin.firestore.FieldValue.delete(),
+                        };
+
+                        batch.update(letterDocRef, updatedData);
+                    }
+                }
+            }
+    
+            await batch.commit();
+            return res.status(200).json({ message: 'Campo "Letter" eliminado exitosamente y "Card" se mantuvo intacto.' });
+        } catch (error) {
+            return res.status(500).json({ message: 'Hubo un error al eliminar el campo "Letter".', error: error.message });
         }
     }
 };
