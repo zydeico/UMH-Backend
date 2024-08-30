@@ -290,12 +290,20 @@ const UtilsServerController = {
     async insertGenericData(req, res, next) {
         try {
             const mainCollectionName = db.collection(process.env.CONFIGURATIONVALUESCOLLECTION);
-            const docRef = mainCollectionName.doc(process.env.GIFTSCONFIGURATIONVALUESSUBCOLLECTION);
-            await docRef.set({ SpecialOcassionES: giftsTypes }, { merge: true });
+            const docRef = mainCollectionName.doc(process.env.FAMILIARCOLLECTION);
+            
+            console.log('Collection:', process.env.CONFIGURATIONVALUESCOLLECTION);
+            console.log('Document:', process.env.FAMILIARCOLLECTION);
+            console.log('Data being inserted:', { FamilyMembersEN: familyMembers });
+    
+            await docRef.set({ FamilyMembersEN: familyMembers }, { merge: true });
+    
             res.status(200).json({ message: "Familiar info inserted successfully" });
         } catch (error) {
             console.error("Error occurred:", error);
-            res.status(500).json({ message: "Internal server error" });
+            if (!res.headersSent) {
+                res.status(500).json({ message: "Internal server error" });
+            }
             next(error);
         }
     },
