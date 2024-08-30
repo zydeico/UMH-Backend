@@ -15,6 +15,7 @@ const NotesController = require('../controllers/notesController');
 const TaskController = require('../controllers/taskController');
 const LegacyController = require('../controllers/legacyController');
 const ConfigurationValuesController = require('../controllers/configurationValuesController');
+const StatisticsController = require('../controllers/statisticsController');
 
 
 /*
@@ -95,6 +96,9 @@ router.post('/mstasks/get_tasks', verifyToken, TaskController.getAllTasks);
 router.post('/mslegacy/register_legacy_contact', verifyToken, LegacyController.registerLegacyContact);
 router.post('/mslegacy/get_legacy_contacts', verifyToken, LegacyController.getLegacyContacts);
 
+// Statistics
+router.post('/statistics/get_statistics', verifyToken, StatisticsController.getStatistics);
+
 /*
 * Routes for the User model POST
 * This routes are separeted by the authentication required
@@ -103,7 +107,7 @@ router.post('/unblockIP', UtilsServerController.unblockIP);
 router.post('/verifyToken', UserController.verifyToken);
 
 router.post('/msconfigurations/rename_cards', verifyToken, UserController.renameCards);
-
+router.post('/msconfigurations/rename_mapcard_to_letter', verifyToken, UserController.renameCardsToLetters);
 
 /*
 * Routes for the User model DELETE

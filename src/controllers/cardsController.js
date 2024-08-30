@@ -27,7 +27,7 @@ const CardsController = {
     
             const successfullyAddedCards = [];
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
-            const cardCollectionRef = mobileUserDocRef.collection(process.env.CARDSSUBCOLLECTION);
+            const cardCollectionRef = mobileUserDocRef.collection(process.env.LETTERSSUBCOLLECTION);
     
             const promises = cards.map(async (card) => {
                 const newCardDocRef = cardCollectionRef.doc();
@@ -75,12 +75,12 @@ const CardsController = {
                 return res.status(400).json({ message: 'Invalid UID format' });
             }
     
-            if (!process.env.CARDSSUBCOLLECTION) {
+            if (!process.env.LETTERSSUBCOLLECTION) {
                 return res.status(202).json({ message: 'Favorites subcollection not defined', data: [] });
             }
     
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
-            const cardsCollectionRef = mobileUserDocRef.collection(process.env.CARDSSUBCOLLECTION);
+            const cardsCollectionRef = mobileUserDocRef.collection(process.env.LETTERSSUBCOLLECTION);
             const cardsArray = [];
 
             const snapshot = await cardsCollectionRef.get();
@@ -121,7 +121,7 @@ const CardsController = {
             }
     
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
-            const cardCollectionRef = mobileUserDocRef.collection(process.env.CARDSSUBCOLLECTION).doc(cardIDToDelete);
+            const cardCollectionRef = mobileUserDocRef.collection(process.env.LETTERSSUBCOLLECTION).doc(cardIDToDelete);
             const docSnapshot = await cardCollectionRef.get();
             
             if (!docSnapshot.exists) {
@@ -161,7 +161,7 @@ const CardsController = {
             }
     
             const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
-            const cardDocRef = mobileUserDocRef.collection(process.env.CARDSSUBCOLLECTION).doc(cardID);
+            const cardDocRef = mobileUserDocRef.collection(process.env.LETTERSSUBCOLLECTION).doc(cardID);
     
             const docSnapshot = await cardDocRef.get();
     
