@@ -23,7 +23,7 @@ app.use(errorHandler);
  */
 const limiter = rateLimit({
     windowMs: 6 * 60 * 60 * 1000,
-    max: 200,
+    max: 999,
     message: 'Too many requests from this IP, please try again later.'
 });
 app.use(limiter);

@@ -54,6 +54,7 @@ const FamiliarController = {
      */
     async addFamilyMember(req, res) {
         try {
+
             const uid = req.body.uid;
             const familyMembers = req.body.Member;
     
@@ -65,41 +66,81 @@ const FamiliarController = {
                 return res.status(400).json({ message: 'Invalid UID format' });
             }
     
+            const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
+            const familyCollectionRef = mobileUserDocRef.collection(process.env.FAMILIARSUBCOLLECTION);
+    
+            const promises = [];
             const successfullyAddedMembers = [];
+    
+            // TODO: -  Generate unique numeric UID for each family member
+            const generateUniqueNumericUID = async () => {
+                let uniqueUID;
+                let isUnique = false;
+                while (!isUnique) {
+                    uniqueUID = Math.floor(Math.random() * 200);
+
+                    // Avoid to use number id 10
+                    if (uniqueUID === 10) {
+                        continue;
+                    }
+                    const existingMember = await familyCollectionRef.where('Member.id', '==', uniqueUID).get();
+                    if (existingMember.empty) {
+                        isUnique = true;
+                    }
+                }
+                return uniqueUID;
+            };            
     
             for (let familyMember of familyMembers) {
                 if (typeof familyMember !== 'object' || !familyMember.email || !familyMember.name || !familyMember.phone || !familyMember.relationship) {
                     return res.status(400).json({ message: 'Invalid family member format' });
                 }
-            }
-    
-            const mobileUserDocRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
-            const familyCollectionRef = mobileUserDocRef.collection(process.env.FAMILIARSUBCOLLECTION);
-    
-            const promises = [];
-    
-            for (let familyMember of familyMembers) {
+                
                 const newFamilyDocRef = familyCollectionRef.doc();
                 const now = new Date().toISOString().split('.')[0];
+    
+                // TODO: - Define this, if we need to generate all the ID's from front-end
+                const uniqueUID = await generateUniqueNumericUID();
+
+                // Data to insert
                 const dataToSave = {
                     Member: {
+                        // Principal fields
                         name: familyMember.name,
                         phone: familyMember.phone,
                         email: familyMember.email,
                         relationship: familyMember.relationship,
                         dateAdded: now.replace('T', ' '),
-                        memberID: newFamilyDocRef.id
+                        memberID: newFamilyDocRef.id,
+                        parentOf: familyMember.parentOf || '',
+                        childOf: familyMember.childOf || '',
+                        partnerOf: familyMember.partnerOf || '',
+
+                        // Unique numeric ID
+                        id: uniqueUID, 
+    
+                        // Additional fields
+                        gender: familyMember.gender || 0,
+                        description: familyMember.description || '',
+                        osisRef: familyMember.osisRef || '',
+                        birthYear: familyMember.birthYear || null,
+                        deathYear: familyMember.deathYear || null,
+                        birthPlaceID: familyMember.birthPlaceID || null,
+                        deathPlaceID: familyMember.deathPlaceID || null,
+                        alsoCalled: familyMember.alsoCalled || '',
+                        writerOf: familyMember.writerOf || '',
+                        knows: familyMember.knows || ''
                     }
                 };
     
                 promises.push(newFamilyDocRef.set(dataToSave));
                 successfullyAddedMembers.push({
-                    memberID: newFamilyDocRef.id
+                    memberID: newFamilyDocRef.id,
+                    id: dataToSave.Member.id
                 });
             }
-    
+
             await Promise.all(promises);
-    
             return res.status(200).json({ message: 'Family member added successfully', InformationMember: successfullyAddedMembers });
         } catch (error) {
             return res.status(500).json({ message: 'Unexpected error', error: error.message });
