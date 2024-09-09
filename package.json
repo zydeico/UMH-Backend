@@ -13,7 +13,7 @@
   "author": "Daniel Vazquez",
   "license": "ISC",
   "engines": {
-    "node": "22.5.0"
+    "node": "22.8.0"
   },
   "dependencies": {
     "axios": "^1.6.8",

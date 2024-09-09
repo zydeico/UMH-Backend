@@ -99,6 +99,10 @@ router.post('/mslegacy/get_legacy_contacts', verifyToken, LegacyController.getLe
 // Statistics
 router.post('/statistics/get_statistics', verifyToken, StatisticsController.getStatistics);
 
+// MSUtils
+router.post('/msutils/add_fields_to_users', verifyToken, UtilsServerController.addFieldToUsers);
+router.post('/msutils/family_tree', verifyToken, UtilsServerController.createFamilyTreeStructure)
+
 /*
 * Routes for the User model POST
 * This routes are separeted by the authentication required

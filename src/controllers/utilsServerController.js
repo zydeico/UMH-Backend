@@ -4,13 +4,13 @@ const { getFirestore } = require('firebase-admin/firestore');
 const db = getFirestore();
 
 const states = [
-    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", 
-    "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", 
-    "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", 
-    "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", 
-    "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", 
-    "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", 
-    "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", 
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
+    "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
+    "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan",
+    "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
+    "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
+    "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
+    "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia",
     "Wisconsin", "Wyoming"
 ];
 
@@ -196,7 +196,7 @@ const UtilsServerController = {
                     results.push(dataWithId);
                 });
             }
-            
+
             if (results.length === 0) {
                 return res.status(404).json({ message: `User not found` });
             }
@@ -211,18 +211,18 @@ const UtilsServerController = {
     async searchByUID(req, res, next) {
         try {
             const { uid } = req.body;
-    
+
             if (!uid) {
                 return res.status(400).json({ message: "UID is required" });
             } else if (typeof uid !== 'string') {
                 return res.status(400).json({ message: "UID must be a string" });
             }
-    
+
             const collectionName = process.env.MOBILEUSERCOLLECTIONNAME;
             if (!collectionName) {
                 throw new Error("Error: Collection not found");
             }
-    
+
             const mobileUserCollectionRef = db.collection(collectionName);
 
             const snapshot = await mobileUserCollectionRef.get();
@@ -233,38 +233,38 @@ const UtilsServerController = {
                     userData = data;
                 }
             });
-    
+
             if (!userData) {
                 return res.status(404).json({ message: "User not found" });
             }
-    
+
             res.status(200).json({ data: userData });
         } catch (error) {
             console.error("Error occurred:", error);
             res.status(500).json({ message: "Internal server error" });
             next(error);
         }
-    },      
+    },
 
     async unblockIP(req, res, next) {
         try {
             const { ip } = req.body;
-    
+
             if (!ip) {
                 return res.status(400).json({ message: "IP is required" });
             }
-    
+
             const db = getFirestore();
             const blockedIPCollectionRef = db.collection(process.env.BLOCKEDIPCOLLECTIONNAME);
             const querySnapshot = await blockedIPCollectionRef.where('ip', '==', ip).get();
-    
+
             if (querySnapshot.empty) {
                 return res.status(404).json({ message: "IP not found in the blocked IPs collection" });
             }
             querySnapshot.forEach(async doc => {
                 await blockedIPCollectionRef.doc(doc.id).delete();
             });
-    
+
             res.status(200).json({ message: "IP unblocked successfully" });
         } catch (error) {
             console.error("Error occurred:", error);
@@ -272,7 +272,7 @@ const UtilsServerController = {
             next(error);
         }
     },
-    
+
     // Insert states into the database
     async insertStates(req, res, next) {
         try {
@@ -291,13 +291,9 @@ const UtilsServerController = {
         try {
             const mainCollectionName = db.collection(process.env.CONFIGURATIONVALUESCOLLECTION);
             const docRef = mainCollectionName.doc(process.env.FAMILIARCOLLECTION);
-            
-            console.log('Collection:', process.env.CONFIGURATIONVALUESCOLLECTION);
-            console.log('Document:', process.env.FAMILIARCOLLECTION);
-            console.log('Data being inserted:', { FamilyMembersEN: familyMembers });
-    
+
             await docRef.set({ FamilyMembersEN: familyMembers }, { merge: true });
-    
+
             res.status(200).json({ message: "Familiar info inserted successfully" });
         } catch (error) {
             console.error("Error occurred:", error);
@@ -356,14 +352,119 @@ const UtilsServerController = {
             const deletionPromises = users.map(user => {
                 return auth.deleteUser(user.uid);
             });
-    
+
             await Promise.all(deletionPromises);
             return res.status(200).json({ message: 'All Firebase users deleted successfully' });
         } catch (error) {
             console.error('Error deleting Firebase users:', error);
             return res.status(500).json({ message: 'Unexpected error', data: [] });
         }
-    }    
+    },
+
+    async addFieldToUsers(req, res, next) {
+        try {
+            const admin = require('firebase-admin');
+            const firestore = admin.firestore();
+            const usersCollection = firestore.collection('mobile_user');
+            const snapshot = await usersCollection.get();
+            const updatePromises = snapshot.docs.map(doc => {
+                return doc.ref.update({ id: 10 });
+            });
+            await Promise.all(updatePromises);
+            return res.status(200).json({ message: 'Field "id" added to all users with value 10' });
+        } catch (error) {
+            console.error('Error updating users:', error);
+            return res.status(500).json({ message: 'Unexpected error', data: [] });
+        }
+    },
+
+    // Family tree
+    async createFamilyTreeStructure(req, res, next) {
+        try {
+            const { uid } = req.body;
+    
+            if (!uid) {
+                return res.status(400).json({ error: "UID is required" });
+            }
+    
+            // Recuperar datos del usuario principal
+            // Recover principal data
+            const userRef = db.collection('mobile_user').doc(uid);
+            const userDoc = await userRef.get();
+    
+            if (!userDoc.exists) {
+                return res.status(404).json({ error: "User not found" });
+            }
+    
+            const userData = userDoc.data();
+            const userId = userData.id || 10;
+
+            // Build family tree
+            const familyTreeStructure = {
+                id: userId,
+                name: userData.name || "",
+                gender: userData.gender || 1,
+                description: userData.description || "",
+                osisRef: userData.osisRef || "",
+                birthYear: userData.birthYear || 1,
+                deathYear: userData.deathYear || 1,
+                birthPlaceID: userData.birthPlaceID || 1,
+                deathPlaceID: userData.deathPlaceID || 1,
+                alsoCalled: userData.alsoCalled || "",
+                writerOf: userData.writerOf || "",
+                parentOf: "",
+                partnerOf: userData.partnerOf || "",
+                childOf: "",
+                knows: userData.knows || ""
+            };
+
+            // Recover FamilyMembers data
+            const familyMembersRef = db.collection(`mobile_user/${uid}/FamilyMembers`);
+            const familyMembersSnapshot = await familyMembersRef.get();
+    
+            let familyMemberData = [];
+            let parentOfIds = [];
+    
+            if (!familyMembersSnapshot.empty) {
+                familyMembersSnapshot.forEach(doc => {
+                    const memberData = doc.data();
+
+                    if (memberData.Member) {
+                        const member = memberData.Member;
+                        const memberId = member.id;
+                        if (memberId !== undefined) {
+                            parentOfIds.push(memberId.toString());
+                            familyMemberData.push({
+                                birthPlaceID: member.birthPlaceID || 1,
+                                gender: member.gender || 1,
+                                partnerOf: userId.toString(),
+                                childOf: userId.toString(),
+                                description: member.description || "",
+                                parentOf: userId.toString(),
+                                osisRef: member.osisRef || "",
+                                alsoCalled: member.alsoCalled || "",
+                                birthYear: member.birthYear || 1,
+                                deathYear: member.deathYear || 1,
+                                name: member.name || "",
+                                id: memberId,
+                                writerOf: member.writerOf || "",
+                                deathPlaceID: member.deathPlaceID || 1,
+                                knows: member.knows || ""
+                            });
+                        }
+                    }
+                });
+    
+                familyTreeStructure.parentOf = parentOfIds.join(',');
+            }
+
+            const finalResponse = [familyTreeStructure, ...familyMemberData];
+            return res.status(200).json(finalResponse);
+    
+        } catch (error) {
+            return res.status(500).json({ message: 'Unexpected error', error: error.message });
+        }
+    }
 };
 
 module.exports = UtilsServerController;

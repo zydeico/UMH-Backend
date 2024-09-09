@@ -114,28 +114,31 @@ const UserController = {
         try {
             const uid = req.body.uid;
             const userData = req.body;
-
+    
             if (!uid) {
-                return res.status(400).json({ error: "Firebase UID is required." });
+                return res.status(400).json({ error: "UID is required." });
             }
-
+    
             const userRef = db.collection(process.env.MOBILEUSERCOLLECTIONNAME).doc(uid);
             const userDoc = await userRef.get();
             const filteredUserData = { ...userData };
+
+            filteredUserData.id = parseInt(10, 10);
+
             if (!filteredUserData.registrationDate) {
                 filteredUserData.registrationDate = new Date();
             }
-
+    
             if (typeof filteredUserData.generatedByApi !== 'boolean') {
                 filteredUserData.generatedByApi = true;
             }
-
+    
             const newUser = new SignUpUserModel(filteredUserData);
             const validationError = newUser.validateSync();
             if (validationError) {
                 return res.status(400).json({ error: "Validation failed. Please check the input data.", details: validationError.errors });
             }
-
+    
             if (userDoc.exists) {
                 await userRef.set(filteredUserData, { merge: true });
                 return res.status(200).json({ message: "User data updated successfully." });
@@ -147,13 +150,13 @@ const UserController = {
             if (error.name === 'ValidationError') {
                 return res.status(400).json({ error: "Validation failed. Please check the input data.", details: error.errors });
             }
-
+    
             const statusCode = error.statusCode || 500;
             const errorMessage = error.message || 'Internal Server Error';
             res.status(statusCode).json({ error: errorMessage });
             next(error);
         }
-    },
+    },      
 
     /**
      * Updates a user's data.
