@@ -387,7 +387,6 @@ const UtilsServerController = {
                 return res.status(400).json({ error: "UID is required" });
             }
     
-            // Recuperar datos del usuario principal
             // Recover principal data
             const userRef = db.collection('mobile_user').doc(uid);
             const userDoc = await userRef.get();
@@ -399,7 +398,6 @@ const UtilsServerController = {
             const userData = userDoc.data();
             const userId = userData.id || 10;
 
-            // Build family tree
             const familyTreeStructure = {
                 id: userId,
                 name: userData.name || "",
@@ -415,9 +413,14 @@ const UtilsServerController = {
                 parentOf: "",
                 partnerOf: userData.partnerOf || "",
                 childOf: "",
-                knows: userData.knows || ""
+                knows: "",
+                phone: userData.phone || "",
+                email: userData.email || "",
+                relationship: "Self",
+                dateAdded: userData.dateAdded || new Date().toISOString(),
+                memberID: uid
             };
-
+    
             // Recover FamilyMembers data
             const familyMembersRef = db.collection(`mobile_user/${uid}/FamilyMembers`);
             const familyMembersSnapshot = await familyMembersRef.get();
@@ -428,27 +431,28 @@ const UtilsServerController = {
             if (!familyMembersSnapshot.empty) {
                 familyMembersSnapshot.forEach(doc => {
                     const memberData = doc.data();
-
+    
                     if (memberData.Member) {
                         const member = memberData.Member;
                         const memberId = member.id;
+    
                         if (memberId !== undefined) {
                             parentOfIds.push(memberId.toString());
                             familyMemberData.push({
-                                birthPlaceID: member.birthPlaceID || 1,
+                                id: memberId,
+                                name: member.name || "",
                                 gender: member.gender || 1,
-                                partnerOf: userId.toString(),
-                                childOf: userId.toString(),
                                 description: member.description || "",
-                                parentOf: userId.toString(),
                                 osisRef: member.osisRef || "",
-                                alsoCalled: member.alsoCalled || "",
                                 birthYear: member.birthYear || 1,
                                 deathYear: member.deathYear || 1,
-                                name: member.name || "",
-                                id: memberId,
-                                writerOf: member.writerOf || "",
+                                birthPlaceID: member.birthPlaceID || 1,
                                 deathPlaceID: member.deathPlaceID || 1,
+                                alsoCalled: member.alsoCalled || "",
+                                writerOf: member.writerOf || "",
+                                parentOf: userId.toString(),
+                                partnerOf: userId.toString(),
+                                childOf: userId.toString(),
                                 knows: member.knows || ""
                             });
                         }
@@ -457,14 +461,16 @@ const UtilsServerController = {
     
                 familyTreeStructure.parentOf = parentOfIds.join(',');
             }
-
-            const finalResponse = [familyTreeStructure, ...familyMemberData];
+    
+            const finalResponse = {
+                data: [familyTreeStructure, ...familyMemberData]
+            };
             return res.status(200).json(finalResponse);
     
         } catch (error) {
             return res.status(500).json({ message: 'Unexpected error', error: error.message });
         }
-    }
+    }    
 };
 
 module.exports = UtilsServerController;
