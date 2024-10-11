@@ -44,6 +44,7 @@ const LegacyController = {
                     Legacy: {
                         legacyFullName: legacyItem.legacyFullName,
                         legacyEmail: legacyItem.legacyEmail,
+                        legacyBirthDay: legacyItem.legacyBirthDay,
                         legacyPhone: legacyItem.legacyPhone,
                         legacyPIN: legacyItem.legacyPIN,
                         dateAdded: now.replace('T', ' '),
