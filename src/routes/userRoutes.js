@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { verifyToken } = require('../middleware/authMiddleware');
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
 
 // Controllers
 const UserController = require('../controllers/userController');
@@ -16,6 +18,7 @@ const TaskController = require('../controllers/taskController');
 const LegacyController = require('../controllers/legacyController');
 const ConfigurationValuesController = require('../controllers/configurationValuesController');
 const StatisticsController = require('../controllers/statisticsController');
+const FeaturesController = require('../controllers/featuresController');
 
 
 /*
@@ -29,6 +32,7 @@ router.get('/getData', verifyToken, UserController.getAllData);
 router.get('/newToken', UserController.generateToken);
 router.get('/health', UserController.health);
 router.get('/msconfigurations/get_links', verifyToken, ConfigurationValuesController.getLinks);
+router.get('/mshome/get_home_banners', verifyToken, FeaturesController.fetchHomeBanners)
 
 
 /*
@@ -53,6 +57,7 @@ router.post('/msconfigurations/get_familiar_relationships', verifyToken, Configu
 router.post('/msconfigurations/get_contact_types', verifyToken, ConfigurationValuesController.getContactsTypes);
 router.post('/msconfigurations/get_category_types', verifyToken, ConfigurationValuesController.getCategoryTypes);
 router.post('/msconfigurations/get_special_ocassion_types', verifyToken, ConfigurationValuesController.getSpecialOcassionTypes);
+router.post('/mshome/new_banner', verifyToken, upload.single('file'), FeaturesController.uploadHomeBanner);
 
 /* 
 * Routes for the User model POST
@@ -145,6 +150,9 @@ router.delete('/mstasks/delete_task', verifyToken, TaskController.deleteTask);
 
 // MSLegacy
 router.delete('/mslegacy/delete_legacy_contact', verifyToken, LegacyController.deleteLegacyContact);
+
+// MSHome
+router.delete('/mshome/delete_home_banner', verifyToken, FeaturesController.deleteHomeBanner)
 
 
 /*
