@@ -129,7 +129,8 @@ const FamiliarController = {
                         deathPlaceID: familyMember.deathPlaceID || null,
                         alsoCalled: familyMember.alsoCalled || '',
                         writerOf: familyMember.writerOf || '',
-                        knows: familyMember.knows || ''
+                        knows: familyMember.knows || '',
+                        imageUrl: familyMember.imageUrl || ''
                     }
                 };
     
