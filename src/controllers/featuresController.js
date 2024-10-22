@@ -26,7 +26,7 @@ const FeaturesController = {
                 if (!banners[baseFileName]) {
                     banners[baseFileName] = {};
                 }
-
+    
                 if (actionURL) {
                     banners[baseFileName].actionURL = actionURL;
                 }
@@ -36,10 +36,11 @@ const FeaturesController = {
                 } else if (language === 'ES' && imageUrl) {
                     banners[baseFileName].imageUrlES = imageUrl;
                 }
-
+    
                 banners[baseFileName].bannerId = id;
+                banners[baseFileName].language = language;
             });
-
+    
             const bannersArray = Object.keys(banners).map(key => {
                 const banner = banners[key];
                 const filteredBanner = {};
@@ -48,6 +49,7 @@ const FeaturesController = {
                 if (banner.imageUrlEN) filteredBanner.imageUrlEN = banner.imageUrlEN;
                 if (banner.actionURL) filteredBanner.actionURL = banner.actionURL;
                 if (banner.bannerId) filteredBanner.id = banner.bannerId;
+                if (banner.language) filteredBanner.language = banner.language;
     
                 return filteredBanner;
             });
@@ -56,7 +58,7 @@ const FeaturesController = {
         } catch (error) {
             return res.status(500).json({ message: 'Unexpected error', error: error.message });
         }
-    },
+    },    
 
     // Upload new banners
     async uploadHomeBanner(req, res, next) {
