@@ -30,6 +30,8 @@ router.get('/getData', verifyToken, UserController.getAllData);
 
 // Authentication doesn't require token verification
 router.get('/newToken', UserController.generateToken);
+router.get('/verifyToken', UserController.verifyToken);
+
 router.get('/health', UserController.health);
 router.get('/msconfigurations/get_links', verifyToken, ConfigurationValuesController.getLinks);
 router.get('/mshome/get_home_banners', verifyToken, FeaturesController.fetchHomeBanners)
@@ -39,7 +41,11 @@ router.get('/mshome/get_home_banners', verifyToken, FeaturesController.fetchHome
 * Routes for the User model POST
 * This routes are separeted by the authentication required
 */
+// Utils
+router.patch('/refreshToken', UserController.refreshToken);
 router.post('/insertEmails', verifyToken, UserController.insertEmails);
+
+// Endpoints used on
 router.post('/msusers/register_user', verifyToken, UserController.registerUser);
 router.post('/msusers/update_general_info', verifyToken, UserController.updateUser);
 router.post('/sendRequests', verifyToken, UserController.sendRequests);

@@ -280,69 +280,149 @@ const UserController = {
     async generateToken(req, res, next) {
         try {
             const subscriptionKey = req.headers['ocp-apim-subscription-key'];
+            const expectedKey = process.env.OCMP_SUBSCRIPTION_KEY;
+    
             if (!subscriptionKey) {
                 return res.status(400).json({ error: 'Subscription key is missing' });
             }
-
-            const expectedKey = process.env.OCMP_SUBSCRIPTION_KEY;
+    
             if (!expectedKey) {
-                throw new Error('Subscription key is not configured in the environment');
+                throw new Error('OCMP subscription key is not configured in the environment');
             }
-
+    
             if (subscriptionKey !== expectedKey) {
                 return res.status(403).json({ error: 'Invalid subscription key' });
             }
-
+    
             const userId = process.env.USER_ID;
             const username = process.env.USERNAME;
             const secretKey = process.env.SECRET_KEY;
-
+    
             if (!userId || !username || !secretKey) {
-                throw new Error('Required environment variables (USER_ID, USERNAME, SECRET_KEY) are not defined');
+                throw new Error('Required data is missing');
             }
-
-            const user = { id: userId, username: username };
+    
+            const user = { 
+                id: userId, 
+                username: username,
+                role: 'user',
+                permissions: ['read', 'write'],
+                issuedAt: new Date().toISOString()
+            };
+    
             const token = jwt.sign(user, secretKey, { expiresIn: '1h' });
-            return res.json({
+    
+            return res.status(200).json({
                 Authorization: `Bearer ${token}`
             });
+    
         } catch (error) {
             if (error instanceof jwt.JsonWebTokenError) {
                 return res.status(500).json({ error: 'Error generating token' });
             }
-            next(error);
+            return next(error);
         }
     },
-
-    /**
-     * Verifies the token provided in the request.
-     * @param {Object} req - The request object.
-     * @param {Object} res - The response object.
-     * @param {Function} next - The next middleware function.
-     * @returns {Promise<void>} - A promise that resolves when the token is verified.
-     */
+    
     async verifyToken(req, res, next) {
         try {
-            const subscriptionKey = req.headers['ocp-apim-subscription-key'];
-            const expectedKey = process.env.OCMP_SUBSCRIPTION_KEY;
-            if (subscriptionKey !== expectedKey) {
-                return res.status(403).json({ error: 'Invalid subscription key' });
-            }
-            const token = req.body.token;
+            const authHeader = req.headers['authorization'];
+            const token = authHeader && authHeader.split(' ')[1];
+    
             if (!token) {
-                return res.status(401).json({ error: 'Token not provided' });
+                return res.status(401).json({ error: 'Token is missing' });
             }
-            const BearerToken = token.split(' ')[1];
-            jwt.verify(BearerToken, process.env.SECRET_KEY, (err, decoded) => {
-                if (err) {
-                    return res.status(403).json({ error: 'Invalid token' });
+    
+            const secretKey = process.env.SECRET_KEY;
+            if (!secretKey) {
+                throw new Error('Secret key not configured in the environment');
+            }
+    
+            jwt.verify(token, secretKey, (error, decoded) => {
+                if (error) {
+                    return res.status(403).json({ error: 'Token is invalid or expired' });
                 }
-                return res.status(200).json({ message: 'Token is valid' });
+    
+                const currentTime = Math.floor(Date.now() / 1000);
+                const timeLeft = decoded.exp - currentTime;
+    
+                if (timeLeft <= 0) {
+                    return res.status(403).json({ error: 'Token has expired' });
+                }
+    
+                return res.status(200).json({
+                    message: "Token is valid",
+                    data: {
+                        validity: {
+                            timeLeftInSeconds: timeLeft,
+                            timeLeftFormatted: `${Math.floor(timeLeft / 60)}m ${timeLeft % 60}s`
+                        }
+                    }
+                });
             });
         } catch (error) {
-            next(error);
+            return res.status(500).json({ error: "Error on verify token: " + error.message });
         }
     },
+    
+    async refreshToken(req, res, next) {
+        try {
+            const authHeader = req.headers['authorization'];
+            const token = authHeader && authHeader.split(' ')[1];
+            const bodyToken = req.body.refreshToken && req.body.refreshToken.split(' ')[1];
+    
+            if (!token && !bodyToken) {
+                return res.status(401).json({ error: 'Refresh token is missing' });
+            }
+    
+            const refreshToken = token || bodyToken;
+    
+            const refreshSecretKey = process.env.SECRET_KEY;
+            if (!refreshSecretKey) {
+                throw new Error('Refresh secret key not configured in the environment');
+            }
+
+            const decoded = jwt.decode(refreshToken);
+            if (!decoded) {
+                return res.status(403).json({ 
+                    error: 'Invalid or expired refresh token',
+                    details: 'Token could not be decoded or is invalid' 
+                });
+            }
+
+            jwt.verify(refreshToken, refreshSecretKey, { ignoreExpiration: true }, (error) => {
+                if (error) {
+                    console.log('Verification error:', error);
+                    return res.status(403).json({ 
+                        error: 'Invalid or expired refresh token',
+                        details: error.message 
+                    });
+                }
+                
+                const newAccessToken = jwt.sign(
+                    { 
+                        id: decoded.id, 
+                        username: decoded.username, 
+                        role: decoded.role, 
+                        permissions: decoded.permissions 
+                    },
+                    refreshSecretKey,
+                    { expiresIn: '1h' }
+                );
+    
+                return res.status(200).json({
+                    message: "Token refreshed successfully",
+                    tokens: {
+                        accessToken: `Bearer ${newAccessToken}`,
+                        expiresIn: '1h'
+                    }
+                });
+            });
+        } catch (error) {
+            console.error('Error in refreshToken:', error);
+            return res.status(500).json({ message: 'Unexpected error', error: error.message });
+        }
+    },          
 
     /**
      * Sends multiple requests to a specified URL using axios.
