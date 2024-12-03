@@ -76,7 +76,7 @@ const StatisticsController = {
         } catch (error) {
             return res.status(500).json({ message: 'Unexpected error', error: error.message });
         }
-    }      
+    }
 };
 
 module.exports = StatisticsController;
