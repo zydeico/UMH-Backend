@@ -61,6 +61,7 @@ const StatisticsController = {
             const notesSnapshot = await notesCollectionRef.get();
             const Notes = notesSnapshot.size || 0;
     
+            
             const statistics = [
                 { type: "Letters", current: Letters, total },
                 { type: "Contacts", current: Contacts, total },
