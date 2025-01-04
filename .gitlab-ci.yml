@@ -79,6 +79,7 @@ deploy:
     SpecialOcassionES: $SpecialOcassionES
     LegacyContactCollection: $LegacyContactCollection
     STRIPE_API_KEY: $STRIPE_API_KEY
+    GCLOUD_SERVICE_KEY: $GCLOUD_SERVICE_KEY
   script:
     - echo $GCLOUD_SERVICE_KEY | base64 -d > key.json
     - gcloud auth activate-service-account --key-file=key.json
@@ -87,12 +88,14 @@ deploy:
     - gcloud services enable cloudbuild.googleapis.com
     - gcloud services enable run.googleapis.com
     - gcloud services enable containerregistry.googleapis.com
-    - gcloud builds submit --tag gcr.io/$FIREBASE_PROJECT_ID/umhbackend
+    - gcloud components update
+    - gcloud builds submit --tag gcr.io/$FIREBASE_PROJECT_ID/umhbackend:$CI_COMMIT_REF_SLUG
     - gcloud run deploy umhbackend \
-        --image gcr.io/$FIREBASE_PROJECT_ID/umhbackend \
-        --platform managed \
-        --region $FIREBASE_UNIVERSE_DOMAIN \
-        --allow-unauthenticated
+      --image gcr.io/$FIREBASE_PROJECT_ID/umhbackend:$CI_COMMIT_REF_SLUG \
+      --platform managed \
+      --region us-west1 \
+      --project $FIREBASE_PROJECT_ID \
+      --allow-unauthenticated
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
   environment:
