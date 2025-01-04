@@ -40,7 +40,8 @@ deploy:
       # Escribe el contenido de PRODUCTION_ENV_FILE en el archivo .env
       echo "$PRODUCTION_ENV_FILE" > .env
 
-    # Cargar el archivo .env y exportar las variables de entorno
+    # Verifica que el archivo .env contiene las variables correctas
+    - cat .env
     - set -a
     - source .env
     - set +a
@@ -66,3 +67,4 @@ deploy:
     - if: $CI_COMMIT_BRANCH == "main"
   environment:
     name: production
+
