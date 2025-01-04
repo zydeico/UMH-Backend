@@ -83,10 +83,18 @@ deploy:
     - echo "Cargando variables desde el archivo .env"
     - echo "$PRODUCTION_ENV_FILE" > .env  # Cargar las variables desde la variable de GitLab
     - export $(grep -v '^#' .env | xargs)  # Exportar todas las variables de .env
+
+    # Asegúrate de que la clave privada esté en formato adecuado (base64-decoding)
     - echo $GCLOUD_SERVICE_KEY | base64 -d > key.json
+
+    # Autenticación en Google Cloud con la clave decodificada
     - gcloud auth activate-service-account --key-file=key.json
+
+    # Configuración de GCloud
     - gcloud config set project $FIREBASE_PROJECT_ID
     - gcloud config set run/region $FIREBASE_UNIVERSE_DOMAIN
+
+    # Construcción y despliegue a Google Cloud Run
     - gcloud builds submit --tag gcr.io/$FIREBASE_PROJECT_ID/umhbackend
     - gcloud run deploy umhbackend \
         --image gcr.io/$FIREBASE_PROJECT_ID/umhbackend \
