@@ -13,12 +13,9 @@ npm run dev
 ```
 You need to have a .env file with the following variables:
 ```bash
-// JWT Authentication
 USERNAME
 SECRET_KEY
 USER_ID
-
-// Firebase cofiguration
 FIREBASE_TYPE
 FIREBASE_PROJECT_ID
 FIREBASE_PRIVATE_KEY_ID
