@@ -81,7 +81,8 @@ deploy:
     STRIPE_API_KEY: $STRIPE_API_KEY
   script:
     - echo "Cargando variables desde el archivo .env"
-    - export $(grep -v '^#' .env | xargs)
+    - echo "$PRODUCTION_ENV_FILE" > .env  # Cargar las variables desde la variable de GitLab
+    - export $(grep -v '^#' .env | xargs)  # Exportar todas las variables de .env
     - echo $GCLOUD_SERVICE_KEY | base64 -d > key.json
     - gcloud auth activate-service-account --key-file=key.json
     - gcloud config set project $FIREBASE_PROJECT_ID
