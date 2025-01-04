@@ -32,8 +32,15 @@ deploy:
   script:
     - echo "Cargando variables desde el archivo .env"
     - |
-      # Escribimos el contenido de la variable PRODUCTION_ENV_FILE en el archivo .env
+      # Verifica que la variable PRODUCTION_ENV_FILE esté correctamente configurada
+      if [ -z "$PRODUCTION_ENV_FILE" ]; then
+        echo "La variable PRODUCTION_ENV_FILE no está definida correctamente."
+        exit 1
+      fi
+      # Escribe el contenido de PRODUCTION_ENV_FILE en el archivo .env
       echo "$PRODUCTION_ENV_FILE" > .env
+
+    # Cargar el archivo .env y exportar las variables de entorno
     - set -a
     - source .env
     - set +a
