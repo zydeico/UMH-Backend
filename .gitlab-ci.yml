@@ -32,9 +32,8 @@ deploy:
   script:
     - echo "Cargando variables desde el archivo .env"
     - |
-      cat << EOL > .env
-      ${PRODUCTION_ENV_FILE}
-      EOL
+      # Escribimos el contenido de la variable PRODUCTION_ENV_FILE en el archivo .env
+      echo "$PRODUCTION_ENV_FILE" > .env
     - set -a
     - source .env
     - set +a
