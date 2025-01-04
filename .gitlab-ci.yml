@@ -3,7 +3,7 @@ stages:
   - deploy
 
 docker-build:
-  image: docker:cli
+  image: umhbackend
   stage: build
   services:
     - docker:dind
@@ -91,6 +91,6 @@ deploy:
         --region $FIREBASE_UNIVERSE_DOMAIN \
         --allow-unauthenticated
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_BRANCH == "main"
   environment:
     name: production
