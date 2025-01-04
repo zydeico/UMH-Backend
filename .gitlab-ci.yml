@@ -3,7 +3,7 @@ stages:
   - deploy
 
 docker-build:
-  image: umhbackend
+  image: docker:cli
   stage: build
   services:
     - docker:dind
