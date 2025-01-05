@@ -89,8 +89,8 @@ deploy:
     - gcloud services enable run.googleapis.com
     - gcloud services enable containerregistry.googleapis.com
     - gcloud builds submit --tag gcr.io/$FIREBASE_PROJECT_ID/umhbackend:$CI_COMMIT_REF_SLUG
-    - gcloud run deploy umhbackend --image=gcr.io/$FIREBASE_PROJECT_ID/umhbackend:$CI_COMMIT_REF_SLUG --platform=managed --region=us-west1 --project=$FIREBASE_PROJECT_ID --allow-unauthenticated
-    
+    - gcloud run deploy umhbackend --image gcr.io/umhbackend/umhbackend --platform managed --region us-west1 --project umhbackend --allow-unauthenticated
+
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
   environment:
