@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "854945044736",
+    "firebase_url": "https://umhbackend-default-rtdb.firebaseio.com",
+    "project_id": "umhbackend",
+    "storage_bucket": "umhbackend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854945044736:android:12b03fb01837a74f3afbe5",
+        "android_client_info": {
+          "package_name": "life.unlockmyheart.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "854945044736-kvl8n3i12mlv7ukb5p8113qde4rqgj4s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "life.unlockmyheart.android",
+            "certificate_hash": "f0743ae4f34ed5ddc94f0faff2d2b4b860ff4e37"
+          }
+        },
+        {
+          "client_id": "854945044736-njaufokj2h8nq50upen9m5c3i56orrch.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "life.unlockmyheart.android",
+            "certificate_hash": "fb11229300bae228f6ecfd3ba0a848ac1931a06a"
+          }
+        },
+        {
+          "client_id": "854945044736-anijdau229lbqf5mqvd5rn3e6ofvcjfq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAa4HxyXpifkAoR8rU6IqX_UbKBQrKizOg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "854945044736-anijdau229lbqf5mqvd5rn3e6ofvcjfq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "854945044736-g6pl4e2tl4872lhqsb64h5laeist9hsg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "life.unlockmyheart.iosprod"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
